@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "member_id")
+    @Column(nullable = false, name = "oauth_id")
     private Long id;
 
     @Column(name = "profile_image")

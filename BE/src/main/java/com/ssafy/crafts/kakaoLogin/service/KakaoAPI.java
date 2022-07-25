@@ -112,13 +112,11 @@ public class KakaoAPI {
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
             String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
-            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
             String gender = kakao_account.getAsJsonObject().get("gender").getAsString(); // null 예외 처리 필요
             String phoneNumber = kakao_account.getAsJsonObject().get("phone_number").getAsString(); // null 예외 처리 필요
 
             userInfo.put("profileImage", profileImage);
-            userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("gender", gender);
             userInfo.put("phoneNumber", phoneNumber);
