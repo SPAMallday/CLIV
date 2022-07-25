@@ -10,6 +10,9 @@ import java.net.URL;
 import java.util.HashMap;
 
 import com.google.gson.JsonObject;
+import com.ssafy.crafts.kakaoLogin.entity.Member;
+import com.ssafy.crafts.kakaoLogin.repo.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
@@ -17,6 +20,9 @@ import com.google.gson.JsonParser;
 
 @Service
 public class KakaoAPI {
+
+    @Autowired
+    private MemberRepository mr;
     public String getAccessToken(String authorize_code) {
         String access_Token = "";
         String refresh_Token = "";
@@ -73,7 +79,7 @@ public class KakaoAPI {
         return access_Token;
     }
 
-    public HashMap<String, Object> getUserInfo (String access_Token) {
+    public Member getUserInfo (String access_Token) {
 
         // 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<>();
@@ -81,7 +87,7 @@ public class KakaoAPI {
         try {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");  // GET? POST?
+            conn.setRequestMethod("GET");  // GET으로 받기
 
             // 요청에 필요한 Header에 포함될 내용
             conn.setRequestProperty("Authorization", "Bearer " + access_Token);
@@ -105,17 +111,28 @@ public class KakaoAPI {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
+            String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            String gender = kakao_account.getAsJsonObject().get("gender").getAsString(); // null 예외 처리 필요
+            String phoneNumber = kakao_account.getAsJsonObject().get("phone_number").getAsString(); // null 예외 처리 필요
 
+            userInfo.put("profileImage", profileImage);
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
+            userInfo.put("gender", gender);
+            userInfo.put("phoneNumber", phoneNumber);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return userInfo;
+        Member result = mr.findMemberByEmail((String) userInfo.get("email"));
+        if(result == null) {
+            // null 이면 DB에 저장(회원가입)
+            mr.save(result);
+        }
+        return result;
     }
 
     public void kakaoLogout(String access_Token) {

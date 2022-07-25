@@ -1,5 +1,6 @@
-package com.ssafy.crafts.entity;
+package com.ssafy.crafts.kakaoLogin.entity;
 
 public enum Status {
-    활성화, 탈퇴;
+    ACTIVE,
+    RESIGNATION
 }

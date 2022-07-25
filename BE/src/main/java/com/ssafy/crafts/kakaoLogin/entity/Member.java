@@ -1,8 +1,7 @@
-package com.ssafy.crafts.entity;
+package com.ssafy.crafts.kakaoLogin.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,14 +11,12 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Table(name = "Oauth")
 @Entity
+@Builder
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "k_email")
-    private String kEmail;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    @Column(nullable = false, name = "member_id")
+    private Long id;
 
     @Column(name = "profile_image")
     private String profileImage;
@@ -27,7 +24,7 @@ public class Member {
     @Column(nullable = false, unique = true, length = 20)
     private String nickname;
 
-    @Column(nullable = false, unique = true) //defualt 값 어떻게 끌어와야 할지..
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String gender;
@@ -38,7 +35,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
 }
