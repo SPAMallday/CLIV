@@ -44,7 +44,6 @@ public class MemberController {
         session.removeAttribute("userId");
         return "index";
     }
-
 }
 
 

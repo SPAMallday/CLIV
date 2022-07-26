@@ -114,7 +114,6 @@ public class KakaoAPI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return userInfo;
     }
 
