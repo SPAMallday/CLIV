@@ -1,4 +1,4 @@
-package com.ssafy.crafts.kakaoLogin.entity;
+package com.ssafy.crafts.db.entity;
 
 public enum Status {
     ACTIVE,
