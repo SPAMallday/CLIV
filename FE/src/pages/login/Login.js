@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import {KAKAO_AUTH_URL} from './KaKaoLogin';
-import Button from '@mui/material/Button';
+import { KAKAO_AUTH_URL } from './KaKaoLoginInfo';
+import { createTheme, Button } from '@mui/material';
 import { StyledEngineProvider } from '@mui/styled-engine';      // styled-components 를 이용하기 위함.
 
 const StyledKaKaoBtn = styled(Button) `
@@ -32,15 +32,20 @@ const StyledKaKaoBtn = styled(Button) `
 function Login () {
     return (
         <div>
-            <a href={KAKAO_AUTH_URL}>
-		    <StyledEngineProvider injectFirst>
-                {/* <div 
-                    className={StyledKaKaoBtn} 
-                    >
-                </div> */}
-                <StyledKaKaoBtn></StyledKaKaoBtn>
-		    </StyledEngineProvider>
-            </a>
+            <div>
+
+            </div>
+            <div>
+                <a href={KAKAO_AUTH_URL}>
+                <StyledEngineProvider injectFirst>
+                    {/* <div 
+                        className={StyledKaKaoBtn} 
+                        >
+                    </div> */}
+                    <StyledKaKaoBtn></StyledKaKaoBtn>
+                </StyledEngineProvider>
+                </a>
+            </div>
         </div>
     );
 };

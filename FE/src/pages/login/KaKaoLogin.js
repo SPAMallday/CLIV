@@ -1,4 +1,36 @@
-export const REST_API_KEY = 'edb21321397901eb36b164f297fbb16a';
-export const REDIRECT_URI = 'http://localhost:3000/kakao-login';
+import React, { useEffect } from 'react';
+import { REST_API_KEY, REDIRECT_URI } from './KaKaoLoginInfo';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
-export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+function KaKaoLogin() {
+    const location = useLocation();
+    const navagate = useNavigate();
+    const AUTHORIZE_CODE = location.search.split('=')[1];
+
+    const getKaKaoToken = () => {
+        fetch(`https://kauth.kakao.com/oauth/token`, {
+            method: 'POST',
+            headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+            body: `grant_type=authorization_code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${AUTHORIZE_CODE}`,
+        })
+        .then(res  => res.json())
+        .then(data => {
+            if (data.access_token) {
+                localStorage.setItem('token', data.access_token);
+            } else {
+                navagate('/');
+            }
+        });
+    };
+    
+    useEffect(() => {
+        if (!location.search) return <div>err</div>;
+        getKaKaoToken();
+    }, []);
+    
+    return (
+        <div> </div>
+    );
+};
+
+export default KaKaoLogin;
