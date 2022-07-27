@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Table(name = "OAUTH")
@@ -13,50 +14,42 @@ import java.time.LocalDateTime;
 @Entity
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "oauth_id")
-    private Long id;
+    @Id
+    @Column(nullable = false, name = "oauth_id", length = 250)
+    private String id; //UUID 변경
 
-    @Column(name = "profile_image")
+    @Column(name = "profile_image", length = 250)
     private String profileImage;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, unique = true, length = 200)
     private String nickname;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 40)
     private String email;
 
+    @Column(length = 10)
     private String gender;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_type")
+    @Column(name = "status_type", length = 10)
     private Status status;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_type", length = 10)
+    private RoleType roleType;
+
+    @Column(name = "reg_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Builder
-    public Member(String profileImage, String nickname, String email){
-        this.createdAt = LocalDateTime.now();
+    public Member(String email, String gender){
+        this.id = UUID.randomUUID().toString();
         this.status = Status.ACTIVE;
-        this.profileImage = profileImage;
-        this.nickname = nickname;
-        this.email = email;
-    }
-
-    @Builder
-    public Member(String profileImage, String nickname, String email, String gender, String phoneNumber){
-        this.createdAt = LocalDateTime.now();
-        this.status = Status.ACTIVE;
-        this.profileImage = profileImage;
-        this.nickname = nickname;
+        this.roleType = RoleType.MEMBER;
+        this.nickname = "회원" + this.id;
         this.email = email;
         this.gender = gender;
-        this.phoneNumber = phoneNumber;
     }
+
 }

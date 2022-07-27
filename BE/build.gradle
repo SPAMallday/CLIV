@@ -163,6 +163,9 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 	implementation('com.google.code.gson:gson:2.8.7')
+
+	compile("com.querydsl:querydsl-jpa") // querydsl
+	compile("com.querydsl:querydsl-apt") // querydsl
 }
 
 test {
