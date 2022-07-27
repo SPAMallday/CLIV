@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+/*
+* 카카오 로그인 요청 API
+*/
 @RestController
 @Slf4j
 @RequestMapping("/auth")
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final KakaoAuthService kakaoService;
-    @ApiOperation(value = "카카오 로그인", notes = "카카오 엑세스 토큰을 이용하여 사용자 정보 받아 저장하고 앱의 토큰 신환")
+    @ApiOperation(value = "카카오 로그인", notes = "카카오 엑세스 토큰을 이용하여 사용자 정보 받아 저장하고 앱의 토큰 전환")
     @PostMapping(value = "/kakao-login")
     public ResponseEntity<AuthResponse> kakaoAuthRequest(@RequestBody AuthRequest authRequest) {
         log.info("로그인 요청");

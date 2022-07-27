@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+/*
+*	카카오 로그인 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
+*/
 @Service
 @RequiredArgsConstructor
 public class KakaoAuthService {
