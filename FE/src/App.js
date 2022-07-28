@@ -1,25 +1,27 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Video from "./Components/Video/Video";
+import VideoClass from "./pages/VideoClass";
 
 function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <Link to='/'>
-          <Button>Main</Button>
-        </Link>
         <Routes>
           <Route
             path='/'
             element={
-              <Link to='/video'>
-                <Button variant='contained'>Show Video</Button>
-              </Link>
+              <div>
+                <Link to='/'>
+                  <Button>Main</Button>
+                </Link>
+                <Link to='/video'>
+                  <Button variant='contained'>Show Video</Button>
+                </Link>
+              </div>
             }
           ></Route>
-          <Route path='/video/*' element={<Video />}></Route>
+          <Route path='/video/*' element={<VideoClass />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
