@@ -593,3 +593,8 @@ java.lang.IllegalArgumentException: Invalid character found in method name [0x16
 2022-07-28 02:10:10.646 DEBUG 7760 --- [http-nio-127.0.0.1-3000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, */*] and supported [application/json, application/hal+json]
 2022-07-28 02:10:10.648 DEBUG 7760 --- [http-nio-127.0.0.1-3000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.spring.web.json.Json@4acbe656]
 2022-07-28 02:10:10.649 DEBUG 7760 --- [http-nio-127.0.0.1-3000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-07-28 02:15:02.049  INFO 7760 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2022-07-28 02:15:02.053  INFO 7760 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-07-28 02:15:02.054  INFO 7760 --- [SpringContextShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-07-28 02:15:02.090  INFO 7760 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-07-28 02:15:02.099  INFO 7760 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

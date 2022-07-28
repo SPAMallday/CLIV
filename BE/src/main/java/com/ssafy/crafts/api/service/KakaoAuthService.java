@@ -6,11 +6,15 @@ import com.ssafy.crafts.common.auth.ClientKakao;
 import com.ssafy.crafts.common.util.AuthToken;
 import com.ssafy.crafts.common.util.AuthTokenProvider;
 import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.entity.RoleType;
+import com.ssafy.crafts.db.entity.Status;
 import com.ssafy.crafts.db.repository.MemberQuerydslRepository;
 import com.ssafy.crafts.db.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 /*
 *	카카오 로그인 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -38,7 +42,17 @@ public class KakaoAuthService {
         AuthToken appToken = authTokenProvider.createUserAppToken(id);
 
         if (member == null) {
-            memberRepository.save(kakaoMember);
+            Member newbie = Member.builder()
+                            .email(kakaoMember.getEmail())
+                            .gender(kakaoMember.getGender())
+                            .id(UUID.randomUUID().toString())
+                            .status(Status.ACTIVE)
+                            .roleType(RoleType.MEMBER)
+                            .nickname(kakaoMember.getEmail())
+                            .build();
+
+            memberRepository.save(newbie);
+
             return AuthResponse.builder()
                     .appToken(appToken.getToken())
                     .isNewMember(Boolean.TRUE)

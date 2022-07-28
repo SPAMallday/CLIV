@@ -43,11 +43,11 @@ public class Member {
     private LocalDateTime createdAt;
 
     @Builder
-    public Member(String email, String gender){
-        this.id = UUID.randomUUID().toString();
-        this.status = Status.ACTIVE;
-        this.roleType = RoleType.MEMBER;
-        this.nickname = "회원" + this.id;
+    public Member(String email, String gender, String id, Status status, RoleType roleType, String nickname){
+        this.id = id;
+        this.status = status;
+        this.roleType = roleType;
+        this.nickname = nickname;
         this.email = email;
         this.gender = gender;
     }
