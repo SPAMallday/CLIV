@@ -96,10 +96,7 @@ export default class ChatComponent extends Component {
       <div id='chatContainer'>
         <div id='chatComponent' style={styleChat}>
           <div id='chatToolbar'>
-            <span>
-              {this.props.user.getStreamManager().stream.session.sessionId} -
-              CHAT
-            </span>
+            <span>채팅</span>
             <IconButton id='closeButton' onClick={this.close}>
               <HighlightOff color='secondary' />
             </IconButton>
@@ -137,14 +134,19 @@ export default class ChatComponent extends Component {
 
           <div id='messageInput'>
             <input
-              placeholder='Send a messge'
+              placeholder='메세지를 입력하세요'
               id='chatInput'
               value={this.state.message}
               onChange={this.handleChange}
               onKeyPress={this.handlePressKey}
             />
             <Tooltip title='Send message'>
-              <Fab size='small' id='sendButton' onClick={this.sendMessage}>
+              <Fab
+                color='secondary'
+                size='small'
+                id='sendButton'
+                onClick={this.sendMessage}
+              >
                 <Send />
               </Fab>
             </Tooltip>

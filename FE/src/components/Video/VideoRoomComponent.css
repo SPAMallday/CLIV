@@ -32,10 +32,6 @@
   width: 40px !important;
 }
 
-#navChatButton {
-  position: absolute;
-  right: 0;
-}
 .stream-container {
   padding: 0;
 }
@@ -386,34 +382,7 @@
   -webkit-animation-iteration-count: infinite;
 }
 
-@-webkit-keyframes OT_pulse {
-  0% {
-    -webkit-box-shadow: 0 0 0px 0px #c70019;
-    box-shadow: 0 0 0px 0px #c70019;
-  }
-
-  30% {
-    -webkit-box-shadow: 0 0 5px 1px #c70019;
-    box-shadow: 0 0 5px 1px #c70019;
-  }
-
-  50% {
-    -webkit-box-shadow: 0 0 5px 1px #c70019;
-    box-shadow: 0 0 5px 1px #c70019;
-  }
-
-  80% {
-    -webkit-box-shadow: 0 0 0px 0px #c70019;
-    box-shadow: 0 0 0px 0px #c70019;
-  }
-
-  100% {
-    -webkit-box-shadow: 0 0 0px 0px #c70019;
-    box-shadow: 0 0 0px 0px #c70019;
-  }
-}
-
-@-webkit-keyframes OT_pulse {
+@keyframes OT_pulse {
   0% {
     -webkit-box-shadow: 0 0 0px 0px #c70019;
     box-shadow: 0 0 0px 0px #c70019;
@@ -883,4 +852,55 @@
   text-align: center;
   height: 100%;
   margin-top: 40px;
+}
+
+/* Custom */
+
+:root {
+  --my-spacing: 10%;
+}
+
+/* #videoBoundary {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  overflow: hidden;
+} */
+
+#bigVideoContainer {
+  position: absolute;
+  background-color: gray;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  min-height: 300px;
+  min-width: 400px;
+  height: 80%;
+  width: calc(100vw - (var(--my-spacing) * 3.5 + 2vw));
+  top: var(--my-spacing);
+  right: calc(var(--my-spacing) + var(--my-spacing) * 2);
+}
+
+#myVideoContainer {
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  min-width: 250px;
+  width: calc(var(--my-spacing) * 2);
+  right: calc(var(--my-spacing) / 2);
+  top: var(--my-spacing);
+  background-color: midnightblue;
+  min-height: 250px;
+  height: 25vh;
+}
+
+#myChatContainer {
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  min-width: 250px;
+  width: calc(var(--my-spacing) * 2);
+  right: calc(var(--my-spacing) / 2);
+  min-height: 180px;
+  height: 50vh;
+  bottom: calc(var(--my-spacing) / 2);
 }

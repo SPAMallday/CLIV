@@ -39,12 +39,13 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: "none",
       currentVideoDevice: undefined,
+      mainVideo: undefined,
     };
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.updateLayout = this.updateLayout.bind(this);
+    // this.updateLayout = this.updateLayout.bind(this);
     this.camStatusChanged = this.camStatusChanged.bind(this);
     this.micStatusChanged = this.micStatusChanged.bind(this);
     this.nicknameChanged = this.nicknameChanged.bind(this);
@@ -56,6 +57,8 @@ class VideoRoomComponent extends Component {
     this.toggleChat = this.toggleChat.bind(this);
     this.checkNotification = this.checkNotification.bind(this);
     this.checkSize = this.checkSize.bind(this);
+    this.changeMainVideo = this.changeMainVideo.bind(this);
+    this.handleTargetVideo = this.handleTargetVideo.bind(this);
   }
 
   componentDidMount() {
@@ -77,14 +80,14 @@ class VideoRoomComponent extends Component {
       openViduLayoutOptions
     );
     window.addEventListener("beforeunload", this.onbeforeunload);
-    window.addEventListener("resize", this.updateLayout);
+    // window.addEventListener("resize", this.updateLayout);
     window.addEventListener("resize", this.checkSize);
     this.joinSession();
   }
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onbeforeunload);
-    window.removeEventListener("resize", this.updateLayout);
+    // window.removeEventListener("resize", this.updateLayout);
     window.removeEventListener("resize", this.checkSize);
     this.leaveSession();
   }
@@ -199,7 +202,7 @@ class VideoRoomComponent extends Component {
       { currentVideoDevice: videoDevices[0], localUser: localUser },
       () => {
         this.state.localUser.getStreamManager().on("streamPlaying", (e) => {
-          this.updateLayout();
+          //   this.updateLayout();
           publisher.videos[0].video.parentElement.classList.remove(
             "custom-class"
           );
@@ -223,7 +226,7 @@ class VideoRoomComponent extends Component {
             isScreenShareActive: this.state.localUser.isScreenShareActive(),
           });
         }
-        this.updateLayout();
+        // this.updateLayout();
       }
     );
   }
@@ -317,7 +320,7 @@ class VideoRoomComponent extends Component {
         this.checkSomeoneShareScreen();
       }, 20);
       event.preventDefault();
-      this.updateLayout();
+      //   this.updateLayout();
     });
   }
 
@@ -351,11 +354,11 @@ class VideoRoomComponent extends Component {
     });
   }
 
-  updateLayout() {
-    setTimeout(() => {
-      this.layout.updateLayout();
-    }, 20);
-  }
+  //   updateLayout() {
+  //     setTimeout(() => {
+  //       this.layout.updateLayout();
+  //     }, 20);
+  //   }
 
   sendSignalUserChanged(data) {
     const signalOptions = {
@@ -473,7 +476,7 @@ class VideoRoomComponent extends Component {
       });
     });
     publisher.on("streamPlaying", () => {
-      this.updateLayout();
+      //   this.updateLayout();
       publisher.videos[0].video.parentElement.classList.remove("custom-class");
     });
   }
@@ -506,7 +509,7 @@ class VideoRoomComponent extends Component {
       animate: true,
     };
     this.layout.setLayoutOptions(openviduLayoutOptions);
-    this.updateLayout();
+    // this.updateLayout();
   }
 
   toggleChat(property) {
@@ -521,7 +524,7 @@ class VideoRoomComponent extends Component {
       console.log("chat", display);
       this.setState({ chatDisplay: display });
     }
-    this.updateLayout();
+    // this.updateLayout();
   }
 
   checkNotification(event) {
@@ -545,9 +548,22 @@ class VideoRoomComponent extends Component {
     }
   }
 
+  changeMainVideo(event) {
+    this.setState({
+      mainVideo: event.target.value,
+    });
+  }
+
+  handleTargetVideo = (targetVideoStreamId) => {
+    this.setState({
+      mainVideo: targetVideoStreamId,
+    });
+  };
+
   render() {
     const mySessionId = this.state.mySessionId;
     const localUser = this.state.localUser;
+    var subscribers = this.state.subscribers;
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
@@ -555,6 +571,7 @@ class VideoRoomComponent extends Component {
         <ToolbarComponent
           sessionId={mySessionId}
           user={localUser}
+          subscribers={subscribers}
           showNotification={this.state.messageReceived}
           camStatusChanged={this.camStatusChanged}
           micStatusChanged={this.micStatusChanged}
@@ -564,6 +581,8 @@ class VideoRoomComponent extends Component {
           switchCamera={this.switchCamera}
           leaveSession={this.leaveSession}
           toggleChat={this.toggleChat}
+          changeMainVideo={this.changeMainVideo}
+          targetVideoStreamId={this.handleTargetVideo}
         />
 
         <DialogExtensionComponent
@@ -571,43 +590,76 @@ class VideoRoomComponent extends Component {
           cancelClicked={this.closeDialogExtension}
         />
 
-        <div id='layout' className='bounds'>
-          {localUser !== undefined &&
-            localUser.getStreamManager() !== undefined && (
-              <div className='OT_root OT_publisher custom-class' id='localUser'>
-                <StreamComponent
-                  user={localUser}
-                  handleNickname={this.nicknameChanged}
-                />
-              </div>
-            )}
-          {this.state.subscribers.map((sub, i) => (
-            <div
-              key={i}
-              className='OT_root OT_publisher custom-class'
-              id='remoteUsers'
-            >
-              <StreamComponent
-                user={sub}
-                streamId={sub.streamManager.stream.streamId}
-              />
+        <div id='videoBoundary'>
+          <div id='bigVideoContainer'>
+            {this.state.subscribers
+              .filter((sub, i) => {
+                if (this.state.mainVideo === undefined && i === 0) return true;
+                else if (
+                  sub.streamManager.stream.streamId === this.state.mainVideo
+                )
+                  return true;
+                else false;
+              })
+              .map((sub, i) => {
+                return (
+                  <div
+                    key={i}
+                    className='OT_root OT_publisher custom-class'
+                    id='remoteUsers'
+                  >
+                    <StreamComponent
+                      user={sub}
+                      streamId={sub.streamManager.stream.streamId}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+          <div id='sideContainer'>
+            <div id='myVideoContainer'>
+              {localUser !== undefined &&
+                localUser.getStreamManager() !== undefined && (
+                  <div
+                    className='OT_root OT_publisher custom-class'
+                    id='localUser'
+                  >
+                    <StreamComponent
+                      user={localUser}
+                      handleNickname={this.nicknameChanged}
+                    />
+                  </div>
+                )}
             </div>
-          ))}
+            <div id='myChatContainer'>
+              {localUser !== undefined &&
+                localUser.getStreamManager() !== undefined && (
+                  <div
+                    className='OT_root OT_publisher custom-class'
+                    style={chatDisplay}
+                  >
+                    <ChatComponent
+                      user={localUser}
+                      chatDisplay={this.state.chatDisplay}
+                      close={this.toggleChat}
+                      messageReceived={this.checkNotification}
+                    />
+                  </div>
+                )}
+            </div>
+          </div>
+        </div>
+        {/* <div id='layout' className='bounds'>
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
               <div
                 className='OT_root OT_publisher custom-class'
                 style={chatDisplay}
               >
-                <ChatComponent
-                  user={localUser}
-                  chatDisplay={this.state.chatDisplay}
-                  close={this.toggleChat}
-                  messageReceived={this.checkNotification}
-                />
+                
               </div>
             )}
-        </div>
+        </div> */}
       </div>
     );
   }
