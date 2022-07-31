@@ -616,37 +616,35 @@ class VideoRoomComponent extends Component {
                 );
               })}
           </div>
-          <div id='sideContainer'>
-            <div id='myVideoContainer'>
-              {localUser !== undefined &&
-                localUser.getStreamManager() !== undefined && (
-                  <div
-                    className='OT_root OT_publisher custom-class'
-                    id='localUser'
-                  >
-                    <StreamComponent
-                      user={localUser}
-                      handleNickname={this.nicknameChanged}
-                    />
-                  </div>
-                )}
-            </div>
-            <div id='myChatContainer'>
-              {localUser !== undefined &&
-                localUser.getStreamManager() !== undefined && (
-                  <div
-                    className='OT_root OT_publisher custom-class'
-                    style={chatDisplay}
-                  >
-                    <ChatComponent
-                      user={localUser}
-                      chatDisplay={this.state.chatDisplay}
-                      close={this.toggleChat}
-                      messageReceived={this.checkNotification}
-                    />
-                  </div>
-                )}
-            </div>
+          <div id='myVideoContainer'>
+            {localUser !== undefined &&
+              localUser.getStreamManager() !== undefined && (
+                <div
+                  className='OT_root OT_publisher custom-class'
+                  id='localUser'
+                >
+                  <StreamComponent
+                    user={localUser}
+                    handleNickname={this.nicknameChanged}
+                  />
+                </div>
+              )}
+          </div>
+          <div id='myChatContainer'>
+            {localUser !== undefined &&
+              localUser.getStreamManager() !== undefined && (
+                <div
+                  className='OT_root OT_publisher custom-class'
+                  style={chatDisplay}
+                >
+                  <ChatComponent
+                    user={localUser}
+                    chatDisplay={this.state.chatDisplay}
+                    close={this.toggleChat}
+                    messageReceived={this.checkNotification}
+                  />
+                </div>
+              )}
           </div>
         </div>
         {/* <div id='layout' className='bounds'>
