@@ -1,0 +1,11 @@
+.myprofile .upside {
+  display: flex;
+}
+
+.myprofile .leftside {
+  flex: 60%;
+}
+
+.myprofile .rightside {
+  flex: 40%;
+}
