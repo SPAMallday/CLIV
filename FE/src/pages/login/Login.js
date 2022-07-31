@@ -1,53 +1,45 @@
 import React from 'react';
-import styled from "styled-components";
+// import styled from "styled-components";
 import { KAKAO_AUTH_URL } from './KaKaoLoginInfo';
-import { createTheme, Button } from '@mui/material';
-import { StyledEngineProvider } from '@mui/styled-engine';      // styled-components 를 이용하기 위함.
+import { Button, Box, Container } from '@mui/material';
+// import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
 
-const StyledKaKaoBtn = styled(Button) `
-    background-image: url(images/kakao_login_large_wide.png);
-    background-repeat: no-repeat;
-    background-size : cover;
-    margin: 10px auto;
-    /* padding: -10px; */
-    // color: transparent;
-    width: 480px;
-    height: 72px;
+const StyledKaKaoBtn = styled(Button)`
+  background-image: url(images/kakao_login_large_wide.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  // color: transparent;
+  width: 480px;
+  height: 72px;
+  justify-content: center;
+  align-items: center;
 `;
 
-// # css
-// .kakao_btn{
-//     background-image: url("/src/images/kakao_login_medium_wide.png");
-//     background-repeat: no-repeat;
-//     background-size : cover;
-//     margin: 10px auto;
-//     /* padding: -10px; */
-//     color: transparent;
-//     width: 300px;
-//     height: 45px;
-// }
-
+const loginImage = styled.img`
+  height: 100vh;
+  width: 100vw;
+  // background-size : cover;
+  // // color: transparent;
+  // width: 480px;
+  // height: 72px;
+  // justify-content: center;
+  // align-items: center;
+`;
 
 // const Login = () => {
-function Login () {
-    return (
-        <div>
-            <div>
+function Login() {
+  return (
+    <div>
+      <Container>
+        <Box>
+          <a href={KAKAO_AUTH_URL}>
+            <StyledKaKaoBtn></StyledKaKaoBtn>
+          </a>
+        </Box>
+      </Container>
+    </div>
+  );
+}
 
-            </div>
-            <div>
-                <a href={KAKAO_AUTH_URL}>
-                <StyledEngineProvider injectFirst>
-                    {/* <div 
-                        className={StyledKaKaoBtn} 
-                        >
-                    </div> */}
-                    <StyledKaKaoBtn></StyledKaKaoBtn>
-                </StyledEngineProvider>
-                </a>
-            </div>
-        </div>
-    );
-};
-  
 export default Login;
