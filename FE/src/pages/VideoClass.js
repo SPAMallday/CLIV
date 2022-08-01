@@ -3,7 +3,7 @@ import VideoRoomComponent from "../components/Video/VideoRoomComponent";
 
 function VideoClass() {
   return (
-    <div className='VideoClass'>
+    <div className="VideoClass">
       <VideoRoomComponent />
     </div>
   );
