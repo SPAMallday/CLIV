@@ -72,6 +72,10 @@
   color: #000000;
 }
 
+.message.left .msg-detail .msg-content p {
+  color: #000000;
+}
+
 .msg-content {
   position: relative;
   margin-top: 5px;

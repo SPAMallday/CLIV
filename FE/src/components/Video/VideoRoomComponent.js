@@ -567,7 +567,7 @@ class VideoRoomComponent extends Component {
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
-      <div className='container' id='container'>
+      <div className="container" id="container">
         <ToolbarComponent
           sessionId={mySessionId}
           user={localUser}
@@ -590,8 +590,8 @@ class VideoRoomComponent extends Component {
           cancelClicked={this.closeDialogExtension}
         />
 
-        <div id='videoBoundary'>
-          <div id='bigVideoContainer'>
+        <div id="videoBoundary">
+          <div id="bigVideoContainer">
             {this.state.subscribers
               .filter((sub, i) => {
                 if (this.state.mainVideo === undefined && i === 0) return true;
@@ -599,14 +599,14 @@ class VideoRoomComponent extends Component {
                   sub.streamManager.stream.streamId === this.state.mainVideo
                 )
                   return true;
-                else false;
+                else return false;
               })
               .map((sub, i) => {
                 return (
                   <div
                     key={i}
-                    className='OT_root OT_publisher custom-class'
-                    id='remoteUsers'
+                    className="OT_root OT_publisher custom-class"
+                    id="remoteUsers"
                   >
                     <StreamComponent
                       user={sub}
@@ -616,12 +616,12 @@ class VideoRoomComponent extends Component {
                 );
               })}
           </div>
-          <div id='myVideoContainer'>
+          <div id="myVideoContainer">
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
                 <div
-                  className='OT_root OT_publisher custom-class'
-                  id='localUser'
+                  className="OT_root OT_publisher custom-class"
+                  id="localUser"
                 >
                   <StreamComponent
                     user={localUser}
@@ -630,11 +630,11 @@ class VideoRoomComponent extends Component {
                 </div>
               )}
           </div>
-          <div id='myChatContainer'>
+          <div id="myChatContainer">
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
                 <div
-                  className='OT_root OT_publisher custom-class'
+                  className="OT_root OT_publisher custom-class"
                   style={chatDisplay}
                 >
                   <ChatComponent

@@ -94,8 +94,8 @@ export default class ToolbarComponent extends Component {
 
     return (
       <Box
-        className='toolbar'
-        id='header'
+        className="toolbar"
+        id="header"
         sx={{
           flexGrow: 1,
           bgcolor: "background.paper",
@@ -104,19 +104,19 @@ export default class ToolbarComponent extends Component {
         }}
       >
         <Tabs
-          orientation='vertical'
-          variant='scrollable'
+          orientation="vertical"
+          variant="scrollable"
           value={this.state.barValue}
           onChange={this.handleChange}
-          textColor='secondary'
-          indicatorColor='secondary'
+          textColor="secondary"
+          indicatorColor="secondary"
           sx={{ borderRight: 1, borderColor: "divider" }}
         >
           {this.props.subscribers.map((sub, i) => (
             <Tab
               key={i}
               label={sub.nickname.slice(0, 4)}
-              streamId={sub.streamManager.stream.streamId}
+              streamid={sub.streamManager.stream.streamId}
             />
           ))}
         </Tabs>
@@ -128,54 +128,54 @@ export default class ToolbarComponent extends Component {
           }}
         >
           <IconButton
-            color='inherit'
+            color="inherit"
             onClick={this.toggleChat}
-            id='navChatButton'
+            id="navChatButton"
           >
-            {this.props.showNotification && <div id='point' className='' />}
-            <Tooltip title='Chat'>
+            {this.props.showNotification && <div id="point" className="" />}
+            <Tooltip title="Chat">
               <QuestionAnswer />
             </Tooltip>
           </IconButton>
           <IconButton
-            color='inherit'
-            className='navButton'
-            id='navMicButton'
+            color="inherit"
+            className="navButton"
+            id="navMicButton"
             onClick={this.micStatusChanged}
           >
             {localUser !== undefined && localUser.isAudioActive() ? (
               <Mic />
             ) : (
-              <MicOff color='secondary' />
+              <MicOff color="secondary" />
             )}
           </IconButton>
 
           <IconButton
-            color='inherit'
-            className='navButton'
-            id='navCamButton'
+            color="inherit"
+            className="navButton"
+            id="navCamButton"
             onClick={this.camStatusChanged}
           >
             {localUser !== undefined && localUser.isVideoActive() ? (
               <Videocam />
             ) : (
-              <VideocamOff color='secondary' />
+              <VideocamOff color="secondary" />
             )}
           </IconButton>
 
           {localUser !== undefined && localUser.isScreenShareActive() ? (
             <IconButton
-              color='inherit'
+              color="inherit"
               onClick={this.stopScreenShare}
-              id='navScreenButton'
+              id="navScreenButton"
             >
-              <StopScreenShare color='secondary' />
+              <StopScreenShare color="secondary" />
             </IconButton>
           ) : (
             <IconButton
-              color='inherit'
+              color="inherit"
               onClick={this.screenShare}
-              id='navScreenButton'
+              id="navScreenButton"
             >
               <ScreenShare />
             </IconButton>
@@ -189,8 +189,8 @@ export default class ToolbarComponent extends Component {
             <SwitchVideoIcon />
           </IconButton> */}
           <IconButton
-            color='inherit'
-            className='navButton'
+            color="inherit"
+            className="navButton"
             onClick={this.toggleFullscreen}
           >
             {localUser !== undefined && this.state.fullscreen ? (
@@ -200,10 +200,10 @@ export default class ToolbarComponent extends Component {
             )}
           </IconButton>
           <IconButton
-            color='secondary'
-            className='navButton'
+            color="secondary"
+            className="navButton"
             onClick={this.leaveSession}
-            id='navLeaveButton'
+            id="navLeaveButton"
           >
             <PowerSettingsNew />
           </IconButton>
