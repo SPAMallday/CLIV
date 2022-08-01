@@ -566,6 +566,10 @@ class VideoRoomComponent extends Component {
     var subscribers = this.state.subscribers;
     var chatDisplay = { display: this.state.chatDisplay };
 
+    // document.getElementsByClassName("navbar")[0].style.display = "none";
+    var nav = document.getElementsByClassName("navbar")[0];
+    nav.style.display = "none";
+
     return (
       <div className="container" id="container">
         <ToolbarComponent
