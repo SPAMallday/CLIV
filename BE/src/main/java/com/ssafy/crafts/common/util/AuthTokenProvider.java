@@ -1,7 +1,7 @@
 package com.ssafy.crafts.common.util;
 
 import com.ssafy.crafts.common.exception.TokenValidFailedException;
-import com.ssafy.crafts.db.entity.RoleType;
+import com.ssafy.crafts.db.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class AuthTokenProvider {
 
-    @Value("${jwt.access-token.expire-length}")
+    @Value("${jwt.access-token.expire-length}") //1h
     private String expiry;
 
     private final Key key;
@@ -33,13 +33,13 @@ public class AuthTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public AuthToken createToken(String id, RoleType roleType, String expiry) {
+    public AuthToken createToken(String id, Member.RoleType roleType, String expiry) {
         Date expiryDate = getExpiryDate(expiry);
         return new AuthToken(id, roleType, expiryDate, key);
     }
 
     public AuthToken createUserAppToken(String id) {
-        return createToken(id, RoleType.MEMBER, expiry);
+        return createToken(id, Member.RoleType.MEMBER, expiry);
     }
 
     public AuthToken convertAuthToken(String token) {

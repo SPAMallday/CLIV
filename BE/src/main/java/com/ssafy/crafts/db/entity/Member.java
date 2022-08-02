@@ -3,29 +3,28 @@ package com.ssafy.crafts.db.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-@Table(name = "OAUTH")
+@Table(name = "MEMBER")
 @NoArgsConstructor
+@DynamicInsert
 @Entity
 public class Member {
 
-    @Id
-    @Column(nullable = false, name = "oauth_id", length = 250)
-    private String id; //UUID 변경
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
+    private int id;
 
     @Column(name = "profile_image", length = 250)
     private String profileImage;
 
-    @Column(nullable = false, unique = true, length = 200)
+    @Column(nullable = false, unique = true, length = 20)
     private String nickname;
-
-    @Column(nullable = false, unique = true, length = 40)
-    private String email;
 
     @Column(length = 10)
     private String gender;
@@ -38,18 +37,28 @@ public class Member {
     @Column(name = "role_type", length = 10)
     private RoleType roleType;
 
-    @Column(name = "reg_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @OneToOne
+    @JoinColumn(name = "auth_id")
+    private Auth auth;
 
     @Builder
-    public Member(String email, String gender, String id, Status status, RoleType roleType, String nickname){
+    public Member(int id, String profileImage, String nickname, String gender, Status status, RoleType roleType, Auth auth) {
         this.id = id;
+        this.profileImage = profileImage;
+        this.nickname = nickname;
+        this.gender = gender;
         this.status = status;
         this.roleType = roleType;
-        this.nickname = nickname;
-        this.email = email;
-        this.gender = gender;
+        this.auth = auth;
     }
 
+    public static enum RoleType {
+    TEACHER, MEMBER;
+    }
+
+    public static enum Status {
+        ACTIVE,
+        RESIGNATION
+    }
 }
+

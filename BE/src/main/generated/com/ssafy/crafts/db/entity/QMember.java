@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,34 +18,43 @@ public class QMember extends EntityPathBase<Member> {
 
     private static final long serialVersionUID = -709769495L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QMember member = new QMember("member1");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
-    public final StringPath email = createString("email");
+    public final QAuth auth;
 
     public final StringPath gender = createString("gender");
 
-    public final StringPath id = createString("id");
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final StringPath nickname = createString("nickname");
 
     public final StringPath profileImage = createString("profileImage");
 
-    public final EnumPath<RoleType> roleType = createEnum("roleType", RoleType.class);
+    public final EnumPath<Member.RoleType> roleType = createEnum("roleType", Member.RoleType.class);
 
-    public final EnumPath<Status> status = createEnum("status", Status.class);
+    public final EnumPath<Member.Status> status = createEnum("status", Member.Status.class);
 
     public QMember(String variable) {
-        super(Member.class, forVariable(variable));
+        this(Member.class, forVariable(variable), INITS);
     }
 
     public QMember(Path<? extends Member> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QMember(PathMetadata metadata) {
-        super(Member.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QMember(PathMetadata metadata, PathInits inits) {
+        this(Member.class, metadata, inits);
+    }
+
+    public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.auth = inits.isInitialized("auth") ? new QAuth(forProperty("auth")) : null;
     }
 
 }

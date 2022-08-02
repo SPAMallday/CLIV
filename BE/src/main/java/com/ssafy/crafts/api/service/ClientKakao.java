@@ -1,6 +1,8 @@
-package com.ssafy.crafts.common.auth;
+package com.ssafy.crafts.api.service;
 
+import com.ssafy.crafts.common.auth.KakaoUserResponse;
 import com.ssafy.crafts.common.exception.TokenValidFailedException;
+import com.ssafy.crafts.db.entity.Auth;
 import com.ssafy.crafts.db.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,7 +30,10 @@ public class ClientKakao {
                 .block();
 
         return Member.builder()
-                .email(kakaoUserResponse.getKakaoAccount().getEmail())
+                .auth(Auth.builder()
+                        .authId(kakaoUserResponse.getId())
+                        .email(kakaoUserResponse.getKakaoAccount().getEmail())
+                        .build())
                 .gender(kakaoUserResponse.getKakaoAccount().getGender())
                 .build();
     }

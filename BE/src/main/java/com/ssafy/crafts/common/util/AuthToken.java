@@ -1,6 +1,6 @@
 package com.ssafy.crafts.common.util;
 
-import com.ssafy.crafts.db.entity.RoleType;
+import com.ssafy.crafts.db.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -24,7 +24,7 @@ public class AuthToken {
 
     private static final String AUTHORITIES_KEY = "role";
 
-    AuthToken(String id, RoleType roleType, Date expiry, Key key) {
+    AuthToken(String id, Member.RoleType roleType, Date expiry, Key key) {
         String role = roleType.toString();
         this.key = key;
         this.token = createAuthToken(id, role, expiry);

@@ -14,15 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/*
+/**
 * Controller에서 로그인 요청을 보내기 전에 거쳐간다
 */
-
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private final AuthTokenProvider tokenProvider;
-
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -31,13 +28,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String authorizationHeader = request.getHeader("Authorization");
 
-        // 헤더의 시작이 Bearer 일때만 필터를 거쳐감
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String tokenStr = JwtHeaderUtil.getAccessToken(request);
             AuthToken token = tokenProvider.convertAuthToken(tokenStr);
 
             if (token.validate()) {
                 Authentication authentication = tokenProvider.getAuthentication(token);
+                // 토큰으로 부터 획득한 인증 정보(authentication) 설정
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
