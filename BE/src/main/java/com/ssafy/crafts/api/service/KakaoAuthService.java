@@ -38,7 +38,6 @@ public class KakaoAuthService {
         String id = kakaoMember.getAuth().getAuthId();
         Member member = memberQuerydslRepository.findMemberByAuthId(id).get();
 
-        AuthToken appToken = authTokenProvider.createUserAppToken(id);
 
         // 회원가입
         if (member == null) {
@@ -58,15 +57,13 @@ public class KakaoAuthService {
 
             memberRepository.save(newbie);
 
-            return AuthResponse.builder()
-                    .appToken(appToken.getToken())
-                    .isNewMember(Boolean.TRUE)
-                    .build();
         }
+
+        String nickname = memberQuerydslRepository.findMemberByAuthId(id).get().getNickname();
+        AuthToken appToken = authTokenProvider.createUserAppToken(id, nickname);
 
         return AuthResponse.builder()
                 .appToken(appToken.getToken())
-                .isNewMember(Boolean.FALSE)
                 .build();
     }
 }

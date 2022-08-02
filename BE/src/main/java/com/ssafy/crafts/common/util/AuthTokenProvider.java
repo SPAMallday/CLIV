@@ -33,13 +33,13 @@ public class AuthTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public AuthToken createToken(String id, Member.RoleType roleType, String expiry) {
+    public AuthToken createToken(String id, String nickname, Member.RoleType roleType, String expiry) {
         Date expiryDate = getExpiryDate(expiry);
-        return new AuthToken(id, roleType, expiryDate, key);
+        return new AuthToken(id, nickname, roleType, expiryDate, key);
     }
 
-    public AuthToken createUserAppToken(String id) {
-        return createToken(id, Member.RoleType.MEMBER, expiry);
+    public AuthToken createUserAppToken(String id, String nickname) {
+        return createToken(id, nickname, Member.RoleType.MEMBER, expiry);
     }
 
     public AuthToken convertAuthToken(String token) {
