@@ -77,11 +77,11 @@ function NavBar() {
   }));
 
   return (
-    <div className="navbar">
-      <div className="leftside">
-        <a href="/">만들공예</a>
+    <div id='navbar' className='navbar'>
+      <div className='leftside'>
+        <a href='/'>만들공예</a>
         <Button
-          variant="text"
+          variant='text'
           disableRipple
           style={{ backgroundColor: "transparent" }}
         >
@@ -89,9 +89,9 @@ function NavBar() {
         </Button>
         <div>
           <Button
-            id="matching-button"
+            id='matching-button'
             aria-controls={openMatching ? "matching-menu" : undefined}
-            aria-haspopup="true"
+            aria-haspopup='true'
             aria-expanded={openMatching ? "true" : undefined}
             onClick={handleClickMatching}
             disableRipple
@@ -100,7 +100,7 @@ function NavBar() {
             매칭
           </Button>
           <Menu
-            id="matching-menu"
+            id='matching-menu'
             anchorEl={anchorElMatching}
             open={openMatching}
             onClose={handleCloseMatching}
@@ -114,7 +114,7 @@ function NavBar() {
           </Menu>
         </div>
         <Button
-          variant="text"
+          variant='text'
           disableRipple
           style={{ backgroundColor: "transparent" }}
         >
@@ -122,8 +122,8 @@ function NavBar() {
         </Button>
       </div>
 
-      <div className="rightside">
-        <Search id="search">
+      <div className='rightside'>
+        <Search id='search'>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -131,13 +131,13 @@ function NavBar() {
         </Search>
 
         <IconButton
-          id="noti"
-          size="large"
-          color="inherit"
+          id='noti'
+          size='large'
+          color='inherit'
           disableRipple
           style={{ backgroundColor: "transparent" }}
         >
-          <Badge badgeContent={1} color="error">
+          <Badge badgeContent={1} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -146,10 +146,10 @@ function NavBar() {
         >
           <IconButton
             onClick={handleClickUser}
-            size="small"
+            size='small'
             sx={{ ml: 2 }}
             aria-controls={openUser ? "account-menu" : undefined}
-            aria-haspopup="true"
+            aria-haspopup='true'
             aria-expanded={openUser ? "true" : undefined}
             disableRipple
           >
@@ -158,7 +158,7 @@ function NavBar() {
         </Box>
         <Menu
           anchorEl={anchorElUser}
-          id="account-menu"
+          id='account-menu'
           open={openUser}
           onClose={handleCloseUser}
           onClick={handleCloseUser}
@@ -195,7 +195,7 @@ function NavBar() {
             <a href={KAKAO_AUTH_URL}>로그인</a>
           </MenuItem>
           <Divider />
-          <Link to="/myprofile">
+          <Link to='/myprofile'>
             <MenuItem>마이프로필</MenuItem>
           </Link>
           <MenuItem>나의수강내역</MenuItem>
