@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import {
-  Main,
-  Login,
-  KaKaoLogin,
-  NotFound,
-  ClassList,
-  ClassDetail,
-} from './pages';
-// import Login from './pages/login/Login';
+import * as React from "react";
+import { Routes, Route } from "react-router-dom";
+import VideoClass from "./pages/VideoClass";
+import { Main, KaKaoLogin, NotFound, ClassList, ClassDetail } from "./pages";
+import NavBar from "./components/navbar/NavBar";
+import MyProfile from "./pages/myprofile/MyProfile";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        {/* <Header /> */}
+function App() {
+  return (
+    <div className="App">
+      <NavBar />
+      <div className="bodyContainer">
         <Routes>
           <Route path="/" element={<Main />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/video/*" element={<VideoClass />}></Route>
+          <Route path="/myprofile" element={<MyProfile />}></Route>
           <Route path="/kakao-login" element={<KaKaoLogin />}></Route>
           <Route path="/class/list" element={<ClassList />}></Route>
           <Route path="/class/detail/*" element={<ClassDetail />}></Route>
@@ -26,8 +22,8 @@ class App extends Component {
           {/* <Route path="*" element={<NotFound />}></Route>  */}
         </Routes>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
