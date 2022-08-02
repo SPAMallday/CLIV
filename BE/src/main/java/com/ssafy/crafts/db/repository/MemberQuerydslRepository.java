@@ -1,14 +1,14 @@
 package com.ssafy.crafts.db.repository;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.crafts.db.dto.UserInfoResponse;
+import com.ssafy.crafts.db.entity.Auth;
 import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.entity.QAuth;
+import com.ssafy.crafts.db.entity.QMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import static com.ssafy.crafts.db.entity.QMember.member;
+import java.util.Optional;
 
 
 @Repository
@@ -17,21 +17,18 @@ public class MemberQuerydslRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    @Transactional(readOnly = true)
-    public Member findById(String id) {
-        return jpaQueryFactory
-                .selectFrom(member)
-                .where(member.id.like(id))
-                .fetchOne();
+    QMember qMember = QMember.member;
+    QAuth qAuth = QAuth.auth;
+
+    public Optional<Member> findMemberByAuthId(String authId) {
+        Member member = jpaQueryFactory.select(qMember).from(qMember)
+                .where(qMember.auth.authId.eq(authId)).fetchOne();
+        return Optional.ofNullable(member);
     }
 
-    public UserInfoResponse findByMemberId(String memberId) {
-        return jpaQueryFactory
-                .select(Projections.fields(UserInfoResponse.class,
-                        member.gender.as("gender"),
-                        member.email))
-                .from(member)
-                .where(member.id.like(memberId))
-                .fetchOne();
+    public Optional<Auth> findAuthByAuthId(String authId) {
+        Auth auth = jpaQueryFactory.select(qAuth).from(qAuth)
+                .where(qAuth.authId.eq(authId)).fetchOne();
+        return Optional.ofNullable(auth);
     }
 }

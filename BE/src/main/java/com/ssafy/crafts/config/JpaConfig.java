@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/*
+/**
  * Spring Data JPA 관련 추가 설정 정의.
  */
 @Configuration
