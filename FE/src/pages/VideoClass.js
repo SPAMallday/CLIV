@@ -3,8 +3,11 @@ import VideoRoomComponent from "../components/video/VideoRoomComponent";
 
 function VideoClass() {
   return (
-    <div className='VideoClass'>
-      <VideoRoomComponent />
+    <div className="VideoClass">
+      <VideoRoomComponent
+      // openviduServerUrl="https://i7a605.p.ssafy.io:4443"
+      // openviduSecret="minju0919@naver.com"
+      />
     </div>
   );
 }

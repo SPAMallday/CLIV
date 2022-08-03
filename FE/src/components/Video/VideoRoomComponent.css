@@ -240,7 +240,7 @@
   display: block;
 }
 
-.OT_dialog-no-natural-margin {
+.OT_dialog-no-natural-margin {  
   margin-bottom: 0;
 }
 
@@ -248,7 +248,7 @@
 
 .OT_publisher,
 .OT_subscriber {
-  position: relative;
+  position: absolute;
   min-width: 48px;
   min-height: 48px;
   width: 100%;
@@ -857,19 +857,24 @@
 /* Custom */
 
 :root {
-  --my-spacing: 10%;
+  --custom-spacing: 10%;
+  --custom-width-spacing: 10vw;
+  --custom-calc-res: calc(100vw - (var(--custom-width-spacing) * 3.5 + 2vw));
 }
 
 #bigVideoContainer {
   position: absolute;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5); */
+  height: 80%;
+  /* top: var(--custom-spacing); */
   min-height: 300px;
   min-width: 400px;
-  height: 80%;
-  width: calc(100vw - (var(--my-spacing) * 3.5 + 2vw));
-  top: var(--my-spacing);
-  right: calc(var(--my-spacing) + var(--my-spacing) * 2);
+  width: calc(100vw - (var(--custom-spacing) * 3.5 + 2vw));
+  right: calc(var(--custom-spacing) + var(--custom-spacing) * 2);
+  top: 50%;
+  /* transform: translateY(-50%); */
+  transform: translateY(calc(-1 * var(--custom-calc-res) * 0.75 * 0.5));
 }
 
 #myVideoContainer {
@@ -877,9 +882,9 @@
   border-radius: 10px;
   /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5); */
   min-width: 250px;
-  width: calc(var(--my-spacing) * 2);
-  right: calc(var(--my-spacing) / 2);
-  top: var(--my-spacing);
+  width: calc(var(--custom-spacing) * 2);
+  right: calc(var(--custom-spacing) / 2);
+  top: var(--custom-spacing);
   min-height: 250px;
   height: 25vh;
 }
@@ -887,9 +892,17 @@
 #myChatContainer {
   position: absolute;
   min-width: 250px;
-  width: calc(var(--my-spacing) * 2);
-  right: calc(var(--my-spacing) / 2);
+  width: calc(var(--custom-spacing) * 2);
+  right: calc(var(--custom-spacing) / 2);
   min-height: 180px;
   height: 50vh;
-  bottom: calc(var(--my-spacing));
+  bottom: calc(var(--custom-spacing));
+}
+
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+  padding-bottom: 75%;
 }

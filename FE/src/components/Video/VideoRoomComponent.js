@@ -9,7 +9,6 @@ import ChatComponent from "./chat/ChatComponent";
 import OpenViduLayout from "../../layout/openvidu-layout";
 import UserModel from "../../models/user-model";
 import ToolbarComponent from "./toolbar/ToolbarComponent";
-import { buttonGroupClasses } from "@mui/material";
 
 var localUser = new UserModel();
 
@@ -615,7 +614,7 @@ class VideoRoomComponent extends Component {
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
-      <div className='container' id='container'>
+      <div className="container" id="container">
         <ToolbarComponent
           sessionId={mySessionId}
           user={localUser}
@@ -637,51 +636,56 @@ class VideoRoomComponent extends Component {
           cancelClicked={this.closeDialogExtension}
         />
 
-        <div id='videoBoundary'>
-          <div id='bigVideoContainer'>
-            {this.state.subscribers
-              .filter((sub, i) => {
-                if (this.state.mainVideo === undefined && i === 0) return true;
-                else if (
-                  sub.streamManager.stream.streamId === this.state.mainVideo
-                )
-                  return true;
-                else return false;
-              })
-              .map((sub, i) => {
-                return (
+        <div id="videoBoundary">
+          <div id="bigVideoContainer">
+            <div className="videoWrapper">
+              {this.state.subscribers
+                .filter((sub, i) => {
+                  if (this.state.mainVideo === undefined && i === 0)
+                    return true;
+                  else if (
+                    sub.streamManager.stream.streamId === this.state.mainVideo
+                  )
+                    return true;
+                  else return false;
+                })
+                .map((sub, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="OT_root OT_publisher custom-class"
+                      id="remoteUsers"
+                    >
+                      <StreamComponent
+                        user={sub}
+                        streamId={sub.streamManager.stream.streamId}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+          <div id="myVideoContainer">
+            <div className="videoWrapper">
+              {localUser !== undefined &&
+                localUser.getStreamManager() !== undefined && (
                   <div
-                    key={i}
-                    className='OT_root OT_publisher custom-class'
-                    id='remoteUsers'
+                    className="OT_root OT_publisher custom-class"
+                    id="localUser"
                   >
                     <StreamComponent
-                      user={sub}
-                      streamId={sub.streamManager.stream.streamId}
+                      user={localUser}
+                      handleNickname={this.nicknameChanged}
                     />
                   </div>
-                );
-              })}
+                )}
+            </div>
           </div>
-          <div id='myVideoContainer'>
+          <div id="myChatContainer">
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
                 <div
-                  className='OT_root OT_publisher custom-class'
-                  id='localUser'
-                >
-                  <StreamComponent
-                    user={localUser}
-                    handleNickname={this.nicknameChanged}
-                  />
-                </div>
-              )}
-          </div>
-          <div id='myChatContainer'>
-            {localUser !== undefined &&
-              localUser.getStreamManager() !== undefined && (
-                <div
-                  className='OT_root OT_publisher custom-class'
+                  className="OT_root OT_publisher custom-class"
                   style={chatDisplay}
                 >
                   <ChatComponent
