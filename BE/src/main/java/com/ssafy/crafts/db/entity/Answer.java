@@ -11,28 +11,21 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
-@Table(name = "QnA")
-public class QnA {
+@Table(name = "ANSWER")
+public class Answer {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qna_id")
+    @Column(name = "ans_id")
     private int id;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId // @id로 지정한 컬럼에 @OneToOne 이나 @ManyToOne 관계를 매핑시키는 역할
+    @Column(name = "ans_id")
+    private QnA qna;
 
     @Column(nullable = false, length = 500)
     private String content;
 
     @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regdate;
-
-    @ManyToOne
-    @JoinColumn(name = "class_id")
-    private ClassInfo classInfo;
-
-    public ClassInfo getClassInfo() {
-        return classInfo;
-    }
-
-    public void setClassInfo(ClassInfo classInfo) {
-        this.classInfo = classInfo;
-    }
 }

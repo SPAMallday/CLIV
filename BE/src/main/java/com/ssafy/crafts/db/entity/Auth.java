@@ -27,7 +27,7 @@ public class Auth {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "reg_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regDate;
 
     @Builder

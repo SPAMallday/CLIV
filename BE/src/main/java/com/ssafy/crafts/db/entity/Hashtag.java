@@ -9,26 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Table(name = "CATEGORY")
 @NoArgsConstructor
 @DynamicInsert
 @Entity
-public class Category {
+@Table(name = "HASHTAG")
+public class Hashtag {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = "hashtag_id")
     private int id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 10)
     private String content;
 
-    @OneToMany(mappedBy = "category")
+    @ManyToMany(mappedBy = "hashtag")
     private List<ClassInfo> classes = new ArrayList<>();
 
-    public void addClass(ClassInfo classInfo) {
-        this.classes.add(classInfo);
-        if (classInfo.getCategory() != this) {
-            classInfo.setCategory(this);
-        }
-    }
 }

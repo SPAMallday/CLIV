@@ -11,19 +11,21 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
-@Table(name = "QnA")
-public class QnA {
+@Table(name = "REVIEW")
+public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qna_id")
+    @Column(name = "review_id")
     private int id;
 
-    @Column(nullable = false, length = 500)
-    private String content;
+    private int score;
+
+    private String textRv;
 
     @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regdate;
 
+    private
     @ManyToOne
     @JoinColumn(name = "class_id")
     private ClassInfo classInfo;
