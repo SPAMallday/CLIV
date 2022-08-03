@@ -53,7 +53,7 @@ node {
 }
 
 configurations {
-	providedRuntime
+	//providedRuntime
 }
 
 /*task npmInstall(type: NpmTask, overwrite: true) {
