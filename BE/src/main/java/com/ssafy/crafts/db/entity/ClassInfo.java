@@ -42,8 +42,8 @@ public class ClassInfo {
 
     @ManyToMany
     @JoinTable(name = "TAGGING",
-            joinColumns = @JoinColumn(name = "class_id"),
-            inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
+            joinColumns = { @JoinColumn(name = "class_id", referencedColumnName = "class_id")},
+            inverseJoinColumns = @JoinColumn(name = "hashtag_id", referencedColumnName = "hashtag_id"))
     private List<Hashtag> tagging = new ArrayList<>();
 
     @Column(name = "class_name", nullable = false, length = 30)

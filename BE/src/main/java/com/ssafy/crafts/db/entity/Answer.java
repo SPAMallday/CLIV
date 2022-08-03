@@ -18,9 +18,9 @@ public class Answer {
     @Column(name = "ans_id")
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @MapsId // @id로 지정한 컬럼에 @OneToOne 이나 @ManyToOne 관계를 매핑시키는 역할
-    @Column(name = "ans_id")
+    @JoinColumn(name = "ans_id")
     private QnA qna;
 
     @Column(nullable = false, length = 500)
