@@ -79,7 +79,9 @@ function NavBar() {
   return (
     <div id='navbar' className='navbar'>
       <div className='leftside'>
-        <a href='/'>만들공예</a>
+        <a href='/' id='mainLogo'>
+          만들공예
+        </a>
         <Button
           variant='text'
           disableRipple
@@ -113,13 +115,15 @@ function NavBar() {
             <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
           </Menu>
         </div>
-        <Button
-          variant='text'
-          disableRipple
-          style={{ backgroundColor: "transparent" }}
-        >
-          클래스 관리
-        </Button>
+        <Link to='/classmanage'>
+          <Button
+            variant='text'
+            disableRipple
+            style={{ backgroundColor: "transparent" }}
+          >
+            클래스 관리
+          </Button>
+        </Link>
       </div>
 
       <div className='rightside'>

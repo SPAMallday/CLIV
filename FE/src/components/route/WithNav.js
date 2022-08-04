@@ -6,7 +6,7 @@ export default () => {
   return (
     <>
       <NavBar />
-      <div className='bodyContainer'>
+      <div id='bodyContainer'>
         <Outlet />
       </div>
     </>

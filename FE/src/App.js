@@ -1,7 +1,14 @@
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import VideoClass from "./pages/VideoClass";
-import { Main, KaKaoLogin, NotFound, ClassList, ClassDetail } from "./pages";
+import {
+  Main,
+  KaKaoLogin,
+  NotFound,
+  ClassList,
+  ClassDetail,
+  ClassManage,
+} from "./pages";
 import MyProfile from "./pages/myprofile/MyProfile";
 import WithNav from "./components/route/WithNav";
 import WithoutNav from "./components/route/WithoutNav";
@@ -22,6 +29,7 @@ function App() {
           <Route path='/myprofile' element={<MyProfile />} />
           <Route path='/class/list' element={<ClassList />} />
           <Route path='/class/detail/*' element={<ClassDetail />} />
+          <Route path='/classmanage' element={<ClassManage />} />
         </Route>
       </Routes>
     </div>
