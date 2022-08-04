@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -28,4 +29,12 @@ public class Answer {
 
     @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regdate;
+
+    @Builder
+    public Answer(int id, QnA qna, String content, Timestamp regdate) {
+        this.id = id;
+        this.qna = qna;
+        this.content = content;
+        this.regdate = regdate;
+    }
 }

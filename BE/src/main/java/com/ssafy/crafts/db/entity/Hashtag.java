@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -26,4 +27,10 @@ public class Hashtag {
     @ManyToMany(mappedBy = "tagging")
     private List<ClassInfo> classes = new ArrayList<>();
 
+    @Builder
+    public Hashtag(int id, String content, List<ClassInfo> classes) {
+        this.id = id;
+        this.content = content;
+        this.classes = classes;
+    }
 }

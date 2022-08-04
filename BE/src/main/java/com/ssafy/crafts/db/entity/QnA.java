@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -27,6 +28,14 @@ public class QnA {
     @ManyToOne
     @JoinColumn(name = "class_id")
     private ClassInfo classInfo;
+
+    @Builder
+    public QnA(int id, String content, Timestamp regdate, ClassInfo classInfo) {
+        this.id = id;
+        this.content = content;
+        this.regdate = regdate;
+        this.classInfo = classInfo;
+    }
 
     public ClassInfo getClassInfo() {
         return classInfo;

@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -30,6 +31,14 @@ public class Category {
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "auth_id"))
     private List<Member> teachers = new ArrayList<Member>();
+
+    @Builder
+    public Category(int id, String content, List<ClassInfo> classes, List<Member> teachers) {
+        this.id = id;
+        this.content = content;
+        this.classes = classes;
+        this.teachers = teachers;
+    }
 
     public void addClass(ClassInfo classInfo) {
         this.classes.add(classInfo);

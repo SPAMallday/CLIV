@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -19,4 +20,10 @@ public class PhraseReview {
 
     @Column(nullable = false, length = 20)
     private String content;
+
+    @Builder
+    public PhraseReview(int id, String content) {
+        this.id = id;
+        this.content = content;
+    }
 }

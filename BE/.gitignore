@@ -36,3 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 /src/main/generated/com/ssafy/crafts/db/entity/
+/src/main/resources/application.yml
