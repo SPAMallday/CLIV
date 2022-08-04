@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -58,7 +59,7 @@ public class ClassInfo {
     @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
     private int headcount;
 
-    @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
+    @Column(nullable = false)
     private int price;
 
     @Column(length = 200)
@@ -76,6 +77,27 @@ public class ClassInfo {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 10, nullable = false)
     private ClassStatus classStatus;
+
+    @Builder
+    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int durationH, int headcount, int price, String guide, String content, String classImg, int level, ClassStatus classStatus) {
+        this.id = id;
+        this.qnaList = qnaList;
+        this.reviewList = reviewList;
+        this.category = category;
+        this.teacher = teacher;
+        this.members = members;
+        this.tagging = tagging;
+        this.className = className;
+        this.classDatetime = classDatetime;
+        this.durationH = durationH;
+        this.headcount = headcount;
+        this.price = price;
+        this.guide = guide;
+        this.content = content;
+        this.classImg = classImg;
+        this.level = level;
+        this.classStatus = classStatus;
+    }
 
     public void addReviewList(Review review) {
         this.reviewList.add(review);

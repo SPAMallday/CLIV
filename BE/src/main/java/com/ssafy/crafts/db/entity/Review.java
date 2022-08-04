@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -42,6 +43,17 @@ public class Review {
             joinColumns = @JoinColumn(name = "review_id"),
             inverseJoinColumns = @JoinColumn(name = "pr_id"))
     private List<PhraseReview> prList = new ArrayList<>();
+
+    @Builder
+    public Review(int id, int score, String textRv, Timestamp regdate, ClassInfo classInfo, Member member, List<PhraseReview> prList) {
+        this.id = id;
+        this.score = score;
+        this.textRv = textRv;
+        this.regdate = regdate;
+        this.classInfo = classInfo;
+        this.member = member;
+        this.prList = prList;
+    }
 
     public ClassInfo getClassInfo() {
         return classInfo;
