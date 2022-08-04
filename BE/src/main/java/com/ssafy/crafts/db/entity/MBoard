@@ -26,7 +26,13 @@ public class MBoard {
     @Column(name = "auth_id", ullable = false, length = 13)
     private String authId;
 
-    @Column(name = "category_id", ullable = false)
-    private int categoryId;
+    @OneToOne
+    @JoinColumn(name = "category_id", ullable = false)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "auth_id")
+    private Member member;
+
 
 }
