@@ -1,9 +1,0 @@
-package com.ssafy.crafts.db.entity;
-
-@Entity
-@Table(name = "MBOARD_TEACHER")
-public class MBoardTeacher {
-
-    @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
-    private int matStatus;
-}
