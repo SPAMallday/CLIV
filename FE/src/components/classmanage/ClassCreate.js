@@ -90,7 +90,7 @@ function ClassCreate() {
   const [title, setTitle] = useState("입력");
   const [rating, setRating] = useState(2);
   const [hover, setHover] = useState(-1);
-  const [dateTime, setDateTime] = useState(timeNow);
+  const [dateTime, setDateTime] = useState(date);
   const [cost, setCost] = useState(0);
   const [number, setNumber] = useState(2);
   const [content, setContent] = useState("삐용삐용");
@@ -112,6 +112,7 @@ function ClassCreate() {
   };
 
   const handleDateTime = (newValue) => {
+    console.log(newValue);
     setDateTime(newValue);
   };
 
@@ -128,6 +129,14 @@ function ClassCreate() {
     setCost(0);
     setNumber(2);
     setContent("삐용삐용");
+  };
+
+  const validData = () => {
+    if (title !== "" && dateTime !== timeNow && content !== "") {
+      alert("클래스 등록!");
+    } else {
+      alert("모든 내용을 작성해주세요!");
+    }
   };
 
   return (
@@ -204,13 +213,14 @@ function ClassCreate() {
               value={dateTime}
               onChange={handleDateTime}
               label='클래스 일정 선택'
-              minDate={new Date(timeNow)}
-              inputFormat='yyyy/MM/dd hh:mm a'
-              mask='___/__/__ __:__ _M'
+              minDate={date}
+              inputFormat='yyyy/MM/dd hh:mm aa'
+              mask='____/__/__ __:__ __'
               renderInput={(params) => (
                 <TextField
                   {...params}
                   margin='dense'
+                  // type='datetime-local'
                   sx={{
                     svg: { color },
                     input: { color },
@@ -282,6 +292,7 @@ function ClassCreate() {
           variant='contained'
           component='label'
           sx={{ mr: 3 }}
+          onClick={validData}
         >
           등록
         </Button>
