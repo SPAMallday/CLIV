@@ -33,4 +33,8 @@ public class ClassInfoRequest {
     public void setClassImgUrl(String classImgUrl) {
         this.classImgUrl = classImgUrl;
     }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
 }
