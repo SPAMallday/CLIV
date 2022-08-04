@@ -240,7 +240,7 @@
   display: block;
 }
 
-.OT_dialog-no-natural-margin {  
+.OT_dialog-no-natural-margin {
   margin-bottom: 0;
 }
 
@@ -870,11 +870,13 @@
   /* top: var(--custom-spacing); */
   min-height: 300px;
   min-width: 400px;
-  width: calc(100vw - (var(--custom-spacing) * 3.5 + 2vw));
+  max-width: 107vh;
+  width: calc(100vw - (var(--custom-width-spacing) * 3.5 + 2vw));
   right: calc(var(--custom-spacing) + var(--custom-spacing) * 2);
+  left: 8%;
   top: 50%;
-  /* transform: translateY(-50%); */
-  transform: translateY(calc(-1 * var(--custom-calc-res) * 0.75 * 0.5));
+  transform: translateY(-50%);
+  /* transform: translateY(calc(-1 * var(--custom-calc-res) * 0.75 * 0.5)); */
 }
 
 #myVideoContainer {
@@ -896,7 +898,8 @@
   right: calc(var(--custom-spacing) / 2);
   min-height: 180px;
   height: 50vh;
-  bottom: calc(var(--custom-spacing));
+  /* bottom: calc(var(--custom-spacing)); */
+  top: 40vh;
 }
 
 .videoWrapper {

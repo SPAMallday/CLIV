@@ -1,15 +1,15 @@
 .nickname {
-  background-color: #DF7861;
+  background-color: rgba(223, 120, 97, 0.8);
   padding: 8px !important;
   position: absolute;
   z-index: 999;
   color: #ffffff;
   left: 50%;
-  top: -60px;
+  top: -20px;
   border-radius: 12px;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 50%);
   min-width: 100px;
-  transform: translateX(-50%) ;
+  transform: translateX(-50%);
 }
 .form-control {
   color: black;
