@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.kurento:kurento-jsonrpc-client:6.16.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kurento/kurento-jsonrpc-client/6.16.0/d123de54c29c9a96ca1d020516143ca2c31ad359/kurento-jsonrpc-client-6.16.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kurento/kurento-jsonrpc-client/6.16.0/ab1c70d38bd2a148bd3e2cdb7dac171f4911cfd8/kurento-jsonrpc-client-6.16.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

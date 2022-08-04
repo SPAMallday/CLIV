@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.kurento:kurento-client:6.16.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kurento/kurento-client/6.16.0/974ecd794d40e49466b20a1ba649a63b0964b5c4/kurento-client-6.16.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kurento/kurento-client/6.16.0/32d32112fdc5a9f54f089b2816e642c860c99bfc/kurento-client-6.16.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
