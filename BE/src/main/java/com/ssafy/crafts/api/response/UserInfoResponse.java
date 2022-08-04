@@ -1,4 +1,4 @@
-package com.ssafy.crafts.db.dto;
+package com.ssafy.crafts.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

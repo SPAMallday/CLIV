@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 /**
-* 카카오 로그인 요청 API
+ * @FileName : AuthController
+ * @작성자 : 허성은
+ * @Class 설명 : 카카오 로그인 관련 요청을 수행하는 Controller
 */
 @RestController
 @Slf4j

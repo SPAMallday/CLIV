@@ -1,4 +1,4 @@
-package com.ssafy.crafts.db.repository;
+package com.ssafy.crafts.db.repository.querydslRepo;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.crafts.db.entity.Auth;
