@@ -16,6 +16,7 @@
     "openvidu-browser": "^2.22.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-material-ui-calendar": "^0.2.3",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
