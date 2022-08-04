@@ -4,8 +4,8 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.Upload;
+import com.amazonaws.services.s3.transfer.*;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -63,7 +63,8 @@ public class FileUploadService {
 
     private void uploadOnS3(final String findName, final File file) {
         // AWS S3 전송 객체 생성
-        final TransferManager transferManager = new TransferManager(this.amazonS3Client);
+        final TransferManager transferManager = TransferManagerBuilder.standard()
+                                                .withS3Client(this.amazonS3Client).build();
         // 요청 객체 생성
         final PutObjectRequest request = new PutObjectRequest(bucket, findName, file);
         // 업로드 시도
