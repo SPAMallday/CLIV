@@ -7,6 +7,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -16,9 +18,9 @@ import java.util.UUID;
 @Entity
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private int id;
+    @Id
+    @Column(name = "auth_id")
+    private String id;
 
     @Column(name = "profile_image", length = 250)
     private String profileImage;
@@ -38,11 +40,14 @@ public class Member {
     private RoleType roleType;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "auth_id")
     private Auth auth;
 
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviews = new ArrayList<>();
     @Builder
-    public Member(int id, String profileImage, String nickname, String gender, Status status, RoleType roleType, Auth auth) {
+    public Member(String id, String profileImage, String nickname, String gender, Status status, RoleType roleType, Auth auth) {
         this.id = id;
         this.profileImage = profileImage;
         this.nickname = nickname;

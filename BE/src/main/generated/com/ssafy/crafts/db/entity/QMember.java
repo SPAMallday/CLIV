@@ -26,11 +26,13 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath gender = createString("gender");
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final StringPath id = createString("id");
 
     public final StringPath nickname = createString("nickname");
 
     public final StringPath profileImage = createString("profileImage");
+
+    public final ListPath<Review, QReview> reviews = this.<Review, QReview>createList("reviews", Review.class, QReview.class, PathInits.DIRECT2);
 
     public final EnumPath<Member.RoleType> roleType = createEnum("roleType", Member.RoleType.class);
 
