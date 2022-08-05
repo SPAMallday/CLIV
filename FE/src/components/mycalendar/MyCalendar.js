@@ -4,9 +4,9 @@ import moment from "moment";
 
 import "react-calendar/dist/Calendar.css";
 import "./MyCalendar.css";
-import { Box } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
-function MyCalendar() {
+function MyCalendar(props) {
   const [value, onChange] = useState(new Date());
 
   // const [mark, setMark] = useState([]);
@@ -31,8 +31,20 @@ function MyCalendar() {
   return (
     <Box
       className='calendarContainer'
-      sx={{ display: "flex", justifyContent: "center" }}
+      sx={{ display: "flex", justifyContent: "center", alignItems: "flex-end" }}
     >
+      {props.type === "detail" ? null : (
+        <Stack sx={{ ml: 1, visibility: "hidden" }}>
+          <Box className='legendIcon' sx={{ display: "flex" }}>
+            <Box className='circle-dot ' sx={{ px: 1, py: 1, mr: 1 }} />
+            <Typography>신청 클래스</Typography>
+          </Box>
+          <Box className='legendIcon' sx={{ display: "flex" }}>
+            <Box className='square-dot' sx={{ px: 1, py: 1, mr: 1 }} />
+            <Typography>지난 클래스</Typography>
+          </Box>
+        </Stack>
+      )}
       <Calendar
         onChange={onChange} // useState로 포커스 변경 시 현재 날짜 받아오기
         value={value}
@@ -60,6 +72,18 @@ function MyCalendar() {
           );
         }}
       />
+      {props.type === "detail" ? null : (
+        <Stack sx={{ ml: 1 }}>
+          <Box className='legendIcon' sx={{ display: "flex" }}>
+            <Box className='circle-dot ' sx={{ px: 1, py: 1, mr: 1 }} />
+            <Typography>신청 클래스</Typography>
+          </Box>
+          <Box className='legendIcon' sx={{ display: "flex" }}>
+            <Box className='square-dot' sx={{ px: 1, py: 1, mr: 1 }} />
+            <Typography>지난 클래스</Typography>
+          </Box>
+        </Stack>
+      )}
     </Box>
   );
 }

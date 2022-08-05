@@ -25,7 +25,7 @@ const ClassDetail = () => {
         <Grid item xs={12} md={4}>
           <Stack spacing={6}>
             <ClassDetailInfo />
-            <MyCalendar />
+            <MyCalendar type='detail' />
           </Stack>
         </Grid>
       </Grid>

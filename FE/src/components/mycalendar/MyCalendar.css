@@ -23,11 +23,15 @@
 .square-dot {
   height: 8px;
   width: 8px;
-  background-color: #f7ecde;
+  background-color: #979797;
   display: inline-grid;
   margin-left: 2px;
   margin-right: 2px;
   text-align: center;
+}
+
+.legendIcon {
+  align-items: center;
 }
 
 .react-calendar__tile {
