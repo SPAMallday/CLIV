@@ -129,7 +129,7 @@ function NavBar() {
       <div className='rightside'>
         <Search id='search'>
           <SearchIconWrapper>
-            <SearchIcon />
+            <SearchIcon sx={{ color: "white" }} />
           </SearchIconWrapper>
           <StyledInputBase inputProps={{ "aria-label": "search" }} />
         </Search>
