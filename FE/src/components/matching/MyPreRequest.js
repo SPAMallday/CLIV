@@ -8,7 +8,7 @@ function MyPreRequest() {
   return (
     <div>
       <div className='myPreMatchingTitle'>나의 이전 요청</div>
-      <Grid container className='gohome'>
+      <Grid container>
         <Grid item xs md={6} lg={4}>
           <Box className='myPreMatchingBox' style={{ whiteSpace: 'nowrap' }}>
             <Box className='myPreMatching' component='div' sx={{ textOverflow: 'ellipsis' }}>

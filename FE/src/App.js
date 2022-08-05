@@ -7,6 +7,7 @@ import NavBar from './components/navbar/NavBar';
 import ClassManage from './pages/classmanage/ClassManage';
 import MyProfile from './pages/myprofile/MyProfile';
 import Matching from './pages/matching/Matching';
+import MyClassHistory from './pages/myclasshistory/MyClassHistory';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/class/detail/*' element={<ClassDetail />}></Route>
           <Route path='/classmanage' element={<ClassManage />}></Route>
           <Route path='/matching' element={<Matching />}></Route>
+          <Route path='/myhistory' element={<MyClassHistory />}></Route>
           {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}
           <Route path='/*' element={<NotFound />}></Route>
           {/* <Route path="*" element={<NotFound />}></Route>  */}

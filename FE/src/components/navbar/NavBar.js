@@ -192,7 +192,9 @@ function NavBar() {
           <Link to='/myprofile'>
             <MenuItem>마이프로필</MenuItem>
           </Link>
-          <MenuItem>나의수강내역</MenuItem>
+          <Link to='/myhistory'>
+            <MenuItem>나의수강내역</MenuItem>
+          </Link>
           <MenuItem>회원정보수정</MenuItem>
           <MenuItem>로그아웃</MenuItem>
         </Menu>
