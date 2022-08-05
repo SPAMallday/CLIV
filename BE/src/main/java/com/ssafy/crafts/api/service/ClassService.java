@@ -13,5 +13,5 @@ public interface ClassService {
 
     void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail);
     ClassInfoResponse findClassInfoById(int id);
-
+    void joinClassByMemberId(int id, String memberId);
 }

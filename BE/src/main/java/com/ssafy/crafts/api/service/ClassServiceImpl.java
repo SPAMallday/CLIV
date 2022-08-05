@@ -4,6 +4,7 @@ import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.request.HashtagRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
+import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.ClassInfoRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
@@ -92,5 +93,26 @@ public class ClassServiceImpl implements ClassService{
                 .classImgUrl(classInfo.getClassImg())
                 .level(classInfo.getLevel())
                 .build();
+    }
+
+    @Override
+    public void joinClassByMemberId(int id, String memberId) {
+        /**
+         * @Method Name : joinClassByMemberId
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 참여하기
+         */
+        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id).get())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
+        Member member = Optional.ofNullable(memberQuerydslRepository.findMemberByAuthId(memberId).get())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다."));
+        // 인원수 다 찼으면 거절
+        if(classInfo.getHeadcount() <= classInfo.getMembers().size())
+            new ResponseStatusException(HttpStatus.FORBIDDEN, "해당 수업은 신청 인원이 마감되었습니다.");
+        // 선생님과 동일한 아이디면 거절
+        if(classInfo.getTeacher().getId() == memberId)
+            new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이 개설한 수업을 신청할 수 없습니다.");
+
+        classInfo.addMember(member);
     }
 }

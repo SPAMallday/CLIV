@@ -75,4 +75,23 @@ public class ClassController {
         if(classInfoResponse == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(classInfoResponse, HttpStatus.OK);
     }
+
+    @PostMapping("/{classId}")
+    @ApiOperation(value = "수업 신청", notes = "수업 id로 조회된 수업을 참여한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 204, message = "조회할 데이터가 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<Object> joinClassByClassId(HttpServletRequest request,
+            @PathVariable @ApiParam(value = "조회할 수업 정보의 id", required = true) int classId){
+        /**
+         * @Method Name : joinClassByClassId
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 id로 조회된 수업을 참여한다.
+         */
+        String token = JwtHeaderUtil.getAccessToken(request);
+        classService.joinClassByMemberId(classId, authService.getAuthId(token));
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

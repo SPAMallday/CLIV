@@ -112,6 +112,9 @@ public class ClassInfo {
         hashtag.getClasses().add(this);
     }
 
+    public void addMember(Member member) {
+        this.members.add(member);
+    }
     public void addQnaList(QnA qna) {
         this.qnaList.add(qna);
     }
