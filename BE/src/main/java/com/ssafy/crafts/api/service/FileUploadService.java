@@ -27,7 +27,7 @@ public class FileUploadService {
     @Value("${cloud.aws.s3.bucket.url}")
     private String defaultUrl;
 
-    @Value("${cloud.aws.s3.bucket}") // 프로퍼티에서 cloud.aws.s3.bucket에 대한 정보를 불러옴
+    @Value("${cloud.aws.s3.bucket.name}") // 프로퍼티에서 cloud.aws.s3.bucket에 대한 정보를 불러옴
     public String bucket;
 
     private final AmazonS3Client amazonS3Client;

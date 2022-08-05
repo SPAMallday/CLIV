@@ -5,6 +5,7 @@ import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.ClassService;
 import com.ssafy.crafts.common.util.AuthToken;
+import com.ssafy.crafts.common.util.AuthTokenProvider;
 import com.ssafy.crafts.common.util.JwtHeaderUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class ClassController {
     private final ClassService classService;
-    private final AuthToken authToken;
     private final AuthService authService;
 
     @PostMapping(
