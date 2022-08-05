@@ -28,6 +28,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath id = createString("id");
 
+    public final QMBoardTeacher mBoardTeacher;
+
     public final StringPath nickname = createString("nickname");
 
     public final StringPath profileImage = createString("profileImage");
@@ -57,6 +59,7 @@ public class QMember extends EntityPathBase<Member> {
     public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.auth = inits.isInitialized("auth") ? new QAuth(forProperty("auth")) : null;
+        this.mBoardTeacher = inits.isInitialized("mBoardTeacher") ? new QMBoardTeacher(forProperty("mBoardTeacher"), inits.get("mBoardTeacher")) : null;
     }
 
 }
