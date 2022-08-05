@@ -8,10 +8,10 @@ import './MyClassCalendar.css';
 function MyClassCalendar() {
   const [value, onChange] = useState(new Date());
 
-  const [mark, setMark] = useState([]);
+  // const [mark, setMark] = useState([]);
 
-  // const date = new Date(2022, 7, 8, 12, 30, 45, 789);
-  // const [mark, setMark] = useState([moment(date).format('YYYY-MM-DD')]);
+  const date = new Date(2022, 7, 8, 12, 30, 45, 789);
+  const [mark, setMark] = useState([moment(date).format('YYYY-MM-DD')]);
 
   // const { data } = useQuery(
   //   ['logDate', month],
@@ -45,7 +45,8 @@ function MyClassCalendar() {
             let html = [];
             // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
             if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
-              html.push(<div className='dot'></div>);
+              html.push(<div className='square-dot'></div>);
+              html.push(<div className='circle-dot'></div>);
             }
             // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
             return (

@@ -9,13 +9,33 @@
   margin: 2%;
 }
 
-.dot {
+.circle-dot {
   height: 8px;
   width: 8px;
   background-color: #f87171;
   border-radius: 50%;
+  display: inline-grid;
+  margin-left: 2px;
+  margin-right: 2px;
+  text-align: center;
+}
+
+.square-dot {
+  height: 8px;
+  width: 8px;
+  background-color: #f7ecde;
+  display: inline-grid;
+  margin-left: 2px;
+  margin-right: 2px;
+  text-align: center;
+}
+
+.react-calendar__tile {
+  min-height: 50px;
   display: flex;
-  margin-left: 1px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
 .react-calendar {
