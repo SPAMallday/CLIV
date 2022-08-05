@@ -1,5 +1,6 @@
 package com.ssafy.crafts.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,12 +26,16 @@ public class ChatMessage {
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regDate;      // 생성날짜
 
-    @Column(name = "croom_id", nullable = false, unique = true)
-    private int croomId;    // 채팅방 ID (FK)
-
     // N:1 관계 : 채팅방메시지 - 채팅방
     @ManyToOne
     @JoinColumn(name = "croom_id")
     private ChatRoom chatRoom;
 
+    @Builder
+    public ChatMessage(int id, String chatContent, Timestamp regDate, ChatRoom chatRoom) {
+        this.id = id;
+        this.chatContent = chatContent;
+        this.regDate = regDate;
+        this.chatRoom = chatRoom;
+    }
 }

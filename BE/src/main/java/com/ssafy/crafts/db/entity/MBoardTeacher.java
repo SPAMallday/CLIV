@@ -1,6 +1,7 @@
 package com.ssafy.crafts.db.entity;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -10,27 +11,16 @@ import javax.naming.Name;
 import javax.persistence.*;
 
 @Getter
-@Table(name = "MBoard_Teacher")
+@Table(name = "Match_Teacher")
 @NoArgsConstructor
 @DynamicInsert
 @Entity
 public class MBoardTeacher {
 
     @Id
-    @Column(name = "mboard_id")
-    private int mboardId;   // 매칭보드 id
-
-    @Id
-    @Column(name = "teacher_id")
-    private String teacherId;   // 강사 id
-
-    @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
-    private int matStatus;      // 매칭 완료 여부
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "mboard_id")
-    private MBoard mboard;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mt_id")
+    private int id;
 
     // 1:1 관계 : 매칭_선생님 - 회원
     // MBoardTeacher 테이블의 teacher_id(PFK)를 사용해서 Member 테이블과 Join을 수행하고
@@ -40,8 +30,21 @@ public class MBoardTeacher {
     @JoinColumn(name = "teacher_id", referencedColumnName = "auth_id")
     private Member member;
 
+    // 1:1 관계 : 매칭_선생님 - 매칭보드
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "mboard_id")
+    private MBoard mBoard;
+
     // 1:1 관계 : 매칭_선생님 - 채팅방
     @OneToOne(mappedBy = "mBoardTeacher")
-    @PrimaryKeyJoinColumn
     private ChatRoom chatRoom;
+
+    @Builder
+    public MBoardTeacher(int id, Member member, MBoard mBoard, ChatRoom chatRoom) {
+        this.id = id;
+        this.member = member;
+        this.mBoard = mBoard;
+        this.chatRoom = chatRoom;
+    }
 }
