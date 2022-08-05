@@ -15,7 +15,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import { KAKAO_AUTH_URL } from "../login/KaKaoLoginInfo";
 
+import LogoPath from "../../assets/Logo2.png";
+
 import "./NavBar.css";
+import { width } from "@mui/system";
 
 function NavBar() {
   const [anchorElMatching, setAnchorElMatching] = React.useState(null);
@@ -79,9 +82,13 @@ function NavBar() {
   return (
     <div id='navbar' className='navbar'>
       <div className='leftside'>
-        <a href='/' id='mainLogo'>
-          만들공예
-        </a>
+        <Box id='mainLogo'>
+          <Link to='/'>
+            <Button disableRipple>
+              <img src={LogoPath} style={{ width: "100px" }}></img>
+            </Button>
+          </Link>
+        </Box>
         <Button
           variant='text'
           disableRipple
