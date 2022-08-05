@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 
 import ClassCreate from "../../components/class/create/ClassCreate";
 import QnaItem from "../../components/qna/QnaItem";
+import ReserveClass from "../../components/class/reserve/ReserveClass";
+import CloseClass from "../../components/class/close/CloseClass";
 
 import "./ClassManage.css";
 
@@ -48,6 +50,10 @@ function ClassManage() {
 
   React.useEffect(() => {
     document.getElementById("bodyContainer").style.padding = 0;
+
+    return () => {
+      document.getElementById("bodyContainer").style = "";
+    };
   });
 
   return (
@@ -55,8 +61,8 @@ function ClassManage() {
       sx={{
         flexGrow: 1,
         display: "flex",
-        height: "100%",
         width: "100%",
+        minHeight: "100%",
       }}
     >
       <Tabs
@@ -74,10 +80,10 @@ function ClassManage() {
         <Tab label='Q & A 관리' {...a11yProps(3)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <p className='classManageTitle'>예정 클래스</p>
+        <ReserveClass />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <p className='classManageTitle'>지난 클래스</p>
+        <CloseClass />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <p className='classManageTitle'>클래스 생성</p>

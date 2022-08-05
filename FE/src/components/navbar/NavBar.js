@@ -117,7 +117,9 @@ function NavBar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleCloseMatching}>요청 보내기</MenuItem>
+            <Link to='/matching'>
+              <MenuItem onClick={handleCloseMatching}>요청 보내기</MenuItem>
+            </Link>
             <MenuItem onClick={handleCloseMatching}>받은 요청</MenuItem>
             <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
           </Menu>
@@ -172,7 +174,7 @@ function NavBar() {
           id='account-menu'
           open={openUser}
           onClose={handleCloseUser}
-          onClick={handleCloseUser}
+          // onClick={handleCloseUser}
           PaperProps={{
             elevation: 0,
             sx: {
@@ -209,7 +211,9 @@ function NavBar() {
           <Link to='/myprofile'>
             <MenuItem>마이프로필</MenuItem>
           </Link>
-          <MenuItem>나의수강내역</MenuItem>
+          <Link to='/myhistory'>
+            <MenuItem>나의수강내역</MenuItem>
+          </Link>
           <MenuItem>회원정보수정</MenuItem>
           <MenuItem>로그아웃</MenuItem>
         </Menu>

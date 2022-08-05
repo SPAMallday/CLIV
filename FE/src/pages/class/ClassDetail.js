@@ -2,6 +2,7 @@ import React from "react";
 import ClassDetailInfo from "../../components/class/detail/ClassDetailInfo";
 import ClassDetailItem from "../../components/class/detail/ClassDetailItem";
 import QnaItem from "../../components/qna/QnaItem";
+import MyCalendar from "../../components/mycalendar/MyCalendar";
 import Box from "@mui/material/Box";
 import { Grid, Stack, Typography } from "@mui/material";
 
@@ -22,7 +23,10 @@ const ClassDetail = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={4}>
-          <ClassDetailInfo />
+          <Stack spacing={6}>
+            <ClassDetailInfo />
+            <MyCalendar />
+          </Stack>
         </Grid>
       </Grid>
     </Box>

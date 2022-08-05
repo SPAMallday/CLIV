@@ -21,3 +21,8 @@ code {
   padding-right: 5%;
   height: calc(100% - 50px);
 }
+
+.miniTitle {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}

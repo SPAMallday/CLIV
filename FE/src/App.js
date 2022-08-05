@@ -8,6 +8,8 @@ import {
   ClassList,
   ClassDetail,
   ClassManage,
+  Matching,
+  MyClassHistory,
 } from "./pages";
 import MyProfile from "./pages/myprofile/MyProfile";
 import WithNav from "./components/route/WithNav";
@@ -30,6 +32,8 @@ function App() {
           <Route path='/class/list' element={<ClassList />} />
           <Route path='/class/detail/*' element={<ClassDetail />} />
           <Route path='/classmanage' element={<ClassManage />} />
+          <Route path='/matching' element={<Matching />}></Route>
+          <Route path='/myhistory' element={<MyClassHistory />}></Route>
         </Route>
       </Routes>
     </div>

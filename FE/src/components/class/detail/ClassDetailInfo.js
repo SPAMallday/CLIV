@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { Card, CardContent, Typography, Button, Stack } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import Rating from "@mui/material/Rating";
+import StarRating from "../../starrating/StarRating";
 
 import "./ClassDetailInfo.css";
-
-const labels = {
-  1: "기초",
-  2: "초급",
-  3: "중급",
-  4: "고급",
-  5: "전문가",
-};
 
 const handleSubmitButton = (teacherAuth) => {
   // 선생님인 경우
@@ -64,18 +55,7 @@ function ClassDetailInfo(props) {
               <Stack spacing={1}>
                 <Box sx={{ display: "flex" }}>
                   난이도 :
-                  <Rating value={rating} readOnly sx={{ ml: 1 }} />
-                  {rating !== null && (
-                    <Box sx={{ ml: 1, display: "flex", alignItems: "center" }}>
-                      <Typography
-                        color={"gray"}
-                        fontWeight={600}
-                        fontSize={"0.8rem"}
-                      >
-                        {labels[rating]}
-                      </Typography>{" "}
-                    </Box>
-                  )}
+                  <StarRating ratingValue={3} />
                 </Box>
                 <Typography>수강 인원(2 / 4)</Typography>
               </Stack>
