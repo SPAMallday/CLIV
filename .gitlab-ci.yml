@@ -1,4 +1,4 @@
-deploy-to-server: a605Common
+deploy-to-server:
   stage: deploy
   only:
     - main
@@ -20,4 +20,4 @@ deploy-to-server: a605Common
   after_script:
     - echo 'deployment is done'
   tags:
-    - deploy
+    - a605Common
