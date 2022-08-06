@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CraftsApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(CraftsApplication.class, args);
 	}
 
