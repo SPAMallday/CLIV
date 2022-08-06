@@ -2,7 +2,6 @@ HELP.md
 .gradle
 build/
 src/main/resources
-.ssafy-web.log
 !gradle/wrapper/gradle-wrapper.jar
 !/src/main//build/
 !/src/test//build/
@@ -39,3 +38,5 @@ out/
 .vscode/
 /src/main/generated/com/ssafy/crafts/db/entity/
 /src/main/resources/application.yml
+
+ssafy-web.log
