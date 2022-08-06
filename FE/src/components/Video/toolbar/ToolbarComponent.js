@@ -21,6 +21,7 @@ import QuestionAnswer from "@mui/icons-material/QuestionAnswer";
 
 import IconButton from "@mui/material/IconButton";
 
+// component
 export default class ToolbarComponent extends Component {
   constructor(props) {
     super(props);
