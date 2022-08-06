@@ -1,5 +1,5 @@
-import * as React from "react";
-import VideoRoomComponent from "../components/video/VideoRoomComponent";
+import * as React from 'react';
+import VideoRoomComponent from '../components/video/VideoRoomComponent';
 
 function VideoClass() {
   return (
