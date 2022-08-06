@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.webjars.bower:webrtc-adapter:7.4.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars.bower/webrtc-adapter/7.4.0/9d20d24aca02cd865cda74ab19a3aa4f09cebf0b/webrtc-adapter-7.4.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars.bower/webrtc-adapter/7.4.0/b04f3ee8f5e43fa3b162981b50bb72fe1acabb33/webrtc-adapter-7.4.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
