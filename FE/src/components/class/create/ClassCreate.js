@@ -158,9 +158,12 @@ function ClassCreate() {
               size='small'
               sx={{ width: "120px" }}
             >
-              <MenuItem value={10}>가죽공예</MenuItem>
-              <MenuItem value={20}>펠트</MenuItem>
-              <MenuItem value={30}>뜨개질</MenuItem>
+              <MenuItem value={1}>가죽 공예</MenuItem>
+              <MenuItem value={2}>비즈 공예</MenuItem>
+              <MenuItem value={3}>뜨개질</MenuItem>
+              <MenuItem value={4}>펠트</MenuItem>
+              <MenuItem value={5}>라탄 공예</MenuItem>
+              <MenuItem value={6}>인형 공예</MenuItem>
             </Select>
           </FormControl>
         </Grid>
