@@ -1,4 +1,4 @@
-deploy-to-server:
+deploy-to-server: a605Common
   stage: deploy
   only:
     - main
