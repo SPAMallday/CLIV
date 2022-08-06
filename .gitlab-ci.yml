@@ -20,4 +20,4 @@ deploy-to-server:
   after_script:
     - echo 'deployment is done'
   tags:
-    - deploy
+    - a605Common
