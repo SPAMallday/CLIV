@@ -6,39 +6,43 @@ import com.ssafy.crafts.common.util.AuthToken;
 import com.ssafy.crafts.common.util.AuthTokenProvider;
 import com.ssafy.crafts.db.entity.Auth;
 import com.ssafy.crafts.db.entity.Member;
-import com.ssafy.crafts.db.repository.AuthRepository;
-import com.ssafy.crafts.db.repository.MemberQuerydslRepository;
-import com.ssafy.crafts.db.repository.MemberRepository;
+import com.ssafy.crafts.db.repository.jpaRepo.AuthRepository;
+import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
+import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
-* 카카오 로그인 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
-*/
+ * @FileName : AuthService
+ * @작성자 : 허성은
+ * @Class 설명 : 카카오 로그인 관련 비즈니스 로직 처리를 위한 서비스 구현 정의
+ */
 @Service
 @RequiredArgsConstructor
-public class KakaoAuthService {
+public class AuthService {
 
     private final ClientKakao clientKakao;
     private final MemberQuerydslRepository memberQuerydslRepository;
     private final AuthTokenProvider authTokenProvider;
     private final MemberRepository memberRepository;
     private final AuthRepository authRepository;
-    /**
-    * access token을 가지고 ClientKakao을 호출하여 카카오의 사용자 정보를 조회
-    * 사용자 정보 조회 후, 내려받은 사용자식별 ID 값으로 DB에서 이미 가입된 사람인지를 판별 후, 새로운 유저라면 저장, JWT 토큰을 발급
-    * 기존 사용자라면 토큰 만료로 인한 재요청이기 때문에 DB와의 커넥션 없이 바로 새로운 토큰만 발급하여 반환
-    */
     @Transactional
     public AuthResponse login(AuthRequest authRequest) {
+        /**
+         * @Method Name : login
+         * @작성자 : 허성은
+         * @Method 설명 : 카카오 로그인 시 새로운 회원이면 회원가입을, 아니라면 로그인을 진행
+         */
+        //access token을 가지고 ClientKakao을 호출하여 카카오의 사용자 정보를 조회
         Member kakaoMember = clientKakao.getUserData(authRequest.getAccessToken());
         String id = kakaoMember.getAuth().getAuthId();
         Member member = memberQuerydslRepository.findMemberByAuthId(id).get();
 
-
+        // 사용자 정보 조회 후, 내려받은 사용자식별 ID 값으로 DB에서 이미 가입된 사람인지를 판별 후, 새로운 유저라면 저장, JWT 토큰을 발급
         // 회원가입
         if (member == null) {
             Auth auth = Auth.builder()
@@ -59,11 +63,34 @@ public class KakaoAuthService {
 
         }
 
+        // 기존 사용자라면 토큰 만료로 인한 재요청이기 때문에 DB와의 커넥션 없이 바로 새로운 토큰만 발급하여 반환
         String nickname = memberQuerydslRepository.findMemberByAuthId(id).get().getNickname();
         AuthToken appToken = authTokenProvider.createUserAppToken(id, nickname);
 
         return AuthResponse.builder()
                 .appToken(appToken.getToken())
                 .build();
+    }
+
+    public String getAuthId(String token) {
+        /**
+         * @Method Name : getAuthId
+         * @작성자 : 허성은
+         * @Method 설명 : 토큰에서 AuthId를 꺼내서 반환
+         */
+        AuthToken authToken = authTokenProvider.convertAuthToken(token);
+
+        Claims claims = authToken.getTokenClaims();
+        if (claims == null) {
+            return null;
+        }
+
+        try {
+            Member member =  memberQuerydslRepository.findMemberByAuthId(claims.getSubject()).get();
+            return member.getId();
+
+        } catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");
+        }
     }
 }
