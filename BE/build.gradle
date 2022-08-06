@@ -49,7 +49,7 @@ node {
 	download = true
 	version = '14.17.0'
 	// Set the work directory where node_modules should be located
-	nodeModulesDir = file("${project.projectDir}/../frontend")
+	nodeModulesDir = file("${project.projectDir}/../FE")
 }
 
 configurations {
