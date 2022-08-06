@@ -12,7 +12,7 @@ deploy-to-server:
     - kill $(lsof -t -i:8080)
     - sudo mvn package
     - cd /home/ubuntu/S07P12A605/BE/target/
-    - setsid nohup java -jar BE-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
+    - setsid nohup java -jar crafts-1.0-SNAPSHOT.jar > /dev/null 2>&1 &
     - cd /home/ubuntu/S07P12A605/FE/
     - sudo npm install
     - sudo npm run build
