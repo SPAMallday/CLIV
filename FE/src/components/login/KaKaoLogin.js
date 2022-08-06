@@ -1,26 +1,16 @@
-import React, { useEffect } from "react";
-import { REST_API_KEY, REDIRECT_URI } from "./KaKaoLoginInfo";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { REST_API_KEY, REDIRECT_URI } from './KaKaoLoginInfo';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { loginUser } from '../../store/modules/loginUser';
 
 function KaKaoLogin() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const AUTHORIZE_CODE = location.search.split("=")[1]; // 인가코드
+  const AUTHORIZE_CODE = location.search.split('=')[1]; // 인가코드
 
-  // const kakaoAuth = axios.create({
-  //     baseURL:"https://kauth.kakao.com/oauth/token",
-  //     headers: {
-  //         'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-  //     },
-  //     params: {
-
-  //         'grant_type'='authorization_code'
-  //         '&'client_id=${REST_API_KEY}
-  //         &redirect_uri=${REDIRECT_URI}
-  //         &code=${AUTHORIZE_CODE}
-  //     }
-  // });
   useEffect(() => {
     if (!location.search) return <div>err</div>;
     try {
@@ -30,26 +20,29 @@ function KaKaoLogin() {
           null,
           {
             headers: {
-              "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+              'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
-          }
+          },
         )
         .then((res) => {
-          if ((res.status = "200")) {
-            console.log(res);
-            sessionStorage.setItem("token", res.data.access_token);
-            sessionStorage.setItem("code", AUTHORIZE_CODE);
+          if ((res.status = '200')) {
+            const access_token = res.data.access_token;
+
+            sessionStorage.setItem('token', access_token);
+            sessionStorage.setItem('code', AUTHORIZE_CODE);
+
+            dispatch(loginUser(access_token));
+            // dispatch(loginUser());
           } else {
-            console.log("로그인 ERR");
+            console.log('로그인 ERR');
           }
         });
     } catch (err) {
       console.log(err);
     }
 
-    navigate("/", { replace: true }); //
-    // getKaKaoToken();
-  }, []);
+    navigate('/', { replace: true });
+  }, [dispatch]);
 
   return <div></div>;
 }

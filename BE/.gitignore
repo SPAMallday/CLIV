@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+src/main/resources
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -35,3 +36,5 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/generated/com/ssafy/crafts/db/entity/
+/src/main/resources/application.yml

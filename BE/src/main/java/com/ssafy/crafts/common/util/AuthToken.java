@@ -1,6 +1,6 @@
 package com.ssafy.crafts.common.util;
 
-import com.ssafy.crafts.db.entity.RoleType;
+import com.ssafy.crafts.db.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,16 +26,18 @@ public class AuthToken {
 
     private static final String AUTHORITIES_KEY = "role";
 
-    AuthToken(String id, RoleType roleType, Date expiry, Key key) {
+    AuthToken(String id, String nickname, Member.RoleType roleType, Date expiry, Key key) {
         String role = roleType.toString();
         this.key = key;
-        this.token = createAuthToken(id, role, expiry);
+        this.token = createAuthToken(id, nickname, role, expiry);
     }
 
-    private String createAuthToken(String id, String role, Date expiry) {
+    private String createAuthToken(String id, String nickname, String role, Date expiry) {
+        Claims claims = Jwts.claims().setSubject(id); // JWT payload 에 저장되는 정보단위
+        claims.put(AUTHORITIES_KEY, role); // 정보는 key / value 쌍으로 저장된다.
+        claims.put("nickname", nickname);
         return Jwts.builder()
-                .setSubject(id)
-                .claim(AUTHORITIES_KEY, role)
+                .setClaims(claims)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(expiry)
                 .compact();
