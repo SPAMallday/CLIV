@@ -15,7 +15,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import Badge from "@mui/material/Badge";
 import { KAKAO_AUTH_URL } from "../login/KaKaoLoginInfo";
 
+import LogoPath from "../../assets/Logo2.png";
+
 import "./NavBar.css";
+import { width } from "@mui/system";
 
 function NavBar() {
   const [anchorElMatching, setAnchorElMatching] = React.useState(null);
@@ -77,11 +80,17 @@ function NavBar() {
   }));
 
   return (
-    <div className="navbar">
-      <div className="leftside">
-        <a href="/">만들공예</a>
+    <div id='navbar' className='navbar'>
+      <div className='leftside'>
+        <Box id='mainLogo'>
+          <Link to='/'>
+            <Button disableRipple>
+              <img src={LogoPath} style={{ width: "100px" }}></img>
+            </Button>
+          </Link>
+        </Box>
         <Button
-          variant="text"
+          variant='text'
           disableRipple
           style={{ backgroundColor: "transparent" }}
         >
@@ -89,9 +98,9 @@ function NavBar() {
         </Button>
         <div>
           <Button
-            id="matching-button"
+            id='matching-button'
             aria-controls={openMatching ? "matching-menu" : undefined}
-            aria-haspopup="true"
+            aria-haspopup='true'
             aria-expanded={openMatching ? "true" : undefined}
             onClick={handleClickMatching}
             disableRipple
@@ -100,7 +109,7 @@ function NavBar() {
             매칭
           </Button>
           <Menu
-            id="matching-menu"
+            id='matching-menu'
             anchorEl={anchorElMatching}
             open={openMatching}
             onClose={handleCloseMatching}
@@ -108,36 +117,40 @@ function NavBar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleCloseMatching}>요청 보내기</MenuItem>
+            <Link to='/matching'>
+              <MenuItem onClick={handleCloseMatching}>요청 보내기</MenuItem>
+            </Link>
             <MenuItem onClick={handleCloseMatching}>받은 요청</MenuItem>
             <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
           </Menu>
         </div>
-        <Button
-          variant="text"
-          disableRipple
-          style={{ backgroundColor: "transparent" }}
-        >
-          클래스 관리
-        </Button>
+        <Link to='/classmanage'>
+          <Button
+            variant='text'
+            disableRipple
+            style={{ backgroundColor: "transparent" }}
+          >
+            클래스 관리
+          </Button>
+        </Link>
       </div>
 
-      <div className="rightside">
-        <Search id="search">
+      <div className='rightside'>
+        <Search id='search'>
           <SearchIconWrapper>
-            <SearchIcon />
+            <SearchIcon sx={{ color: "white" }} />
           </SearchIconWrapper>
           <StyledInputBase inputProps={{ "aria-label": "search" }} />
         </Search>
 
         <IconButton
-          id="noti"
-          size="large"
-          color="inherit"
+          id='noti'
+          size='large'
+          color='inherit'
           disableRipple
           style={{ backgroundColor: "transparent" }}
         >
-          <Badge badgeContent={1} color="error">
+          <Badge badgeContent={1} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -146,10 +159,10 @@ function NavBar() {
         >
           <IconButton
             onClick={handleClickUser}
-            size="small"
+            size='small'
             sx={{ ml: 2 }}
             aria-controls={openUser ? "account-menu" : undefined}
-            aria-haspopup="true"
+            aria-haspopup='true'
             aria-expanded={openUser ? "true" : undefined}
             disableRipple
           >
@@ -158,10 +171,10 @@ function NavBar() {
         </Box>
         <Menu
           anchorEl={anchorElUser}
-          id="account-menu"
+          id='account-menu'
           open={openUser}
           onClose={handleCloseUser}
-          onClick={handleCloseUser}
+          // onClick={handleCloseUser}
           PaperProps={{
             elevation: 0,
             sx: {
@@ -195,10 +208,12 @@ function NavBar() {
             <a href={KAKAO_AUTH_URL}>로그인</a>
           </MenuItem>
           <Divider />
-          <Link to="/myprofile">
+          <Link to='/myprofile'>
             <MenuItem>마이프로필</MenuItem>
           </Link>
-          <MenuItem>나의수강내역</MenuItem>
+          <Link to='/myhistory'>
+            <MenuItem>나의수강내역</MenuItem>
+          </Link>
           <MenuItem>회원정보수정</MenuItem>
           <MenuItem>로그아웃</MenuItem>
         </Menu>

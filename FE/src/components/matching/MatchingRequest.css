@@ -1,0 +1,56 @@
+.matchingTitle {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.matchingContainer {
+  display: flex;
+  background-color: white;
+  width: 70%;
+  min-width: 500px;
+  height: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-radius: 25px;
+  margin: auto;
+}
+
+.matchingItem {
+  padding: 5%;
+}
+
+.matchingRadioBox {
+  width: 100%;
+}
+
+.matchingRadio {
+  display: flex;
+  width: 100%;
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.matchingRadio .matchingRadioBtn {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.matchingBtnBox {
+  margin-top: 2%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+@media (min-width: 1280px) {
+  .matchingRadio .matchingRadioBtn {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}

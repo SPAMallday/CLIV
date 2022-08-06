@@ -23,6 +23,29 @@ const theme = createTheme({
         },
       },
     },
+    MuiDateTimePicker: {
+      styleOverrides: {
+        "button.MuiPickersDay-root.Mui-selected": {
+          backgroundColor: "red",
+          color: "blue",
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "Nanum Gothic",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
   },
   palette: {
     background: {

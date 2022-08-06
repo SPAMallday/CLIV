@@ -57,8 +57,8 @@ class VideoRoomComponent extends Component {
     this.toggleChat = this.toggleChat.bind(this);
     this.checkNotification = this.checkNotification.bind(this);
     this.checkSize = this.checkSize.bind(this);
-    this.changeMainVideo = this.changeMainVideo.bind(this);
     this.handleTargetVideo = this.handleTargetVideo.bind(this);
+    this.changeTargetVideo = this.changeTargetVideo.bind(this);
   }
 
   componentDidMount() {
@@ -164,51 +164,83 @@ class VideoRoomComponent extends Component {
   }
 
   async connectWebCam() {
-    var devices = await this.OV.getDevices();
-    var videoDevices = devices.filter((device) => device.kind === "videoinput");
-
-    let publisher = this.OV.initPublisher(undefined, {
+    this.OV.getUserMedia({
       audioSource: undefined,
-      videoSource: videoDevices[0].deviceId,
-      publishAudio: localUser.isAudioActive(),
-      publishVideo: localUser.isVideoActive(),
+      videoSource: undefined,
       resolution: "640x480",
       frameRate: 30,
-      insertMode: "APPEND",
-    });
+    }).then((mediaStream) => {
+      var videoTrack = mediaStream.getVideoTracks()[0];
 
-    if (this.state.session.capabilities.publish) {
-      publisher.on("accessAllowed", () => {
-        this.state.session.publish(publisher).then(() => {
-          this.updateSubscribers();
-          this.localUserAccessAllowed = true;
-          if (this.props.joinSession) {
-            this.props.joinSession();
-          }
-        });
+      var publisher = this.OV.initPublisher(undefined, {
+        audioSource: undefined,
+        videoSource: videoTrack,
+        insertMode: "APPEND",
+        mirror: true,
       });
-    }
-    localUser.setNickname(this.state.myUserName);
-    localUser.setConnectionId(this.state.session.connection.connectionId);
-    localUser.setScreenShareActive(false);
-    localUser.setStreamManager(publisher);
-    this.subscribeToUserChanged();
-    this.subscribeToStreamDestroyed();
-    this.sendSignalUserChanged({
-      isScreenShareActive: localUser.isScreenShareActive(),
-    });
 
-    this.setState(
-      { currentVideoDevice: videoDevices[0], localUser: localUser },
-      () => {
-        this.state.localUser.getStreamManager().on("streamPlaying", (e) => {
-          //   this.updateLayout();
-          publisher.videos[0].video.parentElement.classList.remove(
-            "custom-class"
-          );
+      if (this.state.session.capabilities.publish) {
+        publisher.on("accessAllowed", () => {
+          this.state.session.publish(publisher).then(() => {
+            this.updateSubscribers();
+            this.localUserAccessAllowed = true;
+            if (this.props.joinSession) {
+              this.props.joinSession();
+            }
+          });
         });
       }
-    );
+
+      localUser.setNickname(this.state.myUserName);
+      localUser.setConnectionId(this.state.session.connection.connectionId);
+      localUser.setScreenShareActive(false);
+      localUser.setStreamManager(publisher);
+      this.subscribeToUserChanged();
+      this.subscribeToStreamDestroyed();
+      this.sendSignalUserChanged({
+        isScreenShareActive: localUser.isScreenShareActive(),
+      });
+
+      this.setState(
+        { currentVideoDevice: videoTrack, localUser: localUser },
+        () => {
+          this.state.localUser.getStreamManager().on("streamPlaying", (e) => {
+            //   this.updateLayout();
+            publisher.videos[0].video.parentElement.classList.remove(
+              "custom-class"
+            );
+          });
+        }
+      );
+    });
+
+    // getDevices를 사용하는 경우  connectWebCam 바로 다음 라인 부터
+    // 다음처럼 사용 콜백함수 내부에 있는 부분은 모두 밖으로 꺼내서 동기적으로 처리
+
+    // var devices = await this.OV.getDevices();
+    // var videoDevices = devices.filter((device) => device.kind === "videoinput");
+
+    // let publisher = this.OV.initPublisher(undefined, {
+    //   audioSource: undefined,
+    //   videoSource: videoDevices[0].deviceId,
+    //   publishAudio: localUser.isAudioActive(),
+    //   publishVideo: localUser.isVideoActive(),
+    //   resolution: "640x480",
+    //   frameRate: 30,
+    //   insertMode: "APPEND",
+    // });
+
+    // if (this.state.session.capabilities.publish) {
+    //   publisher.on("accessAllowed", () => {
+    //     this.state.session.publish(publisher).then(() => {
+    //       this.updateSubscribers();
+    //       this.localUserAccessAllowed = true;
+    //       if (this.props.joinSession) {
+    //         this.props.joinSession();
+    //       }
+    //     });
+    //   });
+    // }
   }
 
   updateSubscribers() {
@@ -251,6 +283,7 @@ class VideoRoomComponent extends Component {
       this.props.leaveSession();
     }
   }
+
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive());
     localUser.getStreamManager().publishVideo(localUser.isVideoActive());
@@ -318,6 +351,7 @@ class VideoRoomComponent extends Component {
       this.deleteSubscriber(event.stream);
       setTimeout(() => {
         this.checkSomeoneShareScreen();
+        this.changeTargetVideo();
       }, 20);
       event.preventDefault();
       //   this.updateLayout();
@@ -532,6 +566,7 @@ class VideoRoomComponent extends Component {
       messageReceived: this.state.chatDisplay === "none",
     });
   }
+
   checkSize() {
     if (
       document.getElementById("layout").offsetWidth <= 700 &&
@@ -548,17 +583,29 @@ class VideoRoomComponent extends Component {
     }
   }
 
-  changeMainVideo(event) {
+  changeTargetVideo() {
+    const button = document.getElementsByClassName("Mui-selected");
+    const tempButtons = document.getElementsByClassName("MuiTab-root");
+    let targetId = undefined;
+
+    if (button.length !== 0) {
+      targetId = button.item(0).getAttribute("streamid");
+    } else if (tempButtons.length !== 0) {
+      let target = tempButtons.item(tempButtons.length - 1);
+      target.className += " Mui-selected";
+      targetId = target.getAttribute("streamid");
+    }
+
     this.setState({
-      mainVideo: event.target.value,
+      mainVideo: targetId,
     });
   }
 
-  handleTargetVideo = (targetVideoStreamId) => {
+  handleTargetVideo(targetVideoStreamId) {
     this.setState({
       mainVideo: targetVideoStreamId,
     });
-  };
+  }
 
   render() {
     const mySessionId = this.state.mySessionId;
@@ -581,7 +628,6 @@ class VideoRoomComponent extends Component {
           switchCamera={this.switchCamera}
           leaveSession={this.leaveSession}
           toggleChat={this.toggleChat}
-          changeMainVideo={this.changeMainVideo}
           targetVideoStreamId={this.handleTargetVideo}
         />
 
@@ -592,43 +638,48 @@ class VideoRoomComponent extends Component {
 
         <div id="videoBoundary">
           <div id="bigVideoContainer">
-            {this.state.subscribers
-              .filter((sub, i) => {
-                if (this.state.mainVideo === undefined && i === 0) return true;
-                else if (
-                  sub.streamManager.stream.streamId === this.state.mainVideo
-                )
-                  return true;
-                else return false;
-              })
-              .map((sub, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="OT_root OT_publisher custom-class"
-                    id="remoteUsers"
-                  >
-                    <StreamComponent
-                      user={sub}
-                      streamId={sub.streamManager.stream.streamId}
-                    />
-                  </div>
-                );
-              })}
+            <div className="videoWrapper">
+              {this.state.subscribers
+                .filter((sub, i) => {
+                  if (this.state.mainVideo === undefined && i === 0)
+                    return true;
+                  else if (
+                    sub.streamManager.stream.streamId === this.state.mainVideo
+                  )
+                    return true;
+                  else return false;
+                })
+                .map((sub, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="OT_root OT_publisher custom-class"
+                      id="remoteUsers"
+                    >
+                      <StreamComponent
+                        user={sub}
+                        streamId={sub.streamManager.stream.streamId}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
           </div>
           <div id="myVideoContainer">
-            {localUser !== undefined &&
-              localUser.getStreamManager() !== undefined && (
-                <div
-                  className="OT_root OT_publisher custom-class"
-                  id="localUser"
-                >
-                  <StreamComponent
-                    user={localUser}
-                    handleNickname={this.nicknameChanged}
-                  />
-                </div>
-              )}
+            <div className="videoWrapper">
+              {localUser !== undefined &&
+                localUser.getStreamManager() !== undefined && (
+                  <div
+                    className="OT_root OT_publisher custom-class"
+                    id="localUser"
+                  >
+                    <StreamComponent
+                      user={localUser}
+                      handleNickname={this.nicknameChanged}
+                    />
+                  </div>
+                )}
+            </div>
           </div>
           <div id="myChatContainer">
             {localUser !== undefined &&

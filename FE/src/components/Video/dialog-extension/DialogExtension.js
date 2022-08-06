@@ -21,7 +21,7 @@ export default class DialogExtensionComponent extends Component {
     this.refreshBrowser = this.refreshBrowser.bind(this);
   }
 
-  componentWillReceiveProps(props) {}
+  UNSAFE_componentWillReceiveProps(props) {}
 
   componentDidMount() {}
 
