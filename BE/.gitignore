@@ -1,6 +1,9 @@
 HELP.md
 .gradle
-build/
+build/classes
+build/generated
+build/resources
+build/tmp
 src/main/resources
 .ssafy-web.log
 !gradle/wrapper/gradle-wrapper.jar
