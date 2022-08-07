@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c92d86ae-5888-4441-81e3-1606c61d3a6a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/ssafy-web.log" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/BE">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="2CyHAVgFp2cbKP7VB6HswTffm9d" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="RunManager">
+    <configuration name="CraftsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="crafts.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ssafy.crafts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ssafy.crafts.CraftsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.CraftsApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c92d86ae-5888-4441-81e3-1606c61d3a6a" name="Default Changelist" comment="" />
+      <created>1659767760386</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659767760386</updated>
+      <workItem from="1659767766353" duration="1435000" />
+      <workItem from="1659769409893" duration="5685000" />
+      <workItem from="1659850597659" duration="827000" />
+      <workItem from="1659851451148" duration="198000" />
+      <workItem from="1659851690262" duration="457000" />
+      <workItem from="1659852195352" duration="593000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="290" y="0" width="714" height="672" key="#CraftsApplication" timestamp="1659852788809">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="290" y="0" width="714" height="672" key="#CraftsApplication/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659852788809" />
+    <state x="140" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1659800669178">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="140" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659800669178" />
+    <state x="377" y="119" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1659851626215">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="377" y="119" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659851626215" />
+    <state x="168" y="66" key="FileChooserDialogImpl" timestamp="1659852066892">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="168" y="66" key="FileChooserDialogImpl/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659852066892" />
+    <state width="1237" height="150" key="GridCell.Tab.0.bottom" timestamp="1659850544848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.0.bottom/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544848" />
+    <state width="1237" height="150" key="GridCell.Tab.0.center" timestamp="1659850544847">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.0.center/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544847" />
+    <state width="1237" height="150" key="GridCell.Tab.0.left" timestamp="1659850544847">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.0.left/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544847" />
+    <state width="1237" height="150" key="GridCell.Tab.0.right" timestamp="1659850544848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.0.right/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544848" />
+    <state width="1237" height="150" key="GridCell.Tab.1.bottom" timestamp="1659850544848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.1.bottom/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544848" />
+    <state width="1237" height="150" key="GridCell.Tab.1.center" timestamp="1659850544848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.1.center/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544848" />
+    <state width="1237" height="150" key="GridCell.Tab.1.left" timestamp="1659850544848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.1.left/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544848" />
+    <state width="1237" height="150" key="GridCell.Tab.1.right" timestamp="1659850544848">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1237" height="150" key="GridCell.Tab.1.right/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659850544848" />
+    <state width="207" height="477" key="HiddenNamespacesPopup" timestamp="1659799018332">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="207" height="477" key="HiddenNamespacesPopup/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659799018332" />
+    <state x="175" y="0" width="877" height="672" key="SettingsEditor" timestamp="1659852616078">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="175" y="0" width="877" height="672" key="SettingsEditor/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659852616078" />
+    <state x="303" y="0" width="672" height="670" key="search.everywhere.popup" timestamp="1659851090054">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="303" y="0" width="672" height="670" key="search.everywhere.popup/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659851090054" />
+  </component>
+</project>
