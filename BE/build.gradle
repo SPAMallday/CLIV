@@ -49,7 +49,7 @@ node {
 	download = true
 	version = '14.17.0'
 	// Set the work directory where node_modules should be located
-	nodeModulesDir = file("${project.projectDir}/../frontend")
+	nodeModulesDir = file("${project.projectDir}/../FE")
 }
 
 configurations {
@@ -61,7 +61,7 @@ configurations {
 //}
 
 task webpack(type: NpmTask, dependsOn: 'npmInstall') {
-	args = ['run','build']
+	args = ['run']
 }
 
 // processResources is a Java task. Run the webpack bundling before this task using the 'build' task in the package.json

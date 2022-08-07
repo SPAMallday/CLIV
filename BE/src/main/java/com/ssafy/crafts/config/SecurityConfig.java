@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()// 보호된 리소스 URI에 접근할 수 있는 권한을 설정
             .antMatchers(HttpMethod.OPTIONS).permitAll() // CORS Preflight 방지 위해 로그인요청 url 이전에 OPTIONS 요청 보내기
-            .antMatchers("/kakao-login").permitAll() //전체 접근 허용
+            .antMatchers("/api/kakao/**").permitAll() //전체 접근 허용
             .anyRequest().authenticated().and() // 해당 요청을 인증된 사용자만 사용 가능
             .headers()
             .frameOptions()
@@ -45,9 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .cors().and()
             .csrf().disable() // csrf 보안 설정을 비활성화
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
-            .and()
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
+//            .and()
+//            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
             // UsernamePasswordAuthenticationFilter :
             // - (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
             // - AuthenticationManager를 통한 인증 실행
@@ -55,4 +55,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // - 인증 실패 시, AuthenticationFailureHandler 실행
 
     }
+//    // CORS 허용 적용
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.addAllowedOrigin("*");
+//        configuration.addAllowedHeader("*");
+//        configuration.addAllowedMethod("*");
+//        configuration.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }
