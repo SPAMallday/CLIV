@@ -10,7 +10,7 @@
 - Docker: 20.10.17
 - WEB: Nginx 1.18.0
 
-# 🫐포트 번호
+## 🫐포트 번호
 - FrontEnd: 3000
 - BackEnd: 8080
 - Openvidu: 8084
@@ -76,18 +76,20 @@ docker run -i -t ubuntu:20.04
 - 도커 로그 확인
     - docker logs <image_id> : 도커가 꺼져있어도(컨테이너가) 최종적으로 실행된 기록을 가지고 있습니다(오류 잡을 때, 매우 유용)
   
-
+<br/>  
 
 # 🔥방화벽 설정
-## 현재 설정 확인
+### 현재 설정 확인
 ```
 sudo ufw status
 ```
-## `inactive` 로 설정되어 있으면 SSH 접속 허용하기
+### `inactive` 로 설정되어 있으면 SSH 접속 허용하기
 ```
 sudo ufw allow 22
 sudo ufw enable
-```
+```  
+
+<br/>  
 
 # 🎄MySQL 설치 및 세팅
 ### MySQL 설치
@@ -127,6 +129,7 @@ GRANT ALL PRIVILEGES ON bloom.* to craft@'%'
 FLUSH PRIVILEGES;
 SHOW GRANTS FOR '~'@'%';
 ```
+<br/>  
 
 # 💔MySQL Workbench와 EC2에 있는 DB 연결하기
 ```
@@ -149,6 +152,7 @@ sudo systemctl restart mysql.service
 ## MySQL Workbench에 Connection 추가
 ![screenshot4](./img/screenshot4.png)
 
+<br/>  
 
 # 🖥️OpenVidu 서버 구축
 
@@ -198,6 +202,7 @@ $ sudo ./openvidu stop
 # openvidu 서버 재실행
 $ sudo ./openvidu restart
 ```
+<br/>  
 
 # 🍫git 연동
 
@@ -206,6 +211,8 @@ $ sudo ./openvidu restart
 
 ### 프로젝트 폴더 생성 후 git clone
 ![screenshot10](./img/screenshot11.png)
+
+<br/>  
 
 # 🐬도커 파일 생성
 ### FrontEnd Dockerfile
@@ -251,7 +258,9 @@ docker build -t backend:0.1 /root/project/S07P12A605/BE
 ```
 docker build 전에 프로젝트 터미널에서 ./gradlew build 을 통해 jar 파일을 생성해야 한다.
 
-## 🐬컨테이너 실행하기
+<br/>  
+
+# 🐬컨테이너 실행하기
 - Backend
 ```
 sudo docker run -p 8080:8080 backend:0.1
