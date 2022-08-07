@@ -12,6 +12,7 @@ import ToolbarComponent from './toolbar/ToolbarComponent';
 
 var localUser = new UserModel();
 
+// 폴더이름
 class VideoRoomComponent extends Component {
   constructor(props) {
     super(props);
