@@ -3,7 +3,7 @@ FROM node:18 as build-stage
 WORKDIR /app  
 ADD . .
 RUN npm install
-RUN npm run build
+RUN npm start
 
 # 도커 허브에 있는 이미지를 가져온다.
 FROM nginx:stable-alpine as production-stage
