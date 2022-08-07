@@ -1,11 +1,16 @@
-FROM node:18 as build-stage
-# 현재 경로에 있는 모든 파일들을 /app으로 모두 파일을 복사
-WORKDIR /app  
-RUN npm install
-COPY . .
+FROM nginx
 
-# 도커 허브에 있는 이미지를 가져온다.
-FROM nginx:stable-alpine as production-stage
+# root 에 app 폴더를 생성
+RUN mkdir /app
 
-# 컨테이너가 실행할 때 nginx를 실행해 준다. 
+# work dir 고정
+WORKDIR /app
+
+# work dir 에 build 폴더 생성 /app/build
+RUN mkdir ./build
+
+# host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
+ADD ./build ./build
+
+# container 실행 시 자동으로 실행할 command. nginx 시작함
 CMD ["nginx", "-g", "daemon off;"]
