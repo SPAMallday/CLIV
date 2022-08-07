@@ -1,7 +1,7 @@
 version: "3.9"
 services: 
   frontend:
-    container_name: frontend
+    container_name: frontend:0.1
     build: 
       context: ./FE
     ports: 
@@ -12,7 +12,7 @@ services:
     depends_on:
       - backend
   backend:
-    container_name: backend
+    container_name: backend:0.1
     build: 
       context: ./BE
     ports: 
