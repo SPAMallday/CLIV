@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MBoardRepository extends JpaRepository<MBoard, Integer> {
+public interface MatchingRepository extends JpaRepository<MBoard, Integer> {
     List<MBoard> findAll();
 }

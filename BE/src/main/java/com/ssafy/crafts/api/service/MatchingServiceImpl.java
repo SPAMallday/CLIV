@@ -1,11 +1,10 @@
 package com.ssafy.crafts.api.service;
 
-import com.ssafy.crafts.api.request.ClassInfoRequest;
-import com.ssafy.crafts.api.request.HashtagRequest;
-import com.ssafy.crafts.api.response.ClassInfoResponse;
-import com.ssafy.crafts.db.entity.ClassInfo;
+import com.ssafy.crafts.api.request.MatchingRequest;
+import com.ssafy.crafts.api.response.MatchingResponse;
+import com.ssafy.crafts.db.entity.MBoard;
 import com.ssafy.crafts.db.entity.Member;
-import com.ssafy.crafts.db.repository.jpaRepo.ClassInfoRepository;
+import com.ssafy.crafts.db.repository.jpaRepo.MatchingRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.HashtagQuerydslRepository;
@@ -28,5 +27,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MatchingServiceImpl implements MatchingService{
 
+    private  final MatchingRepository matchingRepository;
 
+    @Override
+    public void createMBoard(MatchingRequest matchingRequest) {
+        /**
+         * @Method Name : createMBoard
+         * @작성자 : 김민주
+         * @Method 설명 : 매칭 요청글 생성
+         */
+        matchingRepository.save(matchingRequest.toEntity());
+    }
 }

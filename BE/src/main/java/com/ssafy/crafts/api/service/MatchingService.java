@@ -1,6 +1,7 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
+import com.ssafy.crafts.api.request.MatchingRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,5 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface MatchingService {
 
+    void createMBoard(MatchingRequest matchingRequest);
 
 }
