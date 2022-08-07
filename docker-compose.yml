@@ -1,0 +1,25 @@
+version: "3.9"
+services: 
+  frontend:
+    container_name: frontend
+    build: 
+      context: ./FE
+    ports: 
+      - 3000:80
+    networks:
+      - cliv
+    restart: unless-stopped
+    depends_on:
+      - backend
+  backend:
+    container_name: backend
+    build: 
+      context: ./BE
+    ports: 
+      - 8080:8080
+    networks:
+      - cliv
+    restart: unless-stopped
+    
+networks: 
+  cliv:
