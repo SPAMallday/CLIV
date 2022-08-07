@@ -1,22 +1,29 @@
-import Profile from "../../components/myprofile/Profile";
-import MyReview from "../../components/myprofile/MyReview";
-import Badge from "../../components/myprofile/Badge";
+import React from 'react';
+import { ReactDOM } from 'react';
 
-import "./MyProfile.css";
+import StarRating from '../../components/starrating/StarRating';
+import Profile from '../../components/myprofile/Profile';
+import MyReviewTabs from '../../components/myprofile/MyReviewTabs';
+import Badge from '../../components/myprofile/Badge';
+
+import Box from '@mui/material/Box';
+
+import './MyProfile.css';
 
 function MyProfile() {
   return (
-    <div className="myprofile">
-      <div className="upside">
-        <div className="leftside">
+    <Box>
+      <Box sx={{ display: 'flex', my: 5 }}>
+        <Box sx={{ flex: '50%' }}>
           <Profile />
-        </div>
-        <div className="rightside">
+        </Box>
+        <Box sx={{ flex: '50%' }}>
           <Badge />
-        </div>
-      </div>
-      <MyReview />
-    </div>
+        </Box>
+      </Box>
+      <MyReviewTabs />
+    </Box>
   );
 }
+
 export default MyProfile;

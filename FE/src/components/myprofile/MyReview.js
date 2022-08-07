@@ -1,160 +1,92 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import StarRating from '../starrating/StarRating';
 
 import Button from '@mui/material/Button';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 
 import './MyReview.css';
+import React from 'react';
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
+function MyReview(props) {
   return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#ecdfc8',
-  ...theme.typography.body2,
-  padding: theme.spacing(0),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
-function MyReview() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <div className='myreview'>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label='basic tabs example'>
-            <Tab label='Item One' {...a11yProps(0)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <div className='myreview-container'>
-            <div className='leftside'>
-              <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <Tabs value={value} onChange={handleChange} aria-label='basic tabs example'>
-                    <Tab label='작성한 리뷰' {...a11yProps(0)} />
-                    <Tab label='받은 리뷰' {...a11yProps(1)} />
-                    <Tab label='내가 쓴 리뷰' {...a11yProps(2)} />
-                  </Tabs>
+    <Grid item>
+      <Paper
+        sx={{
+          p: 2,
+          display: 'flex',
+          borderRadius: '15px',
+          alignItems: 'center',
+        }}
+      >
+        <Box sx={{ flex: '75%' }}>
+          <Stack spacing={1}>
+            <Grid container>
+              <Grid item xs={3}>
+                <Box sx={{ display: 'flex' }}>
+                  <Typography fontWeight={700}>별점 : </Typography>
+                  <StarRating ratingValue={3} />
                 </Box>
-                <TabPanel value={value} index={0}></TabPanel>
-                <TabPanel value={value} index={1}></TabPanel>
-                <TabPanel value={value} index={2}></TabPanel>
-              </Box>
-            </div>
-            <div className='rightside'>
-              <div>정렬 : </div>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-                <Select labelId='demo-select-small' id='demo-select-small' onChange={handleChange}>
-                  <MenuItem>최신순</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <div className='myreview-box'>
-            <div className='leftside'>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={3}>
-                    <Item>
-                      <Stack spacing={1}>
-                        <Rating
-                          name='half-rating-read'
-                          defaultValue={2.5}
-                          precision={0.5}
-                          readOnly
-                        />
-                      </Stack>
-                    </Item>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Item>강의자 :</Item>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={3}>
-                    <Item>카테고리 : </Item>
-                  </Grid>
-                  <Grid item xs>
-                    <Item>강의명 : </Item>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={4}>
-                  <Grid item xs>
-                    <Item>수업 설명이 자세해요!</Item>
-                  </Grid>
-                  <Grid item xs>
-                    <Item>강사님이 잘생겼어요!</Item>
-                  </Grid>
-                  <Grid item xs>
-                    <Item>수업이 이해하기 쉬웠어요!</Item>
-                  </Grid>
-                  <Grid item xs>
-                    <Item>강사님이 친절해요!</Item>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                  <Grid item xs>
-                    <Item>후기</Item>
-                  </Grid>
-                </Grid>
-              </Box>
-            </div>
-            <div className='rightside'>
-              <Button>수정</Button>
-              <Button>삭제</Button>
-            </div>
-          </div>
-        </TabPanel>
-      </Box>
-    </div>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography>강의자 : 서윗찬국</Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={3}>
+                <Typography>카테고리 : 가죽공예</Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <Typography>
+                  강의명 : 가죽으로 DB만들기 - 가죽으로 못 만드는게 없어요!
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={3}>
+                <Paper className="reviewpaper">
+                  <Typography>수업 설명이 자세해요!</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={3}>
+                <Paper className="reviewpaper">
+                  <Typography>강사님이 친절해요!</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={3}>
+                <Paper className="reviewpaper">
+                  <Typography>수업이 이해하기 쉬웠어요!</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={3}>
+                <Paper className="reviewpaper">
+                  <Typography>강사님이 잘생겼어요!</Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs>
+                <Typography>
+                  가죽으로 DB 만들기 너무 어려웠어요! 수업이 이해하기 쉬웠지만
+                  원래 어려운 과정이라 하기 힘들었어요! 다음에는 더 쉬운 강의
+                  들을 거에요!!!
+                </Typography>
+              </Grid>
+            </Grid>
+          </Stack>
+        </Box>
+        <Box sx={{ flex: '25%', textAlign: 'center' }}>
+          <Button variant="contained" color="secondary" sx={{ mx: 1 }}>
+            수정
+          </Button>
+          <Button variant="outlined" color="error" sx={{ mx: 1 }}>
+            삭제
+          </Button>
+        </Box>
+      </Paper>
+    </Grid>
   );
 }
 
