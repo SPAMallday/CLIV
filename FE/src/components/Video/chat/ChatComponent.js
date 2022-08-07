@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import IconButton from "@mui/material/IconButton";
-import Fab from "@mui/material/Fab";
-import HighlightOff from "@mui/icons-material/HighlightOff";
-import Send from "@mui/icons-material/Send";
+import React, { Component } from 'react';
+import IconButton from '@mui/material/IconButton';
+import Fab from '@mui/material/Fab';
+import HighlightOff from '@mui/icons-material/HighlightOff';
+import Send from '@mui/icons-material/Send';
 
-import "./ChatComponent.css";
-import { Tooltip } from "@mui/material";
+import './ChatComponent.css';
+import { Tooltip } from '@mui/material';
+//
 
 export default class ChatComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       messageList: [],
-      message: "",
+      message: '',
     };
     this.chatScroll = React.createRef();
 
@@ -25,7 +26,7 @@ export default class ChatComponent extends Component {
   componentDidMount() {
     this.props.user
       .getStreamManager()
-      .stream.session.on("signal:chat", (event) => {
+      .stream.session.on('signal:chat', (event) => {
         const data = JSON.parse(event.data);
         let messageList = this.state.messageList;
         messageList.push({
@@ -36,10 +37,10 @@ export default class ChatComponent extends Component {
         const document = window.document;
         setTimeout(() => {
           const userImg = document.getElementById(
-            "userImg-" + (this.state.messageList.length - 1)
+            'userImg-' + (this.state.messageList.length - 1),
           );
-          const video = document.getElementById("video-" + data.streamId);
-          const avatar = userImg.getContext("2d");
+          const video = document.getElementById('video-' + data.streamId);
+          const avatar = userImg.getContext('2d');
           avatar.drawImage(video, 200, 120, 285, 285, 0, 0, 60, 60);
           this.props.messageReceived();
         }, 50);
@@ -53,7 +54,7 @@ export default class ChatComponent extends Component {
   }
 
   handlePressKey(event) {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.sendMessage();
     }
   }
@@ -61,8 +62,8 @@ export default class ChatComponent extends Component {
   sendMessage() {
     console.log(this.state.message);
     if (this.props.user && this.state.message) {
-      let message = this.state.message.replace(/ +(?= )/g, "");
-      if (message !== "" && message !== " ") {
+      let message = this.state.message.replace(/ +(?= )/g, '');
+      if (message !== '' && message !== ' ') {
         const data = {
           message: message,
           nickname: this.props.user.getNickname(),
@@ -70,11 +71,11 @@ export default class ChatComponent extends Component {
         };
         this.props.user.getStreamManager().stream.session.signal({
           data: JSON.stringify(data),
-          type: "chat",
+          type: 'chat',
         });
       }
     }
-    this.setState({ message: "" });
+    this.setState({ message: '' });
   }
 
   scrollToBottom() {
@@ -93,58 +94,58 @@ export default class ChatComponent extends Component {
   render() {
     const styleChat = { display: this.props.chatDisplay };
     return (
-      <div id='chatContainer'>
-        <div id='chatComponent' style={styleChat}>
-          <div id='chatToolbar'>
+      <div id="chatContainer">
+        <div id="chatComponent" style={styleChat}>
+          <div id="chatToolbar">
             <span>채팅</span>
-            <IconButton id='closeButton' onClick={this.close}>
-              <HighlightOff color='secondary' />
+            <IconButton id="closeButton" onClick={this.close}>
+              <HighlightOff color="secondary" />
             </IconButton>
           </div>
-          <div className='message-wrap' ref={this.chatScroll}>
+          <div className="message-wrap" ref={this.chatScroll}>
             {this.state.messageList.map((data, i) => (
               <div
                 key={i}
-                id='remoteUsers'
+                id="remoteUsers"
                 className={
-                  "message" +
+                  'message' +
                   (data.connectionId !== this.props.user.getConnectionId()
-                    ? " left"
-                    : " right")
+                    ? ' left'
+                    : ' right')
                 }
               >
                 <canvas
-                  id={"userImg-" + i}
-                  width='60'
-                  height='60'
-                  className='user-img'
+                  id={'userImg-' + i}
+                  width="60"
+                  height="60"
+                  className="user-img"
                 />
-                <div className='msg-detail'>
-                  <div className='msg-info'>
+                <div className="msg-detail">
+                  <div className="msg-info">
                     <p> {data.nickname}</p>
                   </div>
-                  <div className='msg-content'>
-                    <span className='triangle' />
-                    <p className='text'>{data.message}</p>
+                  <div className="msg-content">
+                    <span className="triangle" />
+                    <p className="text">{data.message}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div id='messageInput'>
+          <div id="messageInput">
             <input
-              placeholder='메세지를 입력하세요'
-              id='chatInput'
+              placeholder="메세지를 입력하세요"
+              id="chatInput"
               value={this.state.message}
               onChange={this.handleChange}
               onKeyPress={this.handlePressKey}
             />
-            <Tooltip title='Send message'>
+            <Tooltip title="Send message">
               <Fab
-                color='secondary'
-                size='small'
-                id='sendButton'
+                color="secondary"
+                size="small"
+                id="sendButton"
                 onClick={this.sendMessage}
               >
                 <Send />
