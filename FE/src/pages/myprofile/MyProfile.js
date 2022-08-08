@@ -1,8 +1,8 @@
-import Profile from "../../components/myprofile/Profile";
-import MyReview from "../../components/myprofile/MyReview";
-import Badge from "../../components/myprofile/Badge";
+import Profile from '../../components/myprofile/Profile';
+import MyReviewTabs from '../../components/myprofile/MyReviewTabs';
+import Badge from '../../components/myprofile/Badge';
 
-import "./MyProfile.css";
+import './MyProfile.css';
 
 function MyProfile() {
   return (
@@ -15,7 +15,7 @@ function MyProfile() {
           <Badge />
         </div>
       </div>
-      <MyReview />
+      <MyReviewTabs />
     </div>
   );
 }
