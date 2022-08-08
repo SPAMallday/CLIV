@@ -1,33 +1,34 @@
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { useState } from 'react';
 
-import "./MyPreRequest.css";
-import { Typography } from "@mui/material";
-import { useState } from "react";
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import './MyPreRequest.css';
 
 function MyPreRequest() {
   const [data, setData] = useState([
     {
-      category: "가죽공예1",
-      desc: "가죽으로 DB를 만들고 싶어요 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ",
-      date: "2022.07.23",
+      category: '가죽공예1',
+      desc: '가죽으로 DB를 만들고 싶어요 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ',
+      date: '2022.07.23',
     },
     {
-      category: "가죽공예2",
-      desc: "가죽으로 DB를 만들고 싶어요 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ",
-      date: "2022.07.23",
+      category: '가죽공예2',
+      desc: '가죽으로 DB를 만들고 싶어요 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ',
+      date: '2022.07.23',
     },
     {
-      category: "가죽공예3",
-      desc: "가죽으로 DB를 만들고 싶어요 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ",
-      date: "2022.07.23",
+      category: '가죽공예3',
+      desc: '가죽으로 DB를 만들고 싶어요 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ',
+      date: '2022.07.23',
     },
   ]);
 
   return (
     <>
-      <Typography className='miniTitle' sx={{ mt: 3 }}>
+      <Typography className="miniTitle" sx={{ mt: 3 }}>
         나의 이전 요청
       </Typography>
       <Grid container>
@@ -35,32 +36,32 @@ function MyPreRequest() {
           return (
             <Grid item xs sm={6} lg={4}>
               <Box
-                className='myPreMatchingBox'
-                style={{ whiteSpace: "nowrap" }}
+                className="myPreMatchingBox"
+                style={{ whiteSpace: 'nowrap' }}
               >
                 <Box
-                  className='myPreMatching'
-                  component='div'
-                  sx={{ textOverflow: "ellipsis" }}
+                  className="myPreMatching"
+                  component="div"
+                  sx={{ textOverflow: 'ellipsis' }}
                 >
                   {item.category}
                 </Box>
                 <Box
-                  className='myPreMatching'
-                  component='div'
-                  sx={{ textOverflow: "ellipsis" }}
+                  className="myPreMatching"
+                  component="div"
+                  sx={{ textOverflow: 'ellipsis' }}
                 >
                   {item.desc}
                 </Box>
                 <Box
-                  className='myPreMatching'
-                  component='div'
-                  sx={{ textOverflow: "ellipsis" }}
+                  className="myPreMatching"
+                  component="div"
+                  sx={{ textOverflow: 'ellipsis' }}
                 >
                   요청일 : {item.date}
                 </Box>
-                <Button variant='contained' color='secondary'>
-                  <Typography fontWeight={700} fontSize={"0.9rem"}>
+                <Button variant="contained" color="secondary">
+                  <Typography fontWeight={700} fontSize={'0.9rem'}>
                     요청 자세히 보기
                   </Typography>
                 </Button>
