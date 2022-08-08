@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "수업 관련 API", tags = {"ClassController"}, description = "수업 관련 컨트롤러")
 @RestController
 @Slf4j
-@RequestMapping("/class")
+@RequestMapping("/api/class")
 @RequiredArgsConstructor
 public class ClassController {
     private final ClassService classService;

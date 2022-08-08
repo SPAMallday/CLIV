@@ -52,7 +52,7 @@ public class ClassServiceImpl implements ClassService{
         classInfoRequest.setClassImgUrl(thumbnailUrl);
 
         ClassInfo classInfo = ClassInfo.builder()
-                .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()).get())
+                .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()))
                 .category(categoryQuerydslRepository.findCategoryById(classInfoRequest.getCategoryId()).get())
                 .className(classInfoRequest.getClassName())
                 .durationH(classInfoRequest.getDurationH())
@@ -104,7 +104,7 @@ public class ClassServiceImpl implements ClassService{
          */
         ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id).get())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
-        Member member = Optional.ofNullable(memberQuerydslRepository.findMemberByAuthId(memberId).get())
+        Member member = Optional.ofNullable(memberQuerydslRepository.findMemberByAuthId(memberId))
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다."));
         // 인원수 다 찼으면 거절
         if(classInfo.getHeadcount() <= classInfo.getMembers().size())

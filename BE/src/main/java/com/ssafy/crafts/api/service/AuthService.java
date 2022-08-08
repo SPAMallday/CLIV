@@ -40,7 +40,7 @@ public class AuthService {
         //access token을 가지고 ClientKakao을 호출하여 카카오의 사용자 정보를 조회
         Member kakaoMember = clientKakao.getUserData(authRequest.getAccessToken());
         String id = kakaoMember.getAuth().getAuthId();
-        Member member = memberQuerydslRepository.findMemberByAuthId(id).get();
+        Member member = memberQuerydslRepository.findMemberByAuthId(id);
 
         // 사용자 정보 조회 후, 내려받은 사용자식별 ID 값으로 DB에서 이미 가입된 사람인지를 판별 후, 새로운 유저라면 저장, JWT 토큰을 발급
         // 회원가입
@@ -64,7 +64,7 @@ public class AuthService {
         }
 
         // 기존 사용자라면 토큰 만료로 인한 재요청이기 때문에 DB와의 커넥션 없이 바로 새로운 토큰만 발급하여 반환
-        String nickname = memberQuerydslRepository.findMemberByAuthId(id).get().getNickname();
+        String nickname = memberQuerydslRepository.findMemberByAuthId(id).getNickname();
         AuthToken appToken = authTokenProvider.createUserAppToken(id, nickname);
 
         return AuthResponse.builder()
@@ -86,7 +86,7 @@ public class AuthService {
         }
 
         try {
-            Member member =  memberQuerydslRepository.findMemberByAuthId(claims.getSubject()).get();
+            Member member =  memberQuerydslRepository.findMemberByAuthId(claims.getSubject());
             return member.getId();
 
         } catch (NullPointerException e) {
