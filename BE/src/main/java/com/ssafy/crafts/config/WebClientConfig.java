@@ -34,11 +34,9 @@ public class WebClientConfig {  // Spring WebClient Configuration
         return WebClient.builder()
                 .clientConnector(
                         new ReactorClientHttpConnector(
-                                HttpClient.from(
-                                        TcpClient
-                                                .create()
-                                                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
-                                                .doOnConnected(conn -> conn.addHandler(new ReadTimeoutHandler(3000, TimeUnit.MILLISECONDS)))
+                                HttpClient.create()
+                                        .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
+                                        .doOnConnected(conn -> conn.addHandler(new ReadTimeoutHandler(3000, TimeUnit.MILLISECONDS))
                                 )
                 ))
                 .exchangeStrategies(exchangeStrategies)

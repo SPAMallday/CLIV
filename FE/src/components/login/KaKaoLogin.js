@@ -28,8 +28,8 @@ function KaKaoLogin() {
           if ((res.status = '200')) {
             const access_token = res.data.access_token;
 
-            sessionStorage.setItem('token', access_token);
-            sessionStorage.setItem('code', AUTHORIZE_CODE);
+            // sessionStorage.setItem('token', access_token);
+            // sessionStorage.setItem('code', AUTHORIZE_CODE);
 
             dispatch(loginUser(access_token));
             // dispatch(loginUser());
