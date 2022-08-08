@@ -53,7 +53,7 @@ public class ClassInfo {
     @Column(name = "class_datetime", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp classDatetime;
 
-    @Column(name = "duration_h", columnDefinition = "TINYINT", nullable = false, length = 1)
+    @Column(name = "duration_h", columnDefinition = "TINYINT", length = 1)
     private int durationH;
 
     @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
