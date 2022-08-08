@@ -1,9 +1,11 @@
 package com.ssafy.crafts.api.controller;
 
 import com.ssafy.crafts.api.request.MatchingRequest;
+import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
 import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.MBoard;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @FileName : MatchingController
@@ -49,6 +53,24 @@ public class MatchingController {
 
         matchingService.createMBoard(matchingRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/list/{teacherId}")
+    @ApiOperation(value = "강사 id로 강사가 받은 매칭글 조회")
+    public ResponseEntity<?> getMBoardListByTeacherId(@PathVariable String teacherId){
+        /**
+         * @Method Name : getMBoardListByTeacherId
+         * @작성자 : 김민주
+         * @Method 설명 : 강사 id로 매칭 요청글 리스트를 조회한다.
+         */
+        List<Integer> mboardIdList = matchingService.findMBoardIdListByTeacherId(teacherId);
+
+        List<MatchingResponse> list = new ArrayList<>();
+
+        for(Integer mboardId : mboardIdList){
+            list.add(matchingService.findMBoardById(mboardId));
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

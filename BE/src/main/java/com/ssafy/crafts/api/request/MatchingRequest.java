@@ -13,9 +13,8 @@ import lombok.*;
  * @Class 설명 : 매칭 관련 API 요청에 필요한 리퀘스트 바디 정의
  */
 @Getter
-//@AllArgsConstructor
-//@NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @ApiModel("MatchingRequest")
 @Builder
 public class MatchingRequest {

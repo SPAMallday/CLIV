@@ -26,7 +26,7 @@ public class MBoardTeacher {
     // 그 결과로 나온 값은 1건이며 이 데이터를 MBoardTeacher Entity의 Member에 매핑한다.
     @OneToOne
     @JoinColumn(name = "teacher_id")
-    private Member member;
+    private Member teacher;
 
     // 1:1 관계 : 매칭_선생님 - 매칭보드
     @OneToOne
@@ -38,9 +38,9 @@ public class MBoardTeacher {
     private ChatRoom chatRoom;
 
     @Builder
-    public MBoardTeacher(int id, Member member, MBoard mBoard, ChatRoom chatRoom) {
+    public MBoardTeacher(int id, Member teacher, MBoard mBoard, ChatRoom chatRoom) {
         this.id = id;
-        this.member = member;
+        this.teacher = teacher;
         this.mBoard = mBoard;
         this.chatRoom = chatRoom;
     }

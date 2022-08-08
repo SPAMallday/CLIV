@@ -5,10 +5,7 @@ import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.db.entity.MBoard;
 import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.jpaRepo.MatchingRepository;
-import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
-import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
-import com.ssafy.crafts.db.repository.querydslRepo.HashtagQuerydslRepository;
-import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
+import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,7 +24,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MatchingServiceImpl implements MatchingService{
 
-    private  final MatchingRepository matchingRepository;
+    private final MatchingRepository matchingRepository;
+    private final MatchingQuerydslRepository matchingQuerydslRepository;
 
     @Override
     public void createMBoard(MatchingRequest matchingRequest) {
@@ -38,4 +36,38 @@ public class MatchingServiceImpl implements MatchingService{
          */
         matchingRepository.save(matchingRequest.toEntity());
     }
+
+    @Override
+    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
+        /**
+         * @Method Name : findMBoardIdByTeacherId
+         * @작성자 : 김민주
+         * @Method 설명 : 강사 아이디로 강사가 받은 매칭 요청글 ID 리스트 조회
+        */
+        List<Integer> mBoardIdList = matchingQuerydslRepository.findMBoardIdListByTeacherId(teacherId);
+
+        return mBoardIdList;
+    }
+
+    @Override
+    public MatchingResponse findMBoardById(int id) {
+        /**
+         * @Method Name : findMBoardById
+         * @작성자 : 김민주
+         * @Method 설명 : 매칭 요청글 ID로 매칭 요청글 조회
+         */
+        MBoard mBoard = matchingRepository.findById(id);
+
+        return MatchingResponse.builder()
+                .id(mBoard.getId())
+                .title(mBoard.getTitle())
+                .wantedDay(mBoard.getWantedDay())
+                .teacherGender(mBoard.getTeacherGender())
+                .content(mBoard.getContent())
+                .authId(mBoard.getMember().getId())
+                .categoryId(mBoard.getCategory().getId())
+                .matStatus(mBoard.getMatStatus())
+                .build();
+    }
+
 }

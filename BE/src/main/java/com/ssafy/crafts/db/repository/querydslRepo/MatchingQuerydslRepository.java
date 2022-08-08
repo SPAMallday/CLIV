@@ -2,10 +2,13 @@ package com.ssafy.crafts.db.repository.querydslRepo;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.crafts.db.entity.MBoard;
+import com.ssafy.crafts.db.entity.MBoardTeacher;
 import com.ssafy.crafts.db.entity.QMBoard;
+import com.ssafy.crafts.db.entity.QMBoardTeacher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,10 +18,12 @@ public class MatchingQuerydslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     QMBoard qmBoard = QMBoard.mBoard;
+    QMBoardTeacher qmBoardTeacher = QMBoardTeacher.mBoardTeacher;
 
-    public Optional<MBoard> findMBoardById(int id) {
-        MBoard mBoard = jpaQueryFactory.select(qmBoard).from(qmBoard)
-                .where(qmBoard.id.eq(id)).fetchOne();
-        return Optional.ofNullable(mBoard);
+    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
+        List<Integer> mBoardIdList = jpaQueryFactory.select(qmBoardTeacher.mBoard.id)
+                .from(qmBoardTeacher)
+                .where(qmBoardTeacher.member.auth.authId.eq(teacherId)).fetch();
+        return mBoardIdList;
     }
 }
