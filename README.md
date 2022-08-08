@@ -352,3 +352,50 @@ sudo docker run -p 8080:8080 backend:0.1
 - 메인
 
 ![screenshot10](./img/메인페이지.png)
+
+- 카카오 회원가입 및 로그인
+
+![screenshot10](./img/카카오회원가입및로그인.png)
+
+- 회원정보 - 마이프로필
+
+![screenshot10](./img/마이프로필.png)
+
+- 회원정보 - 나의 수강내역
+
+![screenshot10](./img/나의수강내역.png)
+
+---
+
+- 클래스 상세보기
+
+![screenshot10](./img/클래스상세보기1.png)
+![screenshot10](./img/클래스상세보기2.png)
+
+- 클래스 관리 - 클래스 생성
+
+![screenshot10](./img/클래스관리_클래스생성.png)
+
+- 클래스 관리 - 예정 클래스
+
+![screenshot10](./img/클래스관리_예정클래스.png)
+
+- 클래스 관리 - 지난 클래스
+
+![screenshot10](./img/클래스관리_지난클래스.png)
+
+- 클래스 관리 - Q&A 관리
+
+![screenshot10](./img/클래스관리_Q&A관리.png)
+
+---
+
+- 매칭 - 매칭요청하기
+
+![screenshot10](./img/매칭_매칭요청하기.png)
+
+---
+
+- 클래스 수강 화면
+
+![screenshot10](./img/화상클래스.png)
