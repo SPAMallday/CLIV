@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()// 보호된 리소스 URI에 접근할 수 있는 권한을 설정
             .antMatchers(HttpMethod.OPTIONS).permitAll() // CORS Preflight 방지 위해 로그인요청 url 이전에 OPTIONS 요청 보내기
-            .antMatchers("*").permitAll() //전체 접근 허용
+            .antMatchers("/api/kakao/**").permitAll() //전체 접근 허용
             .anyRequest().authenticated().and() // 해당 요청을 인증된 사용자만 사용 가능
             .headers()
             .frameOptions()

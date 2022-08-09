@@ -2,15 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiClient } from '../../api';
 import jwtDecode from 'jwt-decode';
 
-export const loginUser = createAsyncThunk(
+export const classDetail = createAsyncThunk(
   // string action type value: 이 값에 따라 pending, fulfilled, rejected가 붙은 액션 타입이 생성된다.
-  'userInfo/loginUser',
+  'class/detail',
   // payloadCreator callback: 비동기 로직의 결과를 포함하고 있는 프로미스를 반환하는 비동기 함수
-  async (access_token, thunkAPI) => {
+  async (classId, thunkAPI) => {
     try {
-      const res = await apiClient.post('/api/kakao/login', {
-        accessToken: `${access_token}`,
-      });
+      const res = await apiClient.get(`/api/class/${classId}`, null);
       console.log(res);
       return res.data;
     } catch (error) {
@@ -26,8 +24,8 @@ export const loginUser = createAsyncThunk(
 
 // 저장되는 내용
 // id, role, nickname
-export const userInfoSlice = createSlice({
-  name: 'userInfo',
+export const classDetailSlice = createSlice({
+  name: 'classDetail',
   initialState: {
     user: {
       id: '',
@@ -64,10 +62,10 @@ export const userInfoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state, action) => {
+      .addCase(classDetail.pending, (state, action) => {
         console.log('pending');
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(classDetail.fulfilled, (state, action) => {
         state.user.token = action.payload.appToken; // jwt 토큰, 분해해야됨
 
         const decoded = jwtDecode(action.payload.appToken);
@@ -81,9 +79,7 @@ export const userInfoSlice = createSlice({
 
         console.log('fulfilled');
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        // state.loading = false;
-        // state.error = action.error; // action.error인 것을 주의
+      .addCase(classDetail.rejected, (state, action) => {
         console.log('rejected');
       });
   },
@@ -105,4 +101,4 @@ export const userInfoSlice = createSlice({
 
 // export const { loginSuccess, loginFailure } = userInfoSlice.actions;
 
-export default userInfoSlice.reducer;
+export default classDetailSlice.reducer;

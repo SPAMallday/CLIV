@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import videoClassReducer from './modules/VideoClassModule';
 import userInfoReducer from './modules/loginUser';
+import classDetailReducer from './modules/classDetail';
 
 export default configureStore({
   reducer: {
     userInfo: userInfoReducer,
+    classDetail: classDetailReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

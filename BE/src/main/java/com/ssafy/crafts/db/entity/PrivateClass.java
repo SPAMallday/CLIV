@@ -30,16 +30,16 @@ public class PrivateClass {
     private String tuitionFee;
 
     // 1:1 관계 - 1:1수업 - 매칭_선생님
-    @OneToOne
-    @JoinColumn
-    private MBoardTeacher mBoardTeacher;
+//    @OneToOne
+//    @JoinColumn
+//    private MBoardTeacher mBoardTeacher;
 
-    @Builder
-    public PrivateClass(int id, String className, String classDatetime, String tuitionFee, MBoardTeacher mBoardTeacher) {
-        this.id = id;
-        this.className = className;
-        this.classDatetime = classDatetime;
-        this.tuitionFee = tuitionFee;
-        this.mBoardTeacher = mBoardTeacher;
-    }
+//    @Builder
+//    public PrivateClass(int id, String className, String classDatetime, String tuitionFee, MBoardTeacher mBoardTeacher) {
+//        this.id = id;
+//        this.className = className;
+//        this.classDatetime = classDatetime;
+//        this.tuitionFee = tuitionFee;
+//        this.mBoardTeacher = mBoardTeacher;
+//    }
 }

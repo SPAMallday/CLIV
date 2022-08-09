@@ -1,20 +1,24 @@
-import React from "react";
-import ClassDetailInfo from "../../components/class/detail/ClassDetailInfo";
-import ClassDetailItem from "../../components/class/detail/ClassDetailItem";
-import QnaItem from "../../components/qna/QnaItem";
-import MyCalendar from "../../components/mycalendar/MyCalendar";
-import Box from "@mui/material/Box";
-import { Grid, Stack, Typography } from "@mui/material";
+import React from 'react';
+import ClassDetailInfo from '../../components/class/detail/ClassDetailInfo';
+import ClassDetailItem from '../../components/class/detail/ClassDetailItem';
+import QnaItem from '../../components/qna/QnaItem';
+import MyCalendar from '../../components/mycalendar/MyCalendar';
+import Box from '@mui/material/Box';
+import { Grid, Stack, Typography } from '@mui/material';
+import { classDetail } from '../../store/modules/classDetail';
+import { useDispatch } from 'react-redux';
 
 const ClassDetail = () => {
+  const dispatch = useDispatch();
+  dispatch(classDetail(1));
   return (
     <Box sx={{ mt: 8, pb: 6 }}>
-      <Grid container sx={{ width: "100%" }}>
+      <Grid container sx={{ width: '100%' }}>
         <Grid item xs={12} md sx={{ mr: { xs: 0, md: 4 }, mb: 4 }}>
           <Stack spacing={4}>
             <ClassDetailItem />
             <Box>
-              <Typography fontWeight={800} fontSize={"1.4rem"}>
+              <Typography fontWeight={800} fontSize={'1.4rem'}>
                 Q&A
               </Typography>
               <br />
@@ -25,7 +29,7 @@ const ClassDetail = () => {
         <Grid item xs={12} md={4}>
           <Stack spacing={6}>
             <ClassDetailInfo />
-            <MyCalendar type='detail' />
+            <MyCalendar type="detail" />
           </Stack>
         </Grid>
       </Grid>
