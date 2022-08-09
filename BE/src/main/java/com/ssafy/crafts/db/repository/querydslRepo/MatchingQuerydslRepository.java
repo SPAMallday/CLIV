@@ -23,7 +23,12 @@ public class MatchingQuerydslRepository {
     public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
         List<Integer> mBoardIdList = jpaQueryFactory.select(qmBoardTeacher.mBoard.id)
                 .from(qmBoardTeacher)
-                .where(qmBoardTeacher.member.auth.authId.eq(teacherId)).fetch();
+                .where(qmBoardTeacher.member.id.eq(teacherId)).fetch();
         return mBoardIdList;
+    }
+
+    public List<MBoard> findMBoardListByAuthId(String authId) {
+        return jpaQueryFactory.select(qmBoard).from(qmBoard)
+                    .where(qmBoard.member.id.eq(authId)).fetch();
     }
 }

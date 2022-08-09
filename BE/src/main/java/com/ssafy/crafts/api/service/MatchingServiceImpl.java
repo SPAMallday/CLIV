@@ -3,17 +3,13 @@ package com.ssafy.crafts.api.service;
 import com.ssafy.crafts.api.request.MatchingRequest;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.db.entity.MBoard;
-import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.jpaRepo.MatchingRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @FileName : MatchingServiceImpl
@@ -42,7 +38,7 @@ public class MatchingServiceImpl implements MatchingService{
         /**
          * @Method Name : findMBoardIdByTeacherId
          * @작성자 : 김민주
-         * @Method 설명 : 강사 아이디로 강사가 받은 매칭 요청글 ID 리스트 조회
+         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 id 리스트 조회
         */
         List<Integer> mBoardIdList = matchingQuerydslRepository.findMBoardIdListByTeacherId(teacherId);
 
@@ -54,7 +50,7 @@ public class MatchingServiceImpl implements MatchingService{
         /**
          * @Method Name : findMBoardById
          * @작성자 : 김민주
-         * @Method 설명 : 매칭 요청글 ID로 매칭 요청글 조회
+         * @Method 설명 : 매칭 요청글 id로 매칭 요청글 조회
          */
         MBoard mBoard = matchingRepository.findById(id);
 
@@ -68,6 +64,31 @@ public class MatchingServiceImpl implements MatchingService{
                 .categoryId(mBoard.getCategory().getId())
                 .matStatus(mBoard.getMatStatus())
                 .build();
+    }
+
+    @Override
+    public List<MatchingResponse> findMBoardListByAuthId(String authId) {
+        /**
+         * @Method Name : findMBoardListByAuthId
+         * @작성자 : 김민주
+         * @Method 설명 : 회원 id로 매칭 요청글 리스트 조회
+         */
+        List<MBoard> mBoardList = matchingQuerydslRepository.findMBoardListByAuthId(authId);
+        List<MatchingResponse> list = new ArrayList<>();
+
+        for(MBoard mBoard : mBoardList){
+            list.add(MatchingResponse.builder()
+                        .id(mBoard.getId())
+                        .title(mBoard.getTitle())
+                        .wantedDay(mBoard.getWantedDay())
+                        .teacherGender(mBoard.getTeacherGender())
+                        .content(mBoard.getContent())
+                        .authId(mBoard.getMember().getId())
+                        .categoryId(mBoard.getCategory().getId())
+                        .matStatus(mBoard.getMatStatus())
+                        .build());
+        }
+        return list;
     }
 
 }
