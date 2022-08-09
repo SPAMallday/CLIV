@@ -49,23 +49,23 @@ node {
 	download = true
 	version = '14.17.0'
 	// Set the work directory where node_modules should be located
-	nodeModulesDir = file("${project.projectDir}/../frontend")
+	nodeModulesDir = file("${project.projectDir}/../FE")
 }
 
 configurations {
 	providedRuntime
 }
 
-/*task npmInstall(type: NpmTask, overwrite: true) {
-    args = ['install']
-}*/
+//task npmInstall(type: NpmTask, overwrite: true) {
+//    args = ['install']
+//}
 
-task webpack(type: NpmTask, dependsOn: 'npmInstall') {
-	args = ['run','build']
-}
-
-// processResources is a Java task. Run the webpack bundling before this task using the 'build' task in the package.json
-processResources.dependsOn 'webpack'
+//task webpack(type: NpmTask, dependsOn: 'npmInstall') {
+//	args = ['run', 'build']
+//}
+//
+//// processResources is a Java task. Run the webpack bundling before this task using the 'build' task in the package.json
+//processResources.dependsOn 'webpack'
 
 //set build time and inject value to application.properties
 def buildTime() {
@@ -97,6 +97,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	// aws
+	implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+	implementation("org.springframework.cloud:spring-cloud-aws-context:2.2.6.RELEASE")
+	implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE")
+	implementation("com.amazonaws:aws-java-sdk-core:1.12.275")
+	implementation("com.amazonaws:aws-java-sdk-s3:1.12.267")
 
 	//Spring Security
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -153,8 +159,8 @@ dependencies {
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	compile("javax.annotation:javax.annotation-api:1.2")
 
-	implementation("org.projectlombok:lombok:1.18.20")
-	annotationProcessor("org.projectlombok:lombok:1.18.20")
+	implementation("org.projectlombok:lombok:1.18.24")
+	annotationProcessor("org.projectlombok:lombok:1.18.24")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 

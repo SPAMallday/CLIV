@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiClient } from '../../api';
+import jwtDecode from 'jwt-decode';
 
 export const loginUser = createAsyncThunk(
   // string action type value: 이 값에 따라 pending, fulfilled, rejected가 붙은 액션 타입이 생성된다.
@@ -7,7 +8,7 @@ export const loginUser = createAsyncThunk(
   // payloadCreator callback: 비동기 로직의 결과를 포함하고 있는 프로미스를 반환하는 비동기 함수
   async (access_token, thunkAPI) => {
     try {
-      const res = await apiClient.post('/kakao-login', {
+      const res = await apiClient.post('/api/kakao/login', {
         accessToken: `${access_token}`,
       });
       console.log(res);
@@ -32,6 +33,7 @@ export const userInfoSlice = createSlice({
       id: '',
       role: '',
       nickname: '',
+      expTime: 0,
       token: '', // jwt 토큰
     },
     isLogin: null,
@@ -66,8 +68,17 @@ export const userInfoSlice = createSlice({
         console.log('pending');
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        // state.loading = false;
         state.user.token = action.payload.appToken; // jwt 토큰, 분해해야됨
+
+        const decoded = jwtDecode(action.payload.appToken);
+
+        state.user.id = decoded.sub;
+        state.user.role = decoded.role;
+        state.user.nickname = decoded.nickname;
+        state.user.expTime = decoded.exp;
+
+        sessionStorage.setItem('appToken', state.user.token);
+
         console.log('fulfilled');
       })
       .addCase(loginUser.rejected, (state, action) => {

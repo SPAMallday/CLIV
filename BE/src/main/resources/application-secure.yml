@@ -14,9 +14,10 @@ cloud:
       access-key: AKIAS6FLVWY7KIOC5Q6I
       secret-key: 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
     s3:
-      bucket: craftclassbucket
-      url: https://s3.ap-northeast-2.amazonaws.com/craftclassbucket
+      bucket:
+        name: craftclassbucket
+        url: https://s3.ap-northeast-2.amazonaws.com/craftclassbucket
     region:
-      static: ap-northeast-2 # 리전 정보
+      static: ap-northeast-2
     stack:
       auto: false
