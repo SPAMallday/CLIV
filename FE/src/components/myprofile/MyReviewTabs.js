@@ -127,26 +127,6 @@ function MyReviewTabs(props) {
       </TabPanel> */}
       </Box>
     </Box>
-
-    // <div className='myreview'>
-    //   <Box sx={{ width: '100%' }}>
-    //     <TabPanel value={value} index={0}>
-    // <div className='myreview-container'>
-    //   <div className='leftside'>
-
-    //   </div>
-    //   <div className='rightside'>
-    //     <div>정렬 : </div>
-    //     <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-    //       <Select labelId='demo-select-small' id='demo-select-small' onChange={handleChange}>
-    //         <MenuItem>최신순</MenuItem>
-    //       </Select>
-    //     </FormControl>
-    //   </div>
-    //  </div>
-    //     </TabPanel>
-    //   </Box>
-    // </div>
   );
 }
 
