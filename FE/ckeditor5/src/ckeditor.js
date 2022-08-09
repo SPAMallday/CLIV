@@ -30,87 +30,86 @@ import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties.js';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import MediaEmbedToolbar from '@ckeditor/ckeditor5-media-embed/src/mediaembedtoolbar.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
 import Title from '@ckeditor/ckeditor5-heading/src/title.js';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
-import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 class Editor extends ClassicEditor {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
-  Alignment,
-  Autoformat,
-  AutoImage,
-  AutoLink,
-  Autosave,
-  Bold,
-  Essentials,
-  FontColor,
-  FontFamily,
-  FontSize,
-  Heading,
-  Image,
-  ImageCaption,
-  ImageResize,
-  ImageStyle,
-  ImageToolbar,
-  ImageUpload,
-  Indent,
-  IndentBlock,
-  Italic,
-  Link,
-  LinkImage,
-  List,
-  ListProperties,
-  MediaEmbed,
-  MediaEmbedToolbar,
-  Paragraph,
-  TextTransformation,
-  Title,
-  Underline,
-  SimpleUploadAdapter,
+	Alignment,
+	Autoformat,
+	AutoImage,
+	AutoLink,
+	Autosave,
+	Bold,
+	Essentials,
+	FontColor,
+	FontFamily,
+	FontSize,
+	Heading,
+	Image,
+	ImageCaption,
+	ImageResize,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload,
+	Indent,
+	IndentBlock,
+	Italic,
+	Link,
+	LinkImage,
+	List,
+	ListProperties,
+	MediaEmbed,
+	MediaEmbedToolbar,
+	Paragraph,
+	SimpleUploadAdapter,
+	TextTransformation,
+	Title,
+	Underline
 ];
 
 // Editor configuration.
 Editor.defaultConfig = {
-  toolbar: {
-    items: [
-      'undo',
-      'redo',
-      'heading',
-      '|',
-      'fontColor',
-      'fontFamily',
-      'fontSize',
-      '|',
-      'bold',
-      'italic',
-      'underline',
-      '|',
-      'alignment',
-      'indent',
-      'outdent',
-      '|',
-      'bulletedList',
-      'numberedList',
-      '|',
-      'imageUpload',
-      'mediaEmbed',
-      'link',
-      '|',
-    ],
-  },
-  language: 'ko',
-  image: {
-    toolbar: [
-      'imageTextAlternative',
-      'imageStyle:inline',
-      'imageStyle:block',
-      'imageStyle:side',
-      'linkImage',
-    ],
-  },
+	toolbar: {
+		items: [
+			'undo',
+			'heading',
+			'redo',
+			'|',
+			'fontColor',
+			'fontFamily',
+			'fontSize',
+			'|',
+			'bold',
+			'italic',
+			'underline',
+			'|',
+			'alignment',
+			'indent',
+			'outdent',
+			'|',
+			'bulletedList',
+			'numberedList',
+			'|',
+			'imageUpload',
+			'mediaEmbed',
+			'link'
+		]
+	},
+	language: 'ko',
+	image: {
+		toolbar: [
+			'imageTextAlternative',
+			'imageStyle:inline',
+			'imageStyle:block',
+			'imageStyle:side',
+			'linkImage'
+		]
+	}
 };
 
 export default Editor;
