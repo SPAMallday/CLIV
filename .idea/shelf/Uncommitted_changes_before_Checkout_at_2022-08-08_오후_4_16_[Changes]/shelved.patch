@@ -1,0 +1,22 @@
+Index: FE/nginx/nginx.conf
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>server {\r\n  listen 80;\r\n  listen [::]:80;\r\n\r\n\t# server_name 도메인;\r\n  server_name i7a605.p.ssafy.io;\r\n\r\n  access_log /var/log/nginx/access.log;\r\n  error_log /var/log/nginx/error.log;\r\n\r\n  root /usr/share/nginx/html;\r\n  index index.html;\r\n\r\n  location / {\r\n        proxy_pass http://i7a605.p.ssafy.io:3000;\r\n\t\ttry_files $uri $uri/ /index.html;\r\n\t}\r\n\r\n\tlocation /api {\r\n\t    proxy_pass https://i7a605.p.ssafy.io:8080/api;\r\n\t}\r\n\r\n\r\n  #location / {\r\n  #  alias /usr/share/nginx/html;\r\n  #  try_files $uri $uri/ /index.html;\r\n  #  return 301 https://$server_name$request_uri; # http 접속 시 https 로 자동 접속\r\n  #}\r\n}\r\n
+===================================================================
+diff --git a/FE/nginx/nginx.conf b/FE/nginx/nginx.conf
+--- a/FE/nginx/nginx.conf	
++++ b/FE/nginx/nginx.conf	
+@@ -12,12 +12,11 @@
+   index index.html;
+ 
+   location / {
+-        proxy_pass http://i7a605.p.ssafy.io:3000;
+ 		try_files $uri $uri/ /index.html;
+ 	}
+ 
+ 	location /api {
+-	    proxy_pass https://i7a605.p.ssafy.io:8080/api;
++	    proxy_pass http://i7a605.p.ssafy.io:8080/api;
+ 	}
+ 
+ 

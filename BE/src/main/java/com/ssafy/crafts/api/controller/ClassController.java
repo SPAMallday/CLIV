@@ -36,7 +36,7 @@ public class ClassController {
             value="/",
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    @ApiOperation(value = "공연 정보 등록", notes = "새로운 공연 정보를 등록한다.")
+    @ApiOperation(value = "수업 정보 등록", notes = "새로운 수업 정보를 등록한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 404, message = "등록 실패"),
