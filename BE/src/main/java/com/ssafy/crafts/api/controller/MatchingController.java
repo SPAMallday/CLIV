@@ -85,6 +85,6 @@ public class MatchingController {
         return new ResponseEntity<>(mBoardList, HttpStatus.OK);
     }
 
-    @GetMapping("")
+
 
 }
