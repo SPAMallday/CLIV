@@ -1,8 +1,10 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.MatchingRequest;
+import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.db.entity.MBoard;
+import com.ssafy.crafts.db.entity.MBoardTeacher;
 
 import java.util.List;
 
@@ -17,4 +19,6 @@ public interface MatchingService {
     List<Integer> findMBoardIdListByTeacherId(String teacherId);
     MatchingResponse findMBoardById(int id);
     List<MatchingResponse> findMBoardListByAuthId(String authId);
+    void updateAgreeYnById(int mtId);
+    MBoardTeacherResponse getMBoardTeacherById(int mtId);
 }

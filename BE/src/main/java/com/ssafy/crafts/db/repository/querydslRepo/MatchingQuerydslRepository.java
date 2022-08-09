@@ -31,4 +31,5 @@ public class MatchingQuerydslRepository {
         return jpaQueryFactory.select(qmBoard).from(qmBoard)
                     .where(qmBoard.member.id.eq(authId)).fetch();
     }
+
 }

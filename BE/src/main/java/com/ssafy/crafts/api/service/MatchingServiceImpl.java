@@ -1,15 +1,21 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.MatchingRequest;
+import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.db.entity.MBoard;
+import com.ssafy.crafts.db.entity.MBoardTeacher;
+import com.ssafy.crafts.db.repository.jpaRepo.MBoardTeacherRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.MatchingRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @FileName : MatchingServiceImpl
@@ -22,6 +28,7 @@ public class MatchingServiceImpl implements MatchingService{
 
     private final MatchingRepository matchingRepository;
     private final MatchingQuerydslRepository matchingQuerydslRepository;
+    private final MBoardTeacherRepository mBoardTeacherRepository;
 
     @Override
     public void createMBoard(MatchingRequest matchingRequest) {
@@ -89,6 +96,35 @@ public class MatchingServiceImpl implements MatchingService{
                         .build());
         }
         return list;
+    }
+
+    @Override
+    public void updateAgreeYnById(int mtId) {
+        /**
+         * @Method Name : updateAgreeYnById
+         * @작성자 : 김민주
+         * @Method 설명 : 매칭_선생님 id로 클래스 개설 동의 여부를 Y로 업데이트
+         */
+        mBoardTeacherRepository.updateAgreeYn(mtId);
+    }
+
+    @Override
+    public MBoardTeacherResponse getMBoardTeacherById(int mtId) {
+        /**
+         * @Method Name : getMBoardTeacherById
+         * @작성자 : 김민주
+         * @Method 설명 : 매칭_선생님 id로 매칭_선생님 조회
+         */
+
+        MBoardTeacher mBoardTeacher = Optional.ofNullable(mBoardTeacherRepository.findById(mtId).get())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "요청글이 존재하지 않습니다."));
+
+        return MBoardTeacherResponse.builder()
+                .id(mBoardTeacher.getId())
+                .agreeYn(mBoardTeacher.getAgreeYn())
+                .teacherId(mBoardTeacher.getTeacher().getId())
+                .mboardId(mBoardTeacher.getMBoard().getId())
+                .build();
     }
 
 }

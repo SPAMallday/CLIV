@@ -85,6 +85,18 @@ public class MatchingController {
         return new ResponseEntity<>(mBoardList, HttpStatus.OK);
     }
 
+    @PostMapping("/agree/{mtId}")
+    public ResponseEntity<String> agreeMatching(@PathVariable int mtId){
+        /**
+         * @Method Name : agreeMatching
+         * @작성자 : 김민주
+         * @Method 설명 : 수강생이 클래스 개설을 동의한다.
+         */
+        if(matchingService.getMBoardTeacherById(mtId) != null){
+            matchingService.updateAgreeYnById(mtId);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
 
 }

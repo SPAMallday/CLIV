@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.naming.Name;
 import javax.persistence.*;
 
 @Getter
@@ -21,8 +20,12 @@ public class MBoardTeacher {
     @Column(name = "mt_id")
     private int id;
 
-    @Column(nullable = false, length = 1)
-    private String pclassAgreeYn;    // 클래스 개설 수강생 동의 여부
+//    @Column(nullable = false, length = 1, columnDefinition = "STRING DEFAULT N")
+//    private String agreeYn;    // 클래스 개설 수강생 동의 여부
+
+    @Column(columnDefinition = "ENUM('Y', 'N') DEFAULT 'N'")
+    @Enumerated(EnumType.STRING)
+    private EnumYn agreeYn = EnumYn.N;  // 클래스 개설 수강생 동의 여부
 
     // 1:1 관계 : 매칭_선생님 - 회원
     // MBoardTeacher 테이블의 teacher_id(PFK)를 사용해서 Member 테이블과 Join을 수행하고
@@ -41,11 +44,16 @@ public class MBoardTeacher {
     private ChatRoom chatRoom;
 
     @Builder
-    public MBoardTeacher(int id, String pclassAgreeYn, Member teacher, MBoard mBoard, ChatRoom chatRoom) {
+    public MBoardTeacher(int id, EnumYn agreeYn, Member teacher, MBoard mBoard, ChatRoom chatRoom) {
         this.id = id;
-        this.pclassAgreeYn = pclassAgreeYn;
+        this.agreeYn = agreeYn;
         this.teacher = teacher;
         this.mBoard = mBoard;
         this.chatRoom = chatRoom;
+    }
+
+    public static  enum EnumYn {
+        Y,
+        N
     }
 }
