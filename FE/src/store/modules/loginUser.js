@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiClient } from '../../api';
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 
 export const loginUser = createAsyncThunk(
   // string action type value: 이 값에 따라 pending, fulfilled, rejected가 붙은 액션 타입이 생성된다.
@@ -76,7 +76,7 @@ export const userInfoSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user.token = action.payload.appToken; // jwt 토큰, 분해해야됨
-
+        
         const decoded = jwtDecode(action.payload.appToken);
 
         state.user.id = decoded.sub;
