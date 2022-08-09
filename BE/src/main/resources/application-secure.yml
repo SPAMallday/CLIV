@@ -1,0 +1,23 @@
+# jwt
+jwt:
+  token:
+    secret-key: a605dyAeHubOOc8KaOfYB6XEQoEj1QtjNL8PYs1A1tymZvvqkcEU7L1imkKHeDa
+  access-token:
+    expire-length: 3600000 # 60 * 60 * 1000 = 1h
+  refresh-token:
+    expire-length: 1296000000 # unit is ms. 15 * 24 * 60 * 60 * 1000 = 15days
+
+# s3
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAS6FLVWY7KIOC5Q6I
+      secret-key: 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
+    s3:
+      bucket:
+        name: craftclassbucket
+        url: https://s3.ap-northeast-2.amazonaws.com/craftclassbucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

@@ -1,8 +1,6 @@
 package com.ssafy.crafts.api.response;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * @FileName : ClassInfoResponse
@@ -10,7 +8,8 @@ import lombok.ToString;
  * @Class 설명 : 수업 정보 조회 API 요청에 대한 리스폰스 바디 정의
  */
 @Getter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ClassInfoResponse {
     int classId;
