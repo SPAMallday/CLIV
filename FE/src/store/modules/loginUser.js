@@ -36,30 +36,37 @@ export const userInfoSlice = createSlice({
       expTime: 0,
       token: '', // jwt 토큰
     },
-    isLogin: null,
+    isLogin: false,
   },
   reducers: {
     increment: (state) => {
       console.log('inc');
     },
     // login 성공 시
-    loginSuccess: (state, action) => {
+    loginSuccess: (state) => {
       // state.id = action.payload.id;
       // state.role = action.payload.role;
       // state.nickname = action.payload.nickname;
-      state.id = 'id';
-      state.role = 'role';
-      state.nickname = 'nickname';
       state.isLogin = true;
-      return state;
+      // return state;
     },
     // login 실패 시
     loginFailure: (state) => {
-      state.id = '';
-      state.role = '';
-      state.nickname = '';
       state.isLogin = false;
-      return state;
+      // return state;
+    },
+    // logout 성공 시
+    logoutSuccess: (state) => {
+      // state.id = action.payload.id;
+      // state.role = action.payload.role;
+      // state.nickname = action.payload.nickname;
+      state.isLogin = false;
+      // return state;
+    },
+    // logout 실패 시
+    logoutFailure: (state) => {
+      state.isLogin = true;
+      // return state;
     },
   },
   extraReducers: (builder) => {
@@ -77,7 +84,7 @@ export const userInfoSlice = createSlice({
         state.user.nickname = decoded.nickname;
         state.user.expTime = decoded.exp;
 
-        sessionStorage.setItem('appToken', state.user.token);
+        state.isLogin = true;
 
         console.log('fulfilled');
       })
@@ -87,20 +94,6 @@ export const userInfoSlice = createSlice({
         console.log('rejected');
       });
   },
-  // extraReducers: {
-  //   [loadBucket.pending]: (state, action) => {
-  //     console.log('pending');
-  //   },
-  //   // fullflled 되었을 때, 서버에서 받아온 데이터를 state에 넣어줌!
-  //   // 첫번째 파라미터는 redux의 state이고 두번째 파라미터는 action
-  //   [loadBucket.fulfilled]: (state, action) => {
-  //     // state.list = action.payload;
-  //     console.log('fulfilled');
-  //   },
-  //   [loadBucket.rejected]: (state, action) => {
-  //     console.log('rejected');
-  //   },
-  // },
 });
 
 // export const { loginSuccess, loginFailure } = userInfoSlice.actions;

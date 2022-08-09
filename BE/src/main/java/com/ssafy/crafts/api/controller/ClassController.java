@@ -72,6 +72,7 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 수업 id로 수업 정보를 조회한다.
          */
+        System.out.println("class detail");
         log.debug("class detail");
         ClassInfoResponse classInfoResponse = classService.findClassInfoById(classId);
         if(classInfoResponse == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
