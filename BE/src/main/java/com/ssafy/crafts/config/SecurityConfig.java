@@ -3,6 +3,7 @@ package com.ssafy.crafts.config;
 import com.ssafy.crafts.common.auth.JwtAuthenticationFilter;
 import com.ssafy.crafts.common.util.AuthTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.reactive.config.CorsRegistry;
+
 /**
 * WebSecurityConfigurerAdapter를 상속받은 config 클래스에
 * @EnableWebSecurity을 달면 SpringSecurityFilterChain이 자동으로 포함된다.
@@ -55,18 +61,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // - 인증 실패 시, AuthenticationFailureHandler 실행
 
     }
-//    // CORS 허용 적용
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//
-//        configuration.addAllowedOrigin("*");
-//        configuration.addAllowedHeader("*");
-//        configuration.addAllowedMethod("*");
-//        configuration.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+
 }

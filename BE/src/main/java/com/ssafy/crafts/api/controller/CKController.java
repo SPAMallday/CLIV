@@ -2,6 +2,7 @@ package com.ssafy.crafts.api.controller;
 
 import com.ssafy.crafts.api.response.FileResponse;
 import com.ssafy.crafts.api.service.FileUploadService;
+import com.ssafy.crafts.common.util.S3Uploader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -12,11 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @FileName : CKController
@@ -31,7 +29,9 @@ import java.io.PrintWriter;
 @RequiredArgsConstructor
 public class CKController {
 
-    private final FileUploadService fileUploadService;
+//    private final FileUploadService fileUploadService;
+
+    private final S3Uploader s3Uploader;
 
     @PostMapping("/upload")
     @ApiOperation(value = "이미지 url 생성 후 반환", notes = "CK5 에디터에 올라온 이미지의 url을 생성후 반환한다.")
@@ -40,8 +40,7 @@ public class CKController {
             @ApiResponse(code = 404, message = "등록 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<FileResponse> fileUploadFromCKEditor(HttpServletResponse response,
-                                                               @RequestPart(value = "image", required = false) MultipartFile image) throws Exception {
+    public ResponseEntity<FileResponse> fileUploadFromCKEditor(@RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
         /**
          * @Method Name : fileUploadFromCKEditor
@@ -50,7 +49,7 @@ public class CKController {
          */
         return new ResponseEntity<>(FileResponse.builder().
                 uploaded(true).
-                url(fileUploadService.upload(image)).
+                url(s3Uploader.upload(image, "CK5")).
                 build(), HttpStatus.OK);
     }
 }
