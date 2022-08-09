@@ -22,10 +22,8 @@ import './ClassCreate.css';
 
 const editorConfiguration = {
   simpleUpload: {
-    // The URL the images are uploaded to.
-    // 로컬기준
-    uploadUrl: process.env.REACT_APP_BASE_URL + '/upload/image',
-    // Enable the XMLHttpRequest.withCredentials property.
+    // 로컬기준 통신 경로
+    uploadUrl: process.env.REACT_APP_BASE_URL + '/api/image/upload',
     // 쿠키를 헤더에 포함시켜서 보내고 싶다면 사용
     // withCredentials: true,
     // Headers sent along with the XMLHttpRequest to the upload server.
@@ -115,7 +113,7 @@ function ClassCreate() {
   const [uploadImage, setUploadImage] = useState(null);
   const [cost, setCost] = useState(0);
   const [number, setNumber] = useState(2);
-  const [content, setContent] = useState('삐용삐용');
+  const [content, setContent] = useState('');
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -151,9 +149,10 @@ function ClassCreate() {
     setUploadImage(null);
     setCost(0);
     setNumber(2);
-    setContent('삐용삐용');
+    setContent('');
   };
 
+  // 등록 버튼 눌렀을 때 검사
   const validData = () => {
     if (title !== '' && dateTime !== timeNow && content !== '') {
       sendCreate();
@@ -162,20 +161,47 @@ function ClassCreate() {
     }
   };
 
-  const sendCreate = async () => {
-    const formData = new FormData();
-    formData.append('teacherId', '선생님 아이디');
-    formData.append('categoryId', category);
-    formData.append('tagginRequest', '선생님 아이디');
-    formData.append('className', title);
-    formData.append('durationH', '선생님 아이디');
-    formData.append('headcount', number);
-    formData.append('price', cost);
-    formData.append('content', content);
-    formData.append('classImgUrl', uploadImage);
-    formData.append('level', rating);
+  // 이미지 용량 검사
+  const imageCheck = (event) => {
+    console.log(event.target.files[0]);
+    const imgSize = event.target.files[0].size;
 
+    const maxSize = 5 * 1024 * 1024; //5MB
+
+    if (imgSize > maxSize) {
+      alert('클래스 대표 사진은 5MB 이하로 사용해주세요!');
+      return;
+    } else {
+      setUploadImage(event.target.files[0]);
+    }
+  };
+
+  // 검사를 통과하면 데이터 통신을 수행
+  //
+  // 대표사진은 multipartfile로 따로?
+
+  const sendCreate = async () => {
+    let myData = {
+      teacherId: '선생님 아이디',
+      categoryId: category,
+      tagginRequest: ['태그1', '태그2'],
+      className: title,
+      headcount: number,
+      price: cost,
+      content: content,
+      level: rating,
+    };
+
+    console.log(uploadImage);
     // 전체 데이터 합쳐서 form으로
+    const formData = new FormData();
+    // 대표 이미지
+    formData.append('thumbnail', uploadImage);
+    // 나머지 데이터
+    formData.append(
+      'classInfoRequest',
+      new Blob([JSON.stringify(myData)], { type: 'application/json' }),
+    );
 
     const response = await apiClient.post('/api/class', formData);
     if (response.status === '200') {
@@ -300,10 +326,22 @@ function ClassCreate() {
               component="label"
               sx={{ ml: 1, py: 0.5, px: 0.5 }}
             >
-              <input hidden accept="image/*" multiple type="file" />
+              <input
+                hidden
+                accept="image/*"
+                onChange={imageCheck}
+                multiple
+                type="file"
+              />
               <PhotoCamera />
             </IconButton>
-            <input hidden accept="image/*" multiple type="file" />
+            <input
+              hidden
+              accept="image/*"
+              onChange={imageCheck}
+              multiple
+              type="file"
+            />
           </Button>
         </Grid>
         <Grid item xs={6} md>
@@ -353,12 +391,16 @@ function ClassCreate() {
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
+          setContent(data);
         }}
         onBlur={(event, editor) => {
-          console.log('Blur.', editor);
+          // 에디터 내부를 선택했다가 다른 곳을 클릭해서 나갈 때
+          // 포커스가 풀리는 상황
+          // console.log('Blur.', editor);
         }}
         onFocus={(event, editor) => {
-          console.log('Focus.', editor);
+          // 에디터 내부를 선택해서 포커스가 될 때 상황
+          // console.log('Focus.', editor);
         }}
       />
       <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
