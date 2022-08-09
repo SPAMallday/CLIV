@@ -10,11 +10,11 @@ import {
   ClassManage,
   Matching,
   MyClassHistory,
+  ReceiveRequest,
 } from './pages';
 import MyProfile from './pages/myprofile/MyProfile';
 import WithNav from './components/route/WithNav';
 import WithoutNav from './components/route/WithoutNav';
-import ReceiveRequest from './pages/matching/ReceiveRequest';
 
 function App() {
   return (
@@ -30,12 +30,15 @@ function App() {
         <Route element={<WithNav />}>
           <Route path="/" element={<Main />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/myhistory" element={<MyClassHistory />}></Route>
           <Route path="/class/list" element={<ClassList />} />
           <Route path="/class/detail/*" element={<ClassDetail />} />
           <Route path="/classmanage" element={<ClassManage />} />
           <Route path="/matching" element={<Matching />}></Route>
-          <Route path="/receiverequest" element={<ReceiveRequest />}></Route>
+          <Route path="/myhistory" element={<MyClassHistory />}></Route>
+          <Route
+            path="/matching/receiverequest"
+            element={<ReceiveRequest />}
+          ></Route>
         </Route>
       </Routes>
     </div>

@@ -13,19 +13,18 @@ import RequestModal from '../modal/RequestModal';
 
 import './RecRequest.css';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
-  bgcolor: 'background.paper',
-  borderRadius: '25px',
-  p: 5,
-};
-
 function RecRequest() {
   const [openDetail, setOpenDetail] = React.useState(false);
+  const [transItem, setTransItem] = React.useState(null);
+
+  const handleState = (data) => {
+    setOpenDetail(data);
+  };
+
+  const clickItem = (item) => {
+    setOpenDetail(true);
+    setTransItem(item);
+  };
 
   const [data, setData] = useState([
     {
@@ -64,47 +63,54 @@ function RecRequest() {
     <>
       {data.map((item, i) => {
         return (
-          <Box sx={{ my: 2, minWidth: '600px' }}>
-            <Grid container columnSpacing={3} sx={{ px: 1 }}>
-              <Grid item sx={{ flex: '100%' }}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    borderRadius: '15px',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Box sx={{ flex: '75%' }}>
-                    <Stack spacing={1}>
-                      <Typography fontWeight={700}>
-                        [{item.category}] {item.title}
-                      </Typography>
-                      <Typography>요청자 : {item.requestperson} </Typography>
-                      <Typography>요청일 : {item.requestdate} </Typography>
-                      <Typography>원하는 시간 : {item.time} </Typography>
-                      <Typography>예상 금액 : {item.amount} </Typography>
-                    </Stack>
-                  </Box>
+          <>
+            <Box sx={{ my: 2, minWidth: '600px' }}>
+              <Grid container columnSpacing={3} sx={{ px: 1 }}>
+                <Grid item sx={{ flex: '100%' }}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: 'flex',
+                      borderRadius: '15px',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Box sx={{ flex: '75%' }}>
+                      <Stack spacing={1}>
+                        <Typography fontWeight={700}>
+                          [{item.category}] {item.title}
+                        </Typography>
+                        <Typography>요청자 : {item.requestperson} </Typography>
+                        <Typography>요청일 : {item.requestdate} </Typography>
+                        <Typography>원하는 시간 : {item.time} </Typography>
+                        <Typography>예상 금액 : {item.amount} </Typography>
+                      </Stack>
+                    </Box>
 
-                  <Box sx={{ flex: '25%', textAlign: 'center' }}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => {
-                        setOpenDetail(true);
-                      }}
-                    >
-                      요청 자세히 보기
-                    </Button>
-                  </Box>
-                </Paper>
+                    <Box sx={{ flex: '25%', textAlign: 'center' }}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={(event) => {
+                          clickItem(item);
+                        }}
+                      >
+                        요청 자세히 보기
+                      </Button>
+                    </Box>
+                  </Paper>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          </>
         );
       })}
-      <RequestModal openDetail={openDetail} />
+
+      <RequestModal
+        handleState={handleState}
+        openDetail={openDetail}
+        transItem={transItem}
+      />
 
       {/* {data.map((item, i) => {
         return (
