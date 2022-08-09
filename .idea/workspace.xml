@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="" />
+    <list default="true" id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/BE/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/CKController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/CKController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/FileUploadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/FileUploadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/common/util/S3Uploader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/AmazonS3Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/WebMvcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application-secure.yml" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application-secure.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/ssafy-web.log" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,6 +85,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/SSAFY/workspace/commonPjt/S07P12A605",
     "node.js.detected.package.eslint": "true",
@@ -78,7 +94,8 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "profiler.jvm"
+    "settings.editor.selected.configurable": "profiler.jvm",
+    "spring.configuration.checksum": "525d9c323efecbe1bd6e3943f47fcaf1"
   }
 }]]></component>
   <component name="RunManager">
@@ -106,6 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1659921761799</updated>
       <workItem from="1659921764372" duration="2203000" />
+      <workItem from="1660047523253" duration="1324000" />
     </task>
     <servers />
   </component>
