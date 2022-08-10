@@ -53,9 +53,6 @@ public class ClassInfo {
     @Column(name = "class_datetime", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp classDatetime;
 
-    @Column(name = "duration_h", columnDefinition = "TINYINT", length = 1)
-    private int durationH;
-
     @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
     private int headcount;
 
@@ -76,7 +73,7 @@ public class ClassInfo {
     private ClassStatus classStatus;
 
     @Builder
-    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int durationH, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus) {
+    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus) {
         this.id = id;
         this.qnaList = qnaList;
         this.reviewList = reviewList;
@@ -86,7 +83,6 @@ public class ClassInfo {
         this.tagging = tagging;
         this.className = className;
         this.classDatetime = classDatetime;
-        this.durationH = durationH;
         this.headcount = headcount;
         this.price = price;
         this.content = content;
