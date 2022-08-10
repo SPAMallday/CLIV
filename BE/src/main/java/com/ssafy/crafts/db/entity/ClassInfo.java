@@ -62,9 +62,6 @@ public class ClassInfo {
     @Column(nullable = false)
     private int price;
 
-    @Column(length = 200)
-    private String guide;
-
     @Column(nullable = false, length = 1000)
     private String content;
 
@@ -79,7 +76,7 @@ public class ClassInfo {
     private ClassStatus classStatus;
 
     @Builder
-    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int durationH, int headcount, int price, String guide, String content, String classImg, int level, ClassStatus classStatus) {
+    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int durationH, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus) {
         this.id = id;
         this.qnaList = qnaList;
         this.reviewList = reviewList;
@@ -92,7 +89,6 @@ public class ClassInfo {
         this.durationH = durationH;
         this.headcount = headcount;
         this.price = price;
-        this.guide = guide;
         this.content = content;
         this.classImg = classImg;
         this.level = level;
