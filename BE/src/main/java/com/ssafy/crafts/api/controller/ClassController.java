@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 /**
  * @FileName : ClassController
@@ -26,17 +27,17 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "수업 관련 API", tags = {"ClassController"}, description = "수업 관련 컨트롤러")
 @RestController
 @Slf4j
-@RequestMapping("/class")
+@RequestMapping("/api/class")
 @RequiredArgsConstructor
 public class ClassController {
     private final ClassService classService;
     private final AuthService authService;
 
     @PostMapping(
-            value="/",
+            value="/create",
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    @ApiOperation(value = "공연 정보 등록", notes = "새로운 공연 정보를 등록한다.")
+    @ApiOperation(value = "수업 정보 등록", notes = "새로운 수업 정보를 등록한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 404, message = "등록 실패"),
@@ -45,14 +46,19 @@ public class ClassController {
     public ResponseEntity<Object> insertClassInfo(HttpServletRequest request,
                                                   @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
                                                   @RequestPart(value = "classInfoRequest") ClassInfoRequest classInfoRequest
-    ) {
+    ) throws ParseException {
         /**
          * @Method Name : insertClassInfo
          * @작성자 : 허성은
          * @Method 설명 : 새로운 수업 정보를 등록한다.
          */
+        log.info("수업 정보 등록 시작");
+        log.info("토큰 얻어오기");
         String token = JwtHeaderUtil.getAccessToken(request);
+        log.info("토큰에서 아이디 정보 얻어 선생님 아이디로 할당");
         classInfoRequest.setTeacherId(authService.getAuthId(token));
+//        classInfoRequest.setTeacherId("1234555");
+        log.info("수업 정보와 썸네일 등록");
         classService.insertClassInfo(classInfoRequest, thumbnail);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -4,6 +4,8 @@ import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.ParseException;
+
 /**
  * @FileName : ClassService
  * @작성자 : 허성은
@@ -11,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ClassService {
 
-    void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail);
+    void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail) throws ParseException;
     ClassInfoResponse findClassInfoById(int id);
     void joinClassByMemberId(int id, String memberId);
 }

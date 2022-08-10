@@ -20,10 +20,10 @@ public class MemberQuerydslRepository {
     QMember qMember = QMember.member;
     QAuth qAuth = QAuth.auth;
 
-    public Optional<Member> findMemberByAuthId(String authId) {
+    public Member findMemberByAuthId(String authId) {
         Member member = jpaQueryFactory.select(qMember).from(qMember)
                 .where(qMember.auth.authId.eq(authId)).fetchOne();
-        return Optional.ofNullable(member);
+        return member;
     }
 
     public Optional<Auth> findAuthByAuthId(String authId) {
