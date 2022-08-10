@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Grid, styled, Typography, IconButton } from '@mui/material';
+import {
+  Grid,
+  styled,
+  Typography,
+  IconButton,
+  Alert,
+  Backdrop,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
@@ -114,6 +121,8 @@ function ClassCreate() {
   const [cost, setCost] = useState(0);
   const [number, setNumber] = useState(2);
   const [content, setContent] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -138,6 +147,22 @@ function ClassCreate() {
 
   const handleContentChange = (event) => {
     setContent(event.target.value);
+  };
+
+  const handleOpenSuccess = () => {
+    setSuccess(true);
+  };
+
+  const handleCloseSuccess = () => {
+    setSuccess(false);
+  };
+
+  const handleOpenFail = () => {
+    setFail(true);
+  };
+
+  const handleCloseFail = () => {
+    setFail(false);
   };
 
   const resetState = () => {
@@ -191,8 +216,6 @@ function ClassCreate() {
       content: content,
       level: rating,
     };
-
-    console.log(uploadImage);
     // 전체 데이터 합쳐서 form으로
     const formData = new FormData();
     // 대표 이미지
@@ -203,11 +226,13 @@ function ClassCreate() {
       new Blob([JSON.stringify(myData)], { type: 'application/json' }),
     );
 
-    const response = await apiClient.post('/api/class/create', formData);
-    if (response.status === '201') {
-      alert('생성이 완료되었습니다!');
-    } else {
-      alert('클래스 생성 실패');
+    try {
+      const response = await apiClient.post('/api/class/create', formData);
+      if (response.status === '201') {
+        handleOpenSuccess();
+      }
+    } catch (error) {
+      handleOpenFail();
     }
   };
 
@@ -422,6 +447,50 @@ function ClassCreate() {
           취소
         </Button>
       </Box>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: 2 }}
+        open={success || fail}
+        onClick={() => {
+          handleCloseFail();
+          handleCloseSuccess();
+        }}
+      >
+        {success === true ? (
+          <Alert
+            sx={{
+              position: 'absolute',
+              top: '10%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 1,
+            }}
+            onClose={() => {
+              handleCloseSuccess();
+            }}
+            severity="success"
+          >
+            클래스 생성이 완료되었습니다!
+          </Alert>
+        ) : null}
+        {fail === true ? (
+          <Alert
+            sx={{
+              position: 'absolute',
+              top: '10%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 1,
+            }}
+            onClose={() => {
+              handleCloseFail();
+            }}
+            severity="error"
+          >
+            클래스 생성에 실패했습니다..
+          </Alert>
+        ) : null}
+      </Backdrop>
     </Box>
   );
 }
