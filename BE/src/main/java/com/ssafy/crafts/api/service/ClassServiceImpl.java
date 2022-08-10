@@ -61,13 +61,14 @@ public class ClassServiceImpl implements ClassService{
                 .content(classInfoRequest.getContent())
                 .classImg(classInfoRequest.getClassImgUrl())
                 .level(classInfoRequest.getLevel())
+                .classStatus(ClassInfo.ClassStatus.EXPECTED)
                 .build();
 
         List<HashtagRequest> taggingList = classInfoRequest.getTaggingRequest();
 
-        for(int i = 0; i < taggingList.size(); i++){
-            classInfo.addTagging(hashtagQuerydslRepository.findHashtagById(taggingList.get(i).getHashtagId()).get());
-        }
+//        for(int i = 0; i < taggingList.size(); i++){
+//            classInfo.addTagging(hashtagQuerydslRepository.findHashtagById(taggingList.get(i).getHashtagId()).get());
+//        }
 
         classInfoRepository.save(classInfo);
     }

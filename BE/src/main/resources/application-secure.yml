@@ -16,7 +16,7 @@ cloud:
     s3:
       bucket:
         name: craftclassbucket
-        url: https://s3.ap-northeast-2.amazonaws.com/craftclassbucket
+        url: https://craftclassbucket.s3.ap-northeast-2.amazonaws.com/
     region:
       static: ap-northeast-2
     stack:
