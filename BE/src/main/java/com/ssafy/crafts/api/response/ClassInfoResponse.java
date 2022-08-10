@@ -18,6 +18,7 @@ public class ClassInfoResponse {
     int durationH;
     int memberCnt;
     int price;
+    String classDatetime;
     String content;
     String classImgUrl;
     int level;

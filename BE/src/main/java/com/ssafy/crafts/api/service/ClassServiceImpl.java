@@ -1,7 +1,6 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
-import com.ssafy.crafts.api.request.HashtagRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
@@ -11,12 +10,16 @@ import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.HashtagQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -25,8 +28,11 @@ import java.util.Optional;
  * @Class 설명 : 수업 관련 비즈니스 처리 로직을 위한 서비스 구현 정의
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService{
+    static SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    static SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     private final ClassInfoRepository classInfoRepository;
     private final ClassInfoQuerydslRepository classInfoQuerydslRepository;
@@ -36,7 +42,7 @@ public class ClassServiceImpl implements ClassService{
     private final HashtagQuerydslRepository hashtagQuerydslRepository;
 
     @Override
-    public void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail) {
+    public void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail) throws ParseException {
         /**
          * @Method Name : insertClassInfo
          * @작성자 : 허성은
@@ -49,11 +55,15 @@ public class ClassServiceImpl implements ClassService{
         } catch(Exception e) {
             e.printStackTrace();
         }
+        log.info("수업 생성 서비스");
+        // String -> Date
+        Date classDate = inputFormat.parse(classInfoRequest.getClassDatetime());
         classInfoRequest.setClassImgUrl(thumbnailUrl);
 
         ClassInfo classInfo = ClassInfo.builder()
                 .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()))
                 .category(categoryQuerydslRepository.findCategoryById(classInfoRequest.getCategoryId()).get())
+                .classDatetime(Timestamp.valueOf(timeStampFormat.format(classDate)))
                 .className(classInfoRequest.getClassName())
                 .headcount(classInfoRequest.getHeadcount())
                 .price(classInfoRequest.getPrice())
@@ -63,8 +73,8 @@ public class ClassServiceImpl implements ClassService{
                 .classStatus(ClassInfo.ClassStatus.EXPECTED)
                 .build();
 
-        List<HashtagRequest> taggingList = classInfoRequest.getTaggingRequest();
-
+//        List<HashtagRequest> taggingList = classInfoRequest.getTaggingRequest();
+//
 //        for(int i = 0; i < taggingList.size(); i++){
 //            classInfo.addTagging(hashtagQuerydslRepository.findHashtagById(taggingList.get(i).getHashtagId()).get());
 //        }
@@ -87,6 +97,7 @@ public class ClassServiceImpl implements ClassService{
                 .teacherId(classInfo.getTeacher().getId())
                 .className(classInfo.getClassName())
                 .memberCnt(classInfo.getMembers().size())
+                .classDatetime(timeStampFormat.format(classInfo.getClassDatetime()))
                 .price(classInfo.getPrice())
                 .content(classInfo.getContent())
                 .classImgUrl(classInfo.getClassImg())

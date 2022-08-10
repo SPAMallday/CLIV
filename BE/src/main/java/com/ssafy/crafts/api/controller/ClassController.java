@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 /**
  * @FileName : ClassController
@@ -45,7 +46,7 @@ public class ClassController {
     public ResponseEntity<Object> insertClassInfo(HttpServletRequest request,
                                                   @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
                                                   @RequestPart(value = "classInfoRequest") ClassInfoRequest classInfoRequest
-    ) {
+    ) throws ParseException {
         /**
          * @Method Name : insertClassInfo
          * @작성자 : 허성은
@@ -56,7 +57,7 @@ public class ClassController {
         String token = JwtHeaderUtil.getAccessToken(request);
         log.info("토큰에서 아이디 정보 얻어 선생님 아이디로 할당");
         classInfoRequest.setTeacherId(authService.getAuthId(token));
-//        classInfoRequest.setTeacherId("");
+//        classInfoRequest.setTeacherId("1234555");
         log.info("수업 정보와 썸네일 등록");
         classService.insertClassInfo(classInfoRequest, thumbnail);
         return new ResponseEntity<>(HttpStatus.CREATED);

@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class ClassInfoRequest {
     @ApiModelProperty(name = "level", example = "5")
     int level;
     @ApiModelProperty(name = "classDatetime", hidden = true)
-    Timestamp classDatetime;
+    String classDatetime;
 
     public void setClassImgUrl(String classImgUrl) {
         this.classImgUrl = classImgUrl;
