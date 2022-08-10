@@ -38,14 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()// 보호된 리소스 URI에 접근할 수 있는 권한을 설정
             .antMatchers(HttpMethod.OPTIONS).permitAll() // CORS Preflight 방지 위해 로그인요청 url 이전에 OPTIONS 요청 보내기
             .antMatchers("/api/kakao/**").permitAll() //전체 접근 허용
-            .anyRequest().authenticated().and() // 해당 요청을 인증된 사용자만 사용 가능
-            .headers()
+//  ---------------swagger test 시 토큰인증 없이 컨트롤러 작동여부만 확인할 경우 주석처리---------
+//            .anyRequest().authenticated().and() // 해당 요청을 인증된 사용자만 사용 가능
+            .and().headers()
             .frameOptions()
             .sameOrigin().and()
             .cors().and()
             .csrf().disable() // csrf 보안 설정을 비활성화
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
+
 //            .and()
 //            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
             // UsernamePasswordAuthenticationFilter :

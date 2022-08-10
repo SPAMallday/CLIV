@@ -43,7 +43,7 @@ public class PrivateClassController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<Object> createPrivateClass(HttpServletRequest request,
-                                                 @RequestPart(value = "privateClassRequest") PrivateClassRequest privateClassRequest){
+                                                 @RequestBody PrivateClassRequest privateClassRequest){
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
@@ -55,6 +55,5 @@ public class PrivateClassController {
         privateClassService.createPrivateClass(privateClassRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 
 }

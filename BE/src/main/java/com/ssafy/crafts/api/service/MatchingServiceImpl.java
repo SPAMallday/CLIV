@@ -28,7 +28,10 @@ public class MatchingServiceImpl implements MatchingService{
 
     private final MatchingRepository matchingRepository;
     private final MatchingQuerydslRepository matchingQuerydslRepository;
+    private final MBoardTeacherQuerydslRepository mBoardTeacherQuerydslRepository;
     private final MBoardTeacherRepository mBoardTeacherRepository;
+    private final MemberQuerydslRepository memberQuerydslRepository;
+    private final CategoryQuerydslRepository categoryQuerydslRepository;
 
     @Override
     public void createMBoard(MatchingRequest matchingRequest) {
@@ -37,20 +40,88 @@ public class MatchingServiceImpl implements MatchingService{
          * @작성자 : 김민주
          * @Method 설명 : 매칭 요청글 생성
          */
-        matchingRepository.save(matchingRequest.toEntity());
+
+        MBoard mBoard = MBoard.builder()
+                .title(matchingRequest.getTitle())
+                .wantedDay(matchingRequest.getWantedDay())
+                .teacherGender(matchingRequest.getTeacherGender())
+                .content(matchingRequest.getContent())
+                .regDate(matchingRequest.getRegDate())
+                .matStatus(matchingRequest.isMatStatus())
+                .category(categoryQuerydslRepository.findCategoryById(matchingRequest.getCategoryId()).get())
+                .member(memberQuerydslRepository.findMemberByAuthId(matchingRequest.getAuthId()))
+                .build();
+
+//        matchingRepository.save(matchingRequest.toEntity());
+        matchingRepository.save(mBoard);
     }
 
     @Override
-    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
+    public List<MBoardTeacherResponse> getMBoardTeacherListByTeacherId(String teacherId) {
         /**
-         * @Method Name : findMBoardIdByTeacherId
+         * @Method Name : getMBoardTeacherListByTeacherId
          * @작성자 : 김민주
-         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 id 리스트 조회
-        */
-        List<Integer> mBoardIdList = matchingQuerydslRepository.findMBoardIdListByTeacherId(teacherId);
+         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 정보 목록 조회
+         */
+        List<MBoardTeacher> mBoardTeacherList = mBoardTeacherQuerydslRepository.findMBTeacherListByTeacherId(teacherId);
+        List<MBoardTeacherResponse> list = new ArrayList<>();
 
-        return mBoardIdList;
+        for(MBoardTeacher mBoardTeacher : mBoardTeacherList){
+            list.add(MBoardTeacherResponse.builder()
+                    .mt_id(mBoardTeacher.getId())
+                    .agreeYn(mBoardTeacher.isAgreeYn())
+                    .teacherId(mBoardTeacher.getTeacher().getId())
+                    .mboardId(mBoardTeacher.getMBoard().getId())
+                    .title(mBoardTeacher.getMBoard().getTitle())
+                    .wantedDay(mBoardTeacher.getMBoard().getWantedDay())
+                    .content(mBoardTeacher.getMBoard().getContent())
+                    .authId(mBoardTeacher.getTeacher().getId())
+                    .build());
+        }
+        return list;
+
     }
+
+
+//    @Override
+//    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
+//        /**
+//         * @Method Name : findMBoardIdByTeacherId
+//         * @작성자 : 김민주
+//         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 id 리스트 조회
+//        */
+//        List<Integer> mBoardIdList = matchingQuerydslRepository.findMBoardIdListByTeacherId(teacherId);
+//
+//        return mBoardIdList;
+//    }
+
+//    @Override
+//    public List<MatchingResponse> findMBoardListByTeacherId(String teacherId) {
+//        /**
+//         * @Method Name : findMBTeacherListByTeacherId
+//         * @작성자 : 김민주
+//         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 정보 리스트 조회
+//         */
+//        //List<MBoardTeacher> mBoardTeacherList = mBoardTeacherQuerydslRepository.findMBTeacherListByTeacherId(teacherId);
+//        //List<MBoardTeacherResponse> list = new ArrayList<>();
+//
+//        List<MBoard> mBoardList = matchingQuerydslRepository.findMBoardByteacherId(teacherId);
+//        List<MatchingResponse> list = new ArrayList<>();
+//
+//        for(MBoard mBoard : mBoardList){
+//            list.add(MatchingResponse.builder()
+//                    .id(mBoard.getId())
+//                    .title(mBoard.getTitle())
+//                    .wantedDay(mBoard.getWantedDay())
+//                    .teacherGender(mBoard.getTeacherGender())
+//                    .content(mBoard.getContent())
+//                    .authId(mBoard.getMember().getId())
+//                    .categoryId(mBoard.getCategory().getId())
+//                    .matStatus(mBoard.isMatStatus())
+//                    .build());
+//        }
+//        return list;
+//    }
 
     @Override
     public MatchingResponse findMBoardById(int id) {
@@ -69,7 +140,7 @@ public class MatchingServiceImpl implements MatchingService{
                 .content(mBoard.getContent())
                 .authId(mBoard.getMember().getId())
                 .categoryId(mBoard.getCategory().getId())
-                .matStatus(mBoard.getMatStatus())
+                .matStatus(mBoard.isMatStatus())
                 .build();
     }
 
@@ -92,7 +163,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .content(mBoard.getContent())
                         .authId(mBoard.getMember().getId())
                         .categoryId(mBoard.getCategory().getId())
-                        .matStatus(mBoard.getMatStatus())
+                        .matStatus(mBoard.isMatStatus())
                         .build());
         }
         return list;
@@ -120,8 +191,8 @@ public class MatchingServiceImpl implements MatchingService{
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "요청글이 존재하지 않습니다."));
 
         return MBoardTeacherResponse.builder()
-                .id(mBoardTeacher.getId())
-                .agreeYn(mBoardTeacher.getAgreeYn())
+                .mt_id(mBoardTeacher.getId())
+                .agreeYn(mBoardTeacher.isAgreeYn())
                 .teacherId(mBoardTeacher.getTeacher().getId())
                 .mboardId(mBoardTeacher.getMBoard().getId())
                 .build();

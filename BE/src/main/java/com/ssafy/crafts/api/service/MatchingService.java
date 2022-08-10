@@ -16,7 +16,10 @@ import java.util.List;
 public interface MatchingService {
 
     void createMBoard(MatchingRequest matchingRequest);
-    List<Integer> findMBoardIdListByTeacherId(String teacherId);
+    //List<Integer> findMBoardIdListByTeacherId(String teacherId);
+    //List<MBoardTeacherResponse> findMBTeacherListByTeacherId(String teacherId);
+    List<MBoardTeacherResponse> getMBoardTeacherListByTeacherId(String teacherId);
+    //List<MatchingResponse> findMBoardListByTeacherId(String teacherId);
     MatchingResponse findMBoardById(int id);
     List<MatchingResponse> findMBoardListByAuthId(String authId);
     void updateAgreeYnById(int mtId);

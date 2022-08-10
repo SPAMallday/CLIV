@@ -37,14 +37,14 @@ public class MatchingTeacherRequest {
         this.authId = authId;
     }
 
-    public MBoard toEntity(){
-        return MBoard.builder()
-                .title(title)
-                .wantedDay(wantedDay)
-                .teacherGender(teacherGender)
-                .content(content)
-                .category(categoryQuerydslRepository.findCategoryById(getCategoryId()).get())
-                .member(memberQuerydslRepository.findMemberByAuthId(getAuthId()))
-                .build();
-    }
+//    public MBoard toEntity(){
+//        return MBoard.builder()
+//                .title(title)
+//                .wantedDay(wantedDay)
+//                .teacherGender(teacherGender)
+//                .content(content)
+//                .category(categoryQuerydslRepository.findCategoryById(getCategoryId()).get())
+//                .member(memberQuerydslRepository.findMemberByAuthId(getAuthId()))
+//                .build();
+//    }
 }

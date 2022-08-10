@@ -1,5 +1,7 @@
 package com.ssafy.crafts.api.response;
 
+import com.ssafy.crafts.db.entity.MBoard;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,14 +15,22 @@ import lombok.ToString;
 @ToString
 @Builder
 public class MatchingResponse {
+    @ApiModelProperty(name = "categoryId", hidden = true)
     private int id;     // PK
-    private String title;   // wpahr
-    private String wantedDay;
-    private String teacherGender;   // 강사성별
-    private String content;     // 내용
-    private String authId;      // 작성자 아이디
-    private int categoryId;     // 카데고리 아이디
-    private  int matStatus;     // 매칭 완료 여부
 
+    @ApiModelProperty(name = "title", example = "제목")
+    private String title;   // 제목
+    @ApiModelProperty(name = "wantedDay", example = "원하는 수업날짜")
+    private String wantedDay;   // 원하는 수업 날짜
+    @ApiModelProperty(name = "teacherGender", example = "원하는 강사성별")
+    private String teacherGender;   // 강사성별
+    @ApiModelProperty(name = "content", example = "내용")
+    private String content;     // 내용
+    @ApiModelProperty(name = "authId", example = "작성자 아이디")
+    private String authId;      // 작성자 아이디
+    @ApiModelProperty(name = "categoryId", example = "카테고리 id")
+    private int categoryId;     // 카데고리 아이디
+    @ApiModelProperty(name = "matStatus", example = "매칭 완료 여부")
+    private boolean matStatus;     // 매칭 완료 여부
 
 }

@@ -32,11 +32,12 @@ public class MBoard {
     @Column(nullable = false, length = 500)
     private String content;     // 내용
 
-    @Column(name = "regdate", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "regdate", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regDate;  // 작성 시간
 
-    @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
-    private int matStatus;      // 매칭 완료 여부
+    @Column(name = "mat_status", length = 1)
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean matStatus = false;      // 매칭 완료 여부
 
     // 1:1 관계 : 매칭보드 - 매칭_선생님
     @OneToOne(mappedBy="mBoard")
@@ -53,7 +54,7 @@ public class MBoard {
     private Member member;
 
     @Builder
-    public MBoard(int id, String title, String wantedDay, String teacherGender, String content, Timestamp regDate, int matStatus, MBoardTeacher mBoardTeacher, Category category, Member member) {
+    public MBoard(int id, String title, String wantedDay, String teacherGender, String content, Timestamp regDate, boolean matStatus, MBoardTeacher mBoardTeacher, Category category, Member member) {
         this.id = id;
         this.title = title;
         this.wantedDay = wantedDay;
@@ -71,4 +72,9 @@ public class MBoard {
         this.content = content;
         this.wantedDay = wantedDay;
     }
+
+//    public static enum EnumYn {
+//        Y,
+//        N
+//    }
 }

@@ -1,11 +1,11 @@
 package com.ssafy.crafts.api.request;
 
 import com.ssafy.crafts.db.entity.MBoard;
-import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
-import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.sql.Timestamp;
 
 /**
  * @FileName : MatchingRequest
@@ -18,30 +18,43 @@ import lombok.*;
 @ApiModel("MatchingRequest")
 @Builder
 public class MatchingRequest {
-    private final CategoryQuerydslRepository categoryQuerydslRepository;
-    private final MemberQuerydslRepository memberQuerydslRepository;
 
     @ApiModelProperty(name = "authId", hidden = true)
-    private String authId;
+    private String authId;      // 작성자 id
 
+    @ApiModelProperty(name = "title", example = "제목")
     private String title;       // 제목
+
+    @ApiModelProperty(name = "wantedDay", example = "원하는 수업 날짜")
     private String wantedDay;   // 원하는 수업 날짜
+
+    @ApiModelProperty(name = "teacherGender", example = "원하는 강사성별")
     private String teacherGender;   // 강사 성별
+
+    @ApiModelProperty(name = "content", example = "내용")
     private String content;     // 내용
+
+    @ApiModelProperty(name = "regDate", hidden = true)
+    private Timestamp regDate;      // 작성시간
+
+    @ApiModelProperty(name = "matStatus", hidden = true)
+    private boolean matStatus;    // 매칭 완료 여부
+
+    @ApiModelProperty(name = "categoryId", example = "카테고리 id")
     private int categoryId;     // 카테고리 아이디
 
     public void setAuthId(String authId){
         this.authId = authId;
     }
 
-    public MBoard toEntity(){
-        return MBoard.builder()
-                .title(title)
-                .wantedDay(wantedDay)
-                .teacherGender(teacherGender)
-                .content(content)
-                .category(categoryQuerydslRepository.findCategoryById(getCategoryId()).get())
-                .member(memberQuerydslRepository.findMemberByAuthId(getAuthId()))
-                .build();
-    }
+//    public MBoard toEntity(){
+//        return MBoard.builder()
+//                .title(title)
+//                .wantedDay(wantedDay)
+//                .teacherGender(teacherGender)
+//                .content(content)
+//                .category(categoryQuerydslRepository.findCategoryById(getCategoryId()).get())
+//                .member(memberQuerydslRepository.findMemberByAuthId(getAuthId()))
+//                .build();
+//    }
 }
