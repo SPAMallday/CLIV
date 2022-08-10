@@ -203,8 +203,8 @@ function ClassCreate() {
       new Blob([JSON.stringify(myData)], { type: 'application/json' }),
     );
 
-    const response = await apiClient.post('/api/class', formData);
-    if (response.status === '200') {
+    const response = await apiClient.post('/api/class/create', formData);
+    if (response.status === '201') {
       alert('생성이 완료되었습니다!');
     } else {
       alert('클래스 생성 실패');
