@@ -1,0 +1,9 @@
+/* .reviewbtnbox {
+  max-width: auto !important;
+  flex-basis: auto;
+} */
+
+.css-1unik2p-MuiGrid-root {
+  max-width: 100% !important;
+  flex-basis: 100% !important;
+}

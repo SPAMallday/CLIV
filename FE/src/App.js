@@ -11,6 +11,7 @@ import {
   Matching,
   MyClassHistory,
   ReceiveRequest,
+  ClassReview,
 } from './pages';
 import MyProfile from './pages/myprofile/MyProfile';
 import WithNav from './components/route/WithNav';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/classmanage" element={<ClassManage />} />
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/myhistory" element={<MyClassHistory />}></Route>
+          <Route path="/classreview" element={<ClassReview />}></Route>
           <Route
             path="/matching/receiverequest"
             element={<ReceiveRequest />}
