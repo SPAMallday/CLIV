@@ -145,10 +145,6 @@ function ClassCreate() {
     setDateTime(newValue);
   };
 
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
-
   const handleOpenSuccess = () => {
     setSuccess(true);
   };
@@ -215,6 +211,7 @@ function ClassCreate() {
       price: cost,
       content: content,
       level: rating,
+      classDatetime: dateTime,
     };
     // 전체 데이터 합쳐서 form으로
     const formData = new FormData();
