@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -29,8 +31,6 @@ public class ClassInfoRequest {
     List<HashtagRequest> taggingRequest;
     @ApiModelProperty(name = "className", example = "수업 제목")
     String className;
-    @ApiModelProperty(name = "durationH", example = "2")
-    int durationH;
     @ApiModelProperty(name = "headcount", example = "8")
     int headcount;
     @ApiModelProperty(name = "price", example = "50000")
@@ -42,7 +42,7 @@ public class ClassInfoRequest {
     @ApiModelProperty(name = "level", example = "5")
     int level;
     @ApiModelProperty(name = "classDatetime", hidden = true)
-    Timestamp classDatetime;
+    String classDatetime;
 
     public void setClassImgUrl(String classImgUrl) {
         this.classImgUrl = classImgUrl;
