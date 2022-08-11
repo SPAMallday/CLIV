@@ -110,7 +110,7 @@ function NavBar() {
         >
           클래스
         </Button>
-        <div>
+        <Box>
           <Button
             id="matching-button"
             aria-controls={openMatching ? 'matching-menu' : undefined}
@@ -131,24 +131,34 @@ function NavBar() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <Link to="/matching">
-              <MenuItem onClick={handleCloseMatching}>요청 보내기</MenuItem>
-            </Link>
-            <Link to="/matching/receiverequest">
-              <MenuItem onClick={handleCloseMatching}>받은 요청</MenuItem>
-            </Link>
+            <MenuItem
+              component={Link}
+              to={'/matching'}
+              onClick={handleCloseMatching}
+            >
+              요청 보내기
+            </MenuItem>
+
+            <MenuItem
+              component={Link}
+              to={'/matching/receiverequest'}
+              onClick={handleCloseMatching}
+            >
+              받은 요청
+            </MenuItem>
+
             <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
           </Menu>
-        </div>
-        <Link to="/classmanage">
-          <Button
-            variant="text"
-            disableRipple
-            style={{ backgroundColor: 'transparent' }}
-          >
-            클래스 관리
-          </Button>
-        </Link>
+        </Box>
+        <Button
+          component={Link}
+          to={'/classmanage'}
+          variant="text"
+          disableRipple
+          sx={{ color: 'black' }}
+        >
+          클래스 관리
+        </Button>
       </div>
 
       <div className="rightside">
@@ -260,7 +270,9 @@ function NavBar() {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <MenuItem>
-            <a href={KAKAO_AUTH_URL}>로그인</a>
+            <a id="loginButton" href={KAKAO_AUTH_URL}>
+              로그인
+            </a>
           </MenuItem>
           <Divider />
           <MenuItem component={Link} to={'/myprofile'}>
