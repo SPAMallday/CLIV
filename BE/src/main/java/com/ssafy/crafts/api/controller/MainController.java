@@ -40,15 +40,14 @@ public class MainController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     @GetMapping("/list")
-    public ResponseEntity<MainResponse> findAllVideo(HttpServletRequest request) throws ParseException {
+    public ResponseEntity<MainResponse> findAllVideo(HttpServletRequest request) {
         /**
          * @Method Name : findAllVideo
          * @작성자 : 허성은
          * @Method 설명 : 메인화면 수업 리스트를 조회한다.
          */
         String token = JwtHeaderUtil.getAccessToken(request);
-        System.out.println("token = " + token);
-        MainResponse mainResponse = mainServiceImpl.findAllClassList(token);
+        MainResponse mainResponse = mainServiceImpl.findAllClassList(authService.getAuthId(token));
         if(mainResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else

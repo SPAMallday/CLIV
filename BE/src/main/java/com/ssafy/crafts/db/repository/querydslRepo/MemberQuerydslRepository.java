@@ -6,6 +6,7 @@ import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.entity.QAuth;
 import com.ssafy.crafts.db.entity.QMember;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -26,9 +27,10 @@ public class MemberQuerydslRepository {
         return Optional.ofNullable(member);
     }
 
-    public Optional<Auth> findAuthByAuthId(String authId) {
-        Auth auth = jpaQueryFactory.select(qAuth).from(qAuth)
-                .where(qAuth.authId.eq(authId)).fetchOne();
-        return Optional.ofNullable(auth);
+    public void changeMemberRoleType(String authId) {
+        jpaQueryFactory.update(qMember)
+                .set(qMember.roleType, Member.RoleType.TEACHER)
+                .where(qMember.auth.authId.eq(authId))
+                .execute();
     }
 }
