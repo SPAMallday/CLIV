@@ -100,4 +100,6 @@ public class ClassController {
         classService.joinClassByMemberId(classId, authService.getAuthId(token));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
 }

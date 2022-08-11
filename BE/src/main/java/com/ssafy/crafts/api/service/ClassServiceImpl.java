@@ -96,12 +96,15 @@ public class ClassServiceImpl implements ClassService{
         return ClassInfoResponse.builder()
                 .classId(classInfo.getId())
                 .teacherId(classInfo.getTeacher().getId())
+                .members(classInfo.getMembers())
+                .categoryId(classInfo.getCategory().getId())
                 .className(classInfo.getClassName())
-                .memberCnt(classInfo.getMembers().size())
-                .classDatetime(timeStampFormat.format(classInfo.getClassDatetime()))
                 .price(classInfo.getPrice())
+                .headcount(classInfo.getHeadcount())
+                .classDatetime(timeStampFormat.format(classInfo.getClassDatetime()))
                 .content(classInfo.getContent())
-                .classImgUrl(classInfo.getClassImg())
+                .classImg(classInfo.getClassImg())
+                .classStatus(classInfo.getClassStatus().toString())
                 .level(classInfo.getLevel())
                 .build();
     }
