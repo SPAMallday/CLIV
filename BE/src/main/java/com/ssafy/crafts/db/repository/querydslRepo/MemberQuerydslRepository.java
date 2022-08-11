@@ -8,6 +8,7 @@ import com.ssafy.crafts.db.entity.QMember;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class MemberQuerydslRepository {
                 .where(qMember.auth.authId.eq(authId)).fetchOne();
         return Optional.ofNullable(member);
     }
-
+    @Transactional
     public void changeMemberRoleType(String authId) {
         jpaQueryFactory.update(qMember)
                 .set(qMember.roleType, Member.RoleType.TEACHER)
