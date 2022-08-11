@@ -7,9 +7,9 @@ import com.ssafy.crafts.db.entity.QMBoard;
 import com.ssafy.crafts.db.entity.QMBoardTeacher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -30,6 +30,14 @@ public class MatchingQuerydslRepository {
     public List<MBoard> findMBoardListByAuthId(String authId) {
         return jpaQueryFactory.select(qmBoard).from(qmBoard)
                     .where(qmBoard.member.id.eq(authId)).fetch();
+    }
+
+    @Transactional
+    public void updateMatStatus(int mboardId){
+        jpaQueryFactory.update(qmBoard)
+                .set(qmBoard.matStatus, true)
+                .where(qmBoard.id.eq(mboardId))
+                .execute();
     }
 
 //    public List<MBoard> findMBoardByteacherId(String teacherId) {

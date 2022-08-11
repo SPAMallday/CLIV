@@ -35,24 +35,29 @@ public class PrivateClassController {
     private final AuthService authService;
     private final PrivateClassService privateClassService;
 
-    @PostMapping
-    @ApiOperation(value = "새로운 1:1 수업정보를 등록한다. DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+    @PostMapping("{mtId}")
+    @ApiOperation(value = "새로운 1:1 수업정보를 등록한다.", response = String.class)
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 404, message = "등록 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<Object> createPrivateClass(HttpServletRequest request,
-                                                 @RequestBody PrivateClassRequest privateClassRequest){
+                                                 @RequestBody PrivateClassRequest privateClassRequest,
+                                                     @PathVariable int mtId){
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
          * @Method 설명 : 1:1 수업 정보를 등록한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        privateClassRequest.setTeacherId(authService.getAuthId(token));
+//        String token = JwtHeaderUtil.getAccessToken(request);
+//        privateClassRequest.setTeacherId(authService.getAuthId(token));
 
-        privateClassService.createPrivateClass(privateClassRequest);
+        log.info("1:1 수업 정보 등록");
+        privateClassService.createPrivateClass(privateClassRequest, mtId);
+        log.info("매칭글의 매칭 여부 업데이트");
+        matchingService.updateMatStatus(mtId);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

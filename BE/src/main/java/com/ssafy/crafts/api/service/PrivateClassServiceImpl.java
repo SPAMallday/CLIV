@@ -6,7 +6,9 @@ import com.ssafy.crafts.api.request.PrivateClassRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.entity.PrivateClass;
 import com.ssafy.crafts.db.repository.jpaRepo.ClassInfoRepository;
+import com.ssafy.crafts.db.repository.jpaRepo.MBoardTeacherRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.PrivateClassRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
@@ -31,14 +33,23 @@ import java.util.Optional;
 public class PrivateClassServiceImpl implements PrivateClassService{
 
     private final PrivateClassRepository privateClassRepository;
+    private final MBoardTeacherRepository mBoardTeacherRepository;
 
     @Override
-    public void createPrivateClass(PrivateClassRequest privateClassRequest) {
+    public void createPrivateClass(PrivateClassRequest privateClassRequest, int mtId) {
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
          * @Method 설명 : 1:1 수업 생성
          * */
-        privateClassRepository.save(privateClassRequest.toEntity());
+
+        PrivateClass privateClass = PrivateClass.builder()
+                        .className(privateClassRequest.getClassName())
+                        .classDatetime(privateClassRequest.getClassDatetime())
+                        .tuitionFee(privateClassRequest.getTuitionFee())
+                        .mBoardTeacher(mBoardTeacherRepository.findById(mtId).get())
+                        .build();
+//        privateClassRepository.save(privateClassRequest.toEntity());
+        privateClassRepository.save(privateClass);
     }
 }

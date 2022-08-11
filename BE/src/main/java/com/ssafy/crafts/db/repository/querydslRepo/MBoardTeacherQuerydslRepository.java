@@ -24,6 +24,4 @@ public class MBoardTeacherQuerydslRepository {
                 .where(qmBoardTeacher.teacher.id.eq(teacherId)).fetch();
     }
 
-
-
 }

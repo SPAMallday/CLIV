@@ -30,13 +30,17 @@ public class MBoardTeacher {
     private Member teacher;
 
     // 1:1 관계 : 매칭_선생님 - 매칭보드
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "mboard_id")
     private MBoard mBoard;
 
     // 1:1 관계 : 매칭_선생님 - 채팅방
     @OneToOne(mappedBy = "mBoardTeacher")
     private ChatRoom chatRoom;
+
+    // 1:1 관계 : 매칭_선생님 - 1:1수업
+    @OneToOne(mappedBy = "mBoardTeacher")
+    private PrivateClass privateClass;
 
     @Builder
     public MBoardTeacher(int id, boolean agreeYn, Member teacher, MBoard mBoard, ChatRoom chatRoom) {

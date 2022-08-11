@@ -12,6 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface PrivateClassService {
 
-    void createPrivateClass(PrivateClassRequest privateClassRequest);
+    void createPrivateClass(PrivateClassRequest privateClassRequest, int mtId);
 
 }

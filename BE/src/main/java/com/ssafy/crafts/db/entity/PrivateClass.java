@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Entity
@@ -29,9 +31,12 @@ public class PrivateClass {
     @Column(name = "tuition_fee")
     private int tuitionFee;      // 수강료
 
+//    @Column(name = "mt_id")
+//    private int mtId;   // 선생님_매칭보드 id
+
     // 1:1 관계 - 1:1수업 - 매칭_선생님
     @OneToOne
-    @JoinColumn
+    @JoinColumn(name = "mt_id", nullable = false)
     private MBoardTeacher mBoardTeacher;
 
     @Builder

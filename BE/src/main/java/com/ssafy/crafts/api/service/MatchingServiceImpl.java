@@ -200,4 +200,9 @@ public class MatchingServiceImpl implements MatchingService{
                 .build();
     }
 
+    @Override
+    public void updateMatStatus(int mtId) {
+        matchingQuerydslRepository.updateMatStatus(mBoardTeacherRepository.findById(mtId).get().getMBoard().getId());
+    }
+
 }

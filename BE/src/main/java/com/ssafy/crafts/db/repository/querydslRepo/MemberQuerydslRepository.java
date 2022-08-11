@@ -31,4 +31,5 @@ public class MemberQuerydslRepository {
                 .where(qAuth.authId.eq(authId)).fetchOne();
         return Optional.ofNullable(auth);
     }
+
 }

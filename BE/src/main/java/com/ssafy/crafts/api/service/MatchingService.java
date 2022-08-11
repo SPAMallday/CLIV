@@ -24,4 +24,5 @@ public interface MatchingService {
     List<MatchingResponse> findMBoardListByAuthId(String authId);
     void updateAgreeYnById(int mtId);
     MBoardTeacherResponse getMBoardTeacherById(int mtId);
+    void updateMatStatus(int mtId);
 }
