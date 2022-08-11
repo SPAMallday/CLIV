@@ -36,7 +36,6 @@ function App() {
           <Route path="/classmanage" element={<ClassManage />} />
           <Route path="/matching" element={<Matching />}></Route>
           <Route path="/myhistory" element={<MyClassHistory />}></Route>
-
           <Route path="/classreview" element={<ClassReview />}></Route>
           <Route
             path="/matching/receiverequest"
