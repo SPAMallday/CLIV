@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -19,23 +18,7 @@ import { KAKAO_AUTH_URL } from '../login/KaKaoLoginInfo';
 import LogoPath from '../../assets/Logo2.png';
 
 import './NavBar.css';
-import { Stack, Tab, Tabs, Typography } from '@mui/material';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <Box sx={{ p: 1 }}>{children}</Box>}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-};
+import NotiCenter from '../notification/notiCenter';
 
 function NavBar() {
   const [anchorElMatching, setAnchorElMatching] = React.useState(null);
@@ -221,53 +204,10 @@ function NavBar() {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <Tabs
-            value={notiTabValue}
-            onChange={handleChangeNotiTab}
-            textColor="secondary"
-            indicatorColor="secondary"
-          >
-            <Tab value="normal" label="일반" />
-            <Tab value="chat" label="채팅" />
-          </Tabs>
-          <TabPanel value={notiTabValue} index="normal">
-            <Link to="/">
-              <MenuItem>
-                <Stack>
-                  <Box>
-                    <Typography>
-                      {'카테고리'} - {'클래스 제목(요청 제목)'}
-                    </Typography>
-                    <Typography>에 대한 제안을 받았습니다!</Typography>
-                  </Box>
-                  <Box>
-                    <Button variant="outlined" color="secondary">
-                      여기를 눌러 자세한 내용을 확인하세요!
-                    </Button>
-                  </Box>
-                </Stack>
-              </MenuItem>
-            </Link>
-            <Divider />
-          </TabPanel>
-          <TabPanel value={notiTabValue} index="chat">
-            <MenuItem component={Link} to={'/myhistory'}>
-              <Stack>
-                <Box>
-                  <Typography>
-                    {'카테고리'} - {'클래스 제목(요청 제목)'}
-                  </Typography>
-                  <Typography>수업 시작 10분 전입니다!</Typography>
-                </Box>
-                <Box>
-                  <Button variant="outlined" color="secondary">
-                    여기를 눌러 수업을 시작하세요!
-                  </Button>
-                </Box>
-              </Stack>
-            </MenuItem>
-            <Divider />
-          </TabPanel>
+          <NotiCenter
+            handleChangeNotiTab={handleChangeNotiTab}
+            notiTabValue={notiTabValue}
+          ></NotiCenter>
         </Menu>
         <Box
           sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
