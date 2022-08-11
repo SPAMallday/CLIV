@@ -42,3 +42,8 @@
 .navbar .rightside #noti {
   margin-left: 75px;
 }
+
+#loginButton {
+  text-decoration: none;
+  color: black;
+}
