@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -32,7 +33,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService{
     static SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    static SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    static SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy. MM. dd. a hh:mm:ss", Locale.KOREA);
 
     private final ClassInfoRepository classInfoRepository;
     private final ClassInfoQuerydslRepository classInfoQuerydslRepository;
@@ -89,7 +90,7 @@ public class ClassServiceImpl implements ClassService{
          * @작성자 : 허성은
          * @Method 설명 : 수업 아이디로 수업 찾기
          */
-        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id).get())
+        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
 
         return ClassInfoResponse.builder()
@@ -112,7 +113,7 @@ public class ClassServiceImpl implements ClassService{
          * @작성자 : 허성은
          * @Method 설명 : 수업 참여하기
          */
-        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id).get())
+        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
         Member member = Optional.ofNullable(memberQuerydslRepository.findMemberByAuthId(memberId))
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다."));
