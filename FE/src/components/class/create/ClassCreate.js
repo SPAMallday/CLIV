@@ -113,7 +113,7 @@ function ClassCreate() {
     date.toLocaleDateString('en-us') + ' ' + date.toLocaleTimeString('en-us');
 
   const [category, setCategory] = useState(1);
-  const [title, setTitle] = useState('입력');
+  const [title, setTitle] = useState('');
   const [rating, setRating] = useState(2);
   const [hover, setHover] = useState(-1);
   const [dateTime, setDateTime] = useState(date);
@@ -163,7 +163,7 @@ function ClassCreate() {
 
   const resetState = () => {
     setCategory(1);
-    setTitle('초기값');
+    setTitle('');
     setRating(2);
     setHover(-1);
     setDateTime(timeNow);
@@ -406,7 +406,7 @@ function ClassCreate() {
       <CKEditor
         editor={Editor}
         config={editorConfiguration}
-        data=""
+        data={content}
         onReady={(editor) => {
           // You can store the "editor" and use when it is needed.
           console.log('Editor is ready to use!', editor);

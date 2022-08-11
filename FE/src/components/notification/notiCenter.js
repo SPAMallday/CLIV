@@ -32,12 +32,11 @@ const EmNotiTypograpy = styled(Typography)(({ theme }) => ({
   fontSize: '0.8rem',
   fontWeight: 700,
   color: theme.palette.secondary.main,
-  display: 'inline',
+  maxWidth: '60%',
+  display: 'inline-block',
 }));
 
 function NotiCenter(props) {
-  // 클래스 이름이 15자를 넘기면 ...으로 표시하게 만들면 좋을 듯
-
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs
@@ -53,12 +52,12 @@ function NotiCenter(props) {
       <TabPanel value={props.notiTabValue} index="normal">
         <MenuItem component={Link} to={'/myhistory'}>
           <Stack sx={{ width: '100%' }}>
-            <Box>
-              <Typography fontSize={'0.8rem'} noWrap>
-                <EmNotiTypograpy>
-                  [{'카테고리'}] {'클래스 제목(요청 제목) '}
-                </EmNotiTypograpy>
-                수업 시작 10분 전입니다!으아
+            <Box sx={{ width: '100%', display: 'flex' }}>
+              <EmNotiTypograpy noWrap>
+                [{'카테고리'}] {'클래스 제목(요청 제목) '}dddddddd
+              </EmNotiTypograpy>
+              <Typography fontSize={'0.8rem'} sx={{ display: 'inline-block' }}>
+                수업 시작 10분 전입니다!
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'center'}>
@@ -66,6 +65,7 @@ function NotiCenter(props) {
                 variant="outlined"
                 color="secondary"
                 size="small"
+                disableRipple
                 sx={{
                   fontSize: '0.7rem',
                   px: '3px',
@@ -84,11 +84,11 @@ function NotiCenter(props) {
       <TabPanel value={props.notiTabValue} index="chat">
         <MenuItem component={Link} to={'/matching/receiverequest'}>
           <Stack sx={{ width: '100%' }}>
-            <Box>
-              <Typography fontSize={'0.8rem'} noWrap>
-                <EmNotiTypograpy>
-                  [{'카테고리'}] {'클래스 제목(요청 제목)'}
-                </EmNotiTypograpy>
+            <Box sx={{ width: '100%', display: 'flex' }}>
+              <EmNotiTypograpy noWrap>
+                [{'카테고리'}] {'클래스 제목(요청 제목)'}ddddd
+              </EmNotiTypograpy>
+              <Typography fontSize={'0.8rem'} sx={{ display: 'inline-block' }}>
                 에 대한 제안을 받았습니다!
               </Typography>
             </Box>
@@ -97,6 +97,7 @@ function NotiCenter(props) {
                 variant="outlined"
                 size="small"
                 color="secondary"
+                disableRipple
                 sx={{
                   fontSize: '0.7rem',
                   px: '3px',
