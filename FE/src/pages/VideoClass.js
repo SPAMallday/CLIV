@@ -6,7 +6,7 @@ function VideoClass() {
     <div className="VideoClass">
       <VideoRoomComponent
       // openviduServerUrl="https://i7a605.p.ssafy.io:4443"
-      // openviduSecret="minju0919@naver.com"
+      // openviduSecret="aksemfrhdwkfkddP"
       />
     </div>
   );
