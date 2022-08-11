@@ -1,3 +1,4 @@
+//
 //package com.ssafy.crafts.db.entity;
 //
 //
@@ -21,6 +22,9 @@
 //    @Column(name = "mt_id")
 //    private int id;
 //
+//    @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
+//    private int agreeYn;    // 클래스 개설 수강생 동의 여부
+//
 //    // 1:1 관계 : 매칭_선생님 - 회원
 //    // MBoardTeacher 테이블의 teacher_id(PFK)를 사용해서 Member 테이블과 Join을 수행하고
 //    // 그 결과로 나온 값은 1건이며 이 데이터를 MBoardTeacher Entity의 Member에 매핑한다.
@@ -34,14 +38,14 @@
 //    private MBoard mBoard;
 //
 //    // 1:1 관계 : 매칭_선생님 - 채팅방
-//    @OneToOne(mappedBy = "mBoardTeacher")
-//    private ChatRoom chatRoom;
+////    @OneToOne(mappedBy = "mBoardTeacher")
+////    private ChatRoom chatRoom;
 //
 //    @Builder
-//    public MBoardTeacher(int id, Member teacher, MBoard mBoard, ChatRoom chatRoom) {
+//    public MBoardTeacher(int id, Member teacher, MBoard mBoard){//}, ChatRoom chatRoom) {
 //        this.id = id;
 //        this.teacher = teacher;
 //        this.mBoard = mBoard;
-//        this.chatRoom = chatRoom;
+////        this.chatRoom = chatRoom;
 //    }
 //}

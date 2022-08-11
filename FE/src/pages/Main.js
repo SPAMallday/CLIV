@@ -13,6 +13,7 @@ const classImage = ['images/sample.jpg']; // card내용 서버에서 받아오�
 const classTitle = ['title']; // 서버에서 받아올 것들
 
 function Main() {
+  const { count } = useSelector((state) => state.counter);
   return (
     <main>
       {/* Hero unit */}

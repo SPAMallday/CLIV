@@ -1,10 +1,9 @@
+//
 //package com.ssafy.crafts.db.repository.querydslRepo;
 //
 //import com.querydsl.jpa.impl.JPAQueryFactory;
 //import com.ssafy.crafts.db.entity.MBoard;
 //import com.ssafy.crafts.db.entity.MBoardTeacher;
-//import com.ssafy.crafts.db.entity.QMBoard;
-//import com.ssafy.crafts.db.entity.QMBoardTeacher;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Repository;
 //
@@ -17,14 +16,20 @@
 //
 //    private final JPAQueryFactory jpaQueryFactory;
 //
-//    QMBoard qmBoard = QMBoard.mBoard;
-//    QMBoardTeacher qmBoardTeacher = QMBoardTeacher.mBoardTeacher;
-//
-////    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
-//////        List<Integer> mBoardIdList = jpaQueryFactory.select(qmBoardTeacher.mBoard.id)
-//////                .from(qmBoardTeacher)
-//////                .where(qmBoardTeacher.member.auth.authId.eq(teacherId)).fetch();
-////        return new List<Integer>;
+////    MBoard qmBoard = MBoard.mBoard;
+////    MBoardTeacher qmBoardTeacher = MBoardTeacher.mBoardTeacher;
 ////
+////    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
+////        List<Integer> mBoardIdList = jpaQueryFactory.select(qmBoardTeacher.mBoard.id)
+////                .from(qmBoardTeacher)
+////                .where(qmBoardTeacher.member.id.eq(teacherId)).fetch();
+////        return mBoardIdList;
+////    }
+//
+////    public List<Integer> findMBoardListByAuthId(String authId) {
+////        List<Integer> mBoardIdList = jpaQueryFactory.select(qmBoardTeacher.mBoard.id)
+////                .from(qmBoardTeacher)
+////                .where(qmBoardTeacher.member.id.eq(teacherId)).fetch();
+////        return mBoardIdList;
 ////    }
 //}

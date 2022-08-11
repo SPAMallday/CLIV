@@ -5,8 +5,8 @@ import QnaItem from '../../components/qna/QnaItem';
 import MyCalendar from '../../components/mycalendar/MyCalendar';
 import Box from '@mui/material/Box';
 import { Grid, Stack, Typography } from '@mui/material';
-import { classDetail } from '../../api/classDetail';
-import { useDispatch } from 'react-redux';
+// import { classDetail } from '../../api/classDetail';
+// import { useDispatch } from 'react-redux';
 
 const ClassDetail = () => {
   // const dispatch = useDispatch();

@@ -79,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-
 //package com.ssafy.crafts.config;
 //
 //import com.ssafy.crafts.common.auth.JwtAuthenticationFilter;

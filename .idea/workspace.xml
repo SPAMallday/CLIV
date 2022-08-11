@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -8,6 +9,8 @@
 <<<<<<< HEAD
     <list default="true" id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="" />
 =======
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
   <component name="ChangeListManager">
     <list default="true" id="4843c26a-1c18-4547-8c88-9c96a92ae111" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
@@ -221,6 +224,7 @@
       <change beforePath="$PROJECT_DIR$/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/ssafy-web.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ssafy-web.log.2022-08-05.0.gz" beforeDir="false" />
     </list>
+<<<<<<< HEAD
 >>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
 =======
     <list default="true" id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="">
@@ -240,11 +244,14 @@
       <change beforePath="$PROJECT_DIR$/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/ssafy-web.log" afterDir="false" />
     </list>
 >>>>>>> ff67c96d69c2c408361df731ff71eacc205b1623
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
 <<<<<<< HEAD
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/BE">
@@ -273,10 +280,15 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
 >>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
+=======
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
 <<<<<<< HEAD
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -351,6 +363,8 @@
       <workItem from="1659921764372" duration="2203000" />
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
@@ -384,14 +398,18 @@
       <workItem from="1659853355428" duration="130000" />
       <workItem from="1659853529031" duration="435000" />
       <workItem from="1659854000249" duration="88000" />
+<<<<<<< HEAD
 >>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
 =======
       <workItem from="1660047523253" duration="1324000" />
 >>>>>>> ff67c96d69c2c408361df731ff71eacc205b1623
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
+<<<<<<< HEAD
 <<<<<<< HEAD
     <option name="version" value="3" />
   </component>
@@ -409,6 +427,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
 =======
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
@@ -424,6 +444,9 @@
       <screen x="0" y="0" width="1280" height="672" />
     </state>
     <state x="121" y="0" key="SettingsEditor/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659854082647" />
+<<<<<<< HEAD
 >>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
   </component>
 </project>

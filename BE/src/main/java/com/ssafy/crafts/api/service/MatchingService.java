@@ -1,10 +1,9 @@
+//
 //package com.ssafy.crafts.api.service;
 //
-//import com.ssafy.crafts.api.request.ClassInfoRequest;
 //import com.ssafy.crafts.api.request.MatchingRequest;
-//import com.ssafy.crafts.api.response.ClassInfoResponse;
 //import com.ssafy.crafts.api.response.MatchingResponse;
-//import org.springframework.web.multipart.MultipartFile;
+//import com.ssafy.crafts.db.entity.MBoard;
 //
 //import java.util.List;
 //
@@ -17,5 +16,6 @@
 //
 //    void createMBoard(MatchingRequest matchingRequest);
 //    List<Integer> findMBoardIdListByTeacherId(String teacherId);
-//    MatchingResponse findMBoardById(int id);
+//    void findMBoardById(int id);
+//    List<MatchingResponse> findMBoardListByAuthId(String authId);
 //}

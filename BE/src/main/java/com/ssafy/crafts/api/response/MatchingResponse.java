@@ -1,3 +1,4 @@
+//
 //package com.ssafy.crafts.api.response;
 //
 //import lombok.Builder;
@@ -21,4 +22,6 @@
 //    private String authId;      // 작성자 아이디
 //    private int categoryId;     // 카데고리 아이디
 //    private  int matStatus;     // 매칭 완료 여부
+//
+//
 //}

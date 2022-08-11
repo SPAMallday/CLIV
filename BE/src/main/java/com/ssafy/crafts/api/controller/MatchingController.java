@@ -1,3 +1,4 @@
+//
 //package com.ssafy.crafts.api.controller;
 //
 //import com.ssafy.crafts.api.request.MatchingRequest;
@@ -67,10 +68,24 @@
 //
 //        List<MatchingResponse> list = new ArrayList<>();
 //
-//        for(Integer mboardId : mboardIdList){
-//            list.add(matchingService.findMBoardById(mboardId));
-//        }
+////        for(Integer mboardId : mboardIdList){
+////            list.add(matchingService.findMBoardById(mboardId));
+////        }
 //        return new ResponseEntity<>(list, HttpStatus.OK);
 //    }
+//
+//    @GetMapping("/board/list/{authId}")
+//    @ApiOperation(value = "회원 id로 회원이 작성한 매칭글 조회")
+//    public  ResponseEntity<?> getMBoardListByAuthId(@PathVariable String authId){
+//        /**
+//         * @Method Name : getMBoardListByAuthId
+//         * @작성자 : 김민주
+//         * @Method 설명 : 회원 id로 매칭 요청글 리스트를 조회한다.
+//         */
+//        List<MatchingResponse> mBoardList = matchingService.findMBoardListByAuthId(authId);
+//        return new ResponseEntity<>(mBoardList, HttpStatus.OK);
+//    }
+//
+////    @GetMapping("")
 //
 //}
