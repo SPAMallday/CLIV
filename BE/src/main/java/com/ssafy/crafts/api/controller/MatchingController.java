@@ -5,19 +5,16 @@ import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
-import com.ssafy.crafts.db.entity.MBoard;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

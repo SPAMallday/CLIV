@@ -67,16 +67,18 @@ public class MatchingServiceImpl implements MatchingService{
         List<MBoardTeacherResponse> list = new ArrayList<>();
 
         for(MBoardTeacher mBoardTeacher : mBoardTeacherList){
-            list.add(MBoardTeacherResponse.builder()
-                    .mt_id(mBoardTeacher.getId())
-                    .agreeYn(mBoardTeacher.isAgreeYn())
-                    .teacherId(mBoardTeacher.getTeacher().getId())
-                    .mboardId(mBoardTeacher.getMBoard().getId())
-                    .title(mBoardTeacher.getMBoard().getTitle())
-                    .wantedDay(mBoardTeacher.getMBoard().getWantedDay())
-                    .content(mBoardTeacher.getMBoard().getContent())
-                    .authId(mBoardTeacher.getTeacher().getId())
-                    .build());
+            if(!mBoardTeacher.getMBoard().isMatStatus()) {
+                list.add(MBoardTeacherResponse.builder()
+                        .mt_id(mBoardTeacher.getId())
+                        .agreeYn(mBoardTeacher.isAgreeYn())
+                        .teacherId(mBoardTeacher.getTeacher().getId())
+                        .mboardId(mBoardTeacher.getMBoard().getId())
+                        .title(mBoardTeacher.getMBoard().getTitle())
+                        .wantedDay(mBoardTeacher.getMBoard().getWantedDay())
+                        .content(mBoardTeacher.getMBoard().getContent())
+                        .authId(mBoardTeacher.getTeacher().getId())
+                        .build());
+            }
         }
         return list;
 
