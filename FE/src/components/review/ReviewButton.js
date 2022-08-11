@@ -121,32 +121,32 @@ function ReviewButton() {
               </Box>
               <Box sx={{ flex: '80%', paddingInline: '14px' }}>
                 <Grid container>
-                  <Grid item xs={6} md={3} className="reviewbtnbox">
-                    {reviewselect.selectReview.map((reviewbtn, i) => {
-                      return (
-                        <ToggleButtonGroup
-                          value={formats}
-                          onChange={handleFormat}
-                          sx={{ width: '25%' }}
-                          color="secondary"
+                  {reviewselect.selectReview.map((reviewbtn, i) => {
+                    return (
+                      <ToggleButtonGroup
+                        value={formats}
+                        onChange={handleFormat}
+                        sx={{
+                          width: '25%',
+                        }}
+                        color="secondary"
+                      >
+                        <ToggleButton
+                          value={reviewbtn.reviewValue}
+                          sx={{
+                            width: '100%',
+                            padding: '2%',
+                            mx: '2%',
+                            backgroundColor: 'white',
+                            border: '0',
+                            boxShadow: '1',
+                          }}
                         >
-                          <ToggleButton
-                            value={reviewbtn.reviewValue}
-                            sx={{
-                              width: '100%',
-                              padding: '2%',
-                              mx: '2%',
-                              backgroundColor: 'white',
-                              border: '0',
-                              boxShadow: '1',
-                            }}
-                          >
-                            {reviewbtn.reviewName}
-                          </ToggleButton>
-                        </ToggleButtonGroup>
-                      );
-                    })}
-                  </Grid>
+                          {reviewbtn.reviewName}
+                        </ToggleButton>
+                      </ToggleButtonGroup>
+                    );
+                  })}
                 </Grid>
               </Box>
             </Box>
