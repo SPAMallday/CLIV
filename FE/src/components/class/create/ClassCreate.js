@@ -211,7 +211,7 @@ function ClassCreate() {
       price: cost,
       content: content,
       level: rating,
-      classDatetime: dateTime,
+      classDatetime: dateTime.toLocaleString(),
     };
     // 전체 데이터 합쳐서 form으로
     const formData = new FormData();
