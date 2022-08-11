@@ -56,16 +56,16 @@ configurations {
 	providedRuntime
 }
 
-/*task npmInstall(type: NpmTask, overwrite: true) {
-    args = ['install']
-}*/
+//task npmInstall(type: NpmTask, overwrite: true) {
+//    args = ['install']
+//}
 
-task webpack(type: NpmTask, dependsOn: 'npmInstall') {
-	args = ['run']
-}
+//task webpack(type: NpmTask, dependsOn: 'npmInstall') {
+//	args = ['run', 'build']
+//}
 
 // processResources is a Java task. Run the webpack bundling before this task using the 'build' task in the package.json
-processResources.dependsOn 'webpack'
+//processResources.dependsOn 'webpack'
 
 //set build time and inject value to application.properties
 def buildTime() {
@@ -159,8 +159,8 @@ dependencies {
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	compile("javax.annotation:javax.annotation-api:1.2")
 
-	implementation("org.projectlombok:lombok:1.18.20")
-	annotationProcessor("org.projectlombok:lombok:1.18.20")
+	implementation("org.projectlombok:lombok:1.18.24")
+	annotationProcessor("org.projectlombok:lombok:1.18.24")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 

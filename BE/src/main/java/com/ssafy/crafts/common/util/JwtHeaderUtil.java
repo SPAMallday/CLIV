@@ -18,6 +18,7 @@ public class JwtHeaderUtil {
         }
         // Bearer 다음값을 반환
         if (headerValue.startsWith(TOKEN_PREFIX)) {
+
             return headerValue.substring(TOKEN_PREFIX.length());
         }
         // Bearer로 시작안할 시 null 반환

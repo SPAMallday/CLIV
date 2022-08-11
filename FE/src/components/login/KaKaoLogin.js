@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { REST_API_KEY, REDIRECT_URI } from './KaKaoLoginInfo';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { loginUser } from '../../store/modules/loginUser';
+// import { store } from '../../store/store';
 
 function KaKaoLogin() {
   const dispatch = useDispatch();
@@ -28,8 +29,8 @@ function KaKaoLogin() {
           if ((res.status = '200')) {
             const access_token = res.data.access_token;
 
-            sessionStorage.setItem('token', access_token);
-            sessionStorage.setItem('code', AUTHORIZE_CODE);
+            // sessionStorage.setItem('token', access_token);
+            // sessionStorage.setItem('code', AUTHORIZE_CODE);
 
             dispatch(loginUser(access_token));
             // dispatch(loginUser());
@@ -42,7 +43,7 @@ function KaKaoLogin() {
     }
 
     navigate('/', { replace: true });
-  }, [dispatch]);
+  }, []);
 
   return <div></div>;
 }

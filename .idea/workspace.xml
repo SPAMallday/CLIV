@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+<<<<<<< HEAD
+<<<<<<< HEAD
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="" />
+=======
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+  <component name="ChangeListManager">
+    <list default="true" id="4843c26a-1c18-4547-8c88-9c96a92ae111" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/ssafy-web.log.2022-08-02.0.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/ssafy-web.log.2022-08-06.0.gz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/.prettierrc.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/images/kakao_login_large_wide.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/images/login.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/images/sample.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/Root.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/api/config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/api/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/api/loginUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/assets/Logo1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/assets/Logo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/assets/Teacher_mark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/VideoRoomComponent.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/VideoRoomComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/chat/ChatComponent.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/chat/ChatComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/dialog-extension/DialogExtension.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/dialog-extension/DialogExtension.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/stream/OvVideo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/stream/StreamComponent.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/stream/StreamComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/toolbar/ToolbarComponent.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/Video/toolbar/ToolbarComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/close/CloseClass.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/create/ClassCreate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/create/ClassCreate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/detail/ClassDetailInfo.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/detail/ClassDetailInfo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/detail/ClassDetailItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/detail/ClassDetailItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/list/ClassListItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/list/ClassListItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/class/reserve/ReserveClass.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/classlist/classlist.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/classlist/classlist.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/login/KaKaoLogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/login/KaKaoLoginInfo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/matching/MatchingRequest.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/matching/MatchingRequest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/matching/MyPreRequest.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/matching/MyPreRequest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/mycalendar/MyCalendar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/mycalendar/MyCalendar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/myprofile/Badge.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/myprofile/Badge.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/myprofile/MyReview.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/myprofile/MyReview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/myprofile/Profile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/myprofile/Profile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/navbar/NavBar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/navbar/NavBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/qna/QnaItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/qna/QnaItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/route/WithNav.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/route/WithoutNav.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/components/starrating/StarRating.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/layout/openvidu-layout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/models/user-model.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/Main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/Root.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/VideoClass.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/class/ClassDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/class/ClassList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/classmanage/ClassManage.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/classmanage/ClassManage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/error/NotFound.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/login/KaKaoLogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/login/KaKaoLoginInfo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/main/Main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/matching/Matching.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/matching/Matching.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/myclasshistory/MyClassHistory.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/myclasshistory/MyClassHistory.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/myprofile/MyProfile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/pages/myprofile/MyProfile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/registerServiceWorker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/reportWebVitals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/setupTests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/store/modules/VideoClassModule.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/store/modules/loginUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FE/src/styles/ThemeConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/BE/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/BE/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/generated/com/ssafy/crafts/db/entity/QMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/generated/com/ssafy/crafts/db/entity/QMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/ClassController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/ClassController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/ClassServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/ClassServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/db/repository/jpaRepo/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/db/repository/jpaRepo/MemberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/db/repository/querydslRepo/MemberQuerydslRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/db/repository/querydslRepo/MemberQuerydslRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application-secure.yml" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application-secure.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/BE/ssafy-web.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/ssafy-web.log.2022-07-26.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/ssafy-web.log.2022-07-27.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/which" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/which.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/which.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/ansi-styles/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/ansi-styles/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/ansi-styles/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/ansi-styles/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/ansi-styles/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/source/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/source/templates.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/chalk/source/util.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/conversions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-convert/route.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/color-name/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/enoent.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/parse.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/util/escapeArgument.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/util/escapeCommand.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/util/hasEmptyArgumentBug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/util/readShebang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/lib/util/resolveCommand.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cross-spawn/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/gradle/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/gradle/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/gradle/lib/gradle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/gradle/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/has-flag/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/has-flag/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/has-flag/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/has-flag/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/has-flag/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/mode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/test/basic.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/isexe/windows.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/lru-cache/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/lru-cache/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/lru-cache/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/lru-cache/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/pseudomap/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/pseudomap/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/pseudomap/map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/pseudomap/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/pseudomap/pseudomap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/pseudomap/test/basic.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-command/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-command/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-command/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-command/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-regex/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-regex/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-regex/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/shebang-regex/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/supports-color/browser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/supports-color/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/supports-color/license" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/supports-color/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/supports-color/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/which/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/which/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/which/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/which/bin/which" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/which/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/which/which.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/yallist/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/yallist/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/yallist/iterator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/yallist/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/yallist/yallist.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/ssafy-web.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssafy-web.log.2022-08-05.0.gz" beforeDir="false" />
+    </list>
+<<<<<<< HEAD
+>>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
+=======
+    <list default="true" id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/BE/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/CKController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/controller/CKController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/FileUploadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/api/service/FileUploadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/common/util/S3Uploader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/AmazonS3Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/java/com/ssafy/crafts/config/WebMvcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BE/src/main/resources/application-secure.yml" beforeDir="false" afterPath="$PROJECT_DIR$/BE/src/main/resources/application-secure.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FE/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssafy-web.log" beforeDir="false" afterPath="$PROJECT_DIR$/ssafy-web.log" afterDir="false" />
+    </list>
+>>>>>>> ff67c96d69c2c408361df731ff71eacc205b1623
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+<<<<<<< HEAD
+<<<<<<< HEAD
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/BE">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+=======
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+>>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
+=======
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+<<<<<<< HEAD
+<<<<<<< HEAD
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2D3JJKYWdOqrkYPXgbuYJDVGWRr" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/SSAFY/workspace/commonPjt/S07P12A605",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "profiler.jvm",
+    "spring.configuration.checksum": "525d9c323efecbe1bd6e3943f47fcaf1"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="CraftsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
+      <module name="crafts.main" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ssafy.crafts.CraftsApplication" />
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bdebc428-2a6e-403b-8866-f10a12b9ece8" name="Changes" comment="" />
+      <created>1659921761799</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659921761799</updated>
+      <workItem from="1659921764372" duration="2203000" />
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="2D14eh6BqJdRSazZ5EwZ8sbdvRt" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4843c26a-1c18-4547-8c88-9c96a92ae111" name="Default Changelist" comment="" />
+      <created>1659853353401</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659853353401</updated>
+      <workItem from="1659853355428" duration="130000" />
+      <workItem from="1659853529031" duration="435000" />
+      <workItem from="1659854000249" duration="88000" />
+<<<<<<< HEAD
+>>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
+=======
+      <workItem from="1660047523253" duration="1324000" />
+>>>>>>> ff67c96d69c2c408361df731ff71eacc205b1623
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+=======
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1659853963688">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659853963688" />
+    <state x="464" y="103" key="FileChooserDialogImpl" timestamp="1659853900163">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="464" y="103" key="FileChooserDialogImpl/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659853900163" />
+    <state x="121" y="0" key="SettingsEditor" timestamp="1659854082647">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="121" y="0" key="SettingsEditor/0.0.1280.672/-1920.0.1920.1032@0.0.1280.672" timestamp="1659854082647" />
+<<<<<<< HEAD
+>>>>>>> ca945fafec43ad282205d3e4f9648ef4a0f5199e
+=======
+>>>>>>> 42372587dd5aa428b2dc1fcc30117e47e38518b4
+  </component>
+</project>

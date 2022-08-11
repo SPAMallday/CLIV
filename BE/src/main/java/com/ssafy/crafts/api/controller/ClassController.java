@@ -28,15 +28,16 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RequestMapping("/api/class")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class ClassController {
     private final ClassService classService;
     private final AuthService authService;
 
     @PostMapping(
-            value="/",
+            value="/create",
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    @ApiOperation(value = "공연 정보 등록", notes = "새로운 공연 정보를 등록한다.")
+    @ApiOperation(value = "수업 정보 등록", notes = "새로운 수업 정보를 등록한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 404, message = "등록 실패"),
@@ -51,8 +52,13 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 새로운 수업 정보를 등록한다.
          */
+        log.info("수업 정보 등록 시작");
+        log.info("토큰 얻어오기");
         String token = JwtHeaderUtil.getAccessToken(request);
+        log.info("토큰에서 아이디 정보 얻어 선생님 아이디로 할당");
         classInfoRequest.setTeacherId(authService.getAuthId(token));
+//        classInfoRequest.setTeacherId("");
+        log.info("수업 정보와 썸네일 등록");
         classService.insertClassInfo(classInfoRequest, thumbnail);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -71,6 +77,8 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 수업 id로 수업 정보를 조회한다.
          */
+        System.out.println("class detail");
+        log.debug("class detail");
         ClassInfoResponse classInfoResponse = classService.findClassInfoById(classId);
         if(classInfoResponse == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(classInfoResponse, HttpStatus.OK);

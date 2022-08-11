@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * @FileName : FileUploadService
  * @작성자 : 허성은
- * @Class 설명 : File 업로드 기능을 위한 서비스 구현 정의
+ * @Class 설명 : S3 File 업로드 기능을 위한 서비스 구현 정의
  */
 @RequiredArgsConstructor
 @Service
@@ -33,6 +36,11 @@ public class FileUploadService {
     private final AmazonS3Client amazonS3Client;
 
     public String upload(MultipartFile uploadFile) throws IOException {
+        /**
+         * @Method Name : upload
+         * @작성자 : 허성은
+         * @Method 설명 : S3에 이미지를 올리고 url을 반환
+         */
         String origName = uploadFile.getOriginalFilename();
         String url;
         try {
