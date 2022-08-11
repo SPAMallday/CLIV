@@ -1,6 +1,12 @@
 package com.ssafy.crafts.api.response;
 
+import com.ssafy.crafts.db.entity.Member;
 import lombok.*;
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @FileName : ClassInfoResponse
@@ -14,12 +20,15 @@ import lombok.*;
 public class ClassInfoResponse {
     int classId;
     String teacherId;
+    List<Member> members;
+    int categoryId;
     String className;
-    int durationH;
-    int memberCnt;
     int price;
-    String classDatetime;
+    int headcount;
+    Timestamp classDatetime;
     String content;
-    String classImgUrl;
+    String classImg;
+    String classStatus;
     int level;
+    Timestamp regdate;
 }

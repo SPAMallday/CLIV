@@ -3,6 +3,7 @@ package com.ssafy.crafts.db.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
+@ToString
 public class ClassInfo {
 
     @Id
@@ -72,8 +74,11 @@ public class ClassInfo {
     @Column(name = "status", length = 10, nullable = false)
     private ClassStatus classStatus;
 
+    @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp regdate;
+
     @Builder
-    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus) {
+    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus, Timestamp regdate) {
         this.id = id;
         this.qnaList = qnaList;
         this.reviewList = reviewList;
@@ -89,6 +94,7 @@ public class ClassInfo {
         this.classImg = classImg;
         this.level = level;
         this.classStatus = classStatus;
+        this.regdate = regdate;
     }
 
     public void addReviewList(Review review) {

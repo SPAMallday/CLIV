@@ -31,8 +31,6 @@ public class ClassInfoRequest {
     List<HashtagRequest> taggingRequest;
     @ApiModelProperty(name = "className", example = "수업 제목")
     String className;
-    @ApiModelProperty(name = "durationH", example = "2")
-    int durationH;
     @ApiModelProperty(name = "headcount", example = "8")
     int headcount;
     @ApiModelProperty(name = "price", example = "50000")

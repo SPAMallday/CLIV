@@ -57,7 +57,6 @@ public class ClassController {
         String token = JwtHeaderUtil.getAccessToken(request);
         log.info("토큰에서 아이디 정보 얻어 선생님 아이디로 할당");
         classInfoRequest.setTeacherId(authService.getAuthId(token));
-//        classInfoRequest.setTeacherId("1234555");
         log.info("수업 정보와 썸네일 등록");
         classService.insertClassInfo(classInfoRequest, thumbnail);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -100,4 +99,6 @@ public class ClassController {
         classService.joinClassByMemberId(classId, authService.getAuthId(token));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
 }
