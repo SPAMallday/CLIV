@@ -33,8 +33,8 @@ function TabPanel(props) {
 
 TabPanel.propTypes = {
   children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+  index: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 function NavBar() {
@@ -317,8 +317,8 @@ function NavBar() {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem component={Link} to={KAKAO_AUTH_URL}>
-            로그인
+          <MenuItem>
+            <a href={KAKAO_AUTH_URL}>로그인</a>
           </MenuItem>
           <Divider />
           <MenuItem component={Link} to={'/myprofile'}>
