@@ -154,7 +154,9 @@ function NavBar() {
             <Link to="/matching/receiverequest">
               <MenuItem onClick={handleCloseMatching}>받은 요청</MenuItem>
             </Link>
-            <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
+            <Link to="/chatting">
+              <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
+            </Link>
           </Menu>
         </div>
         <Link to="/classmanage">
