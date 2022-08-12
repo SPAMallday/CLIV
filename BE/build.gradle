@@ -124,6 +124,7 @@ dependencies {
 
 	//STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	//STOMP 관련 프론트 라이브러리
 	implementation('org.webjars.bower:jquery:3.3.1')
 	implementation('org.webjars:sockjs-client:1.1.2')

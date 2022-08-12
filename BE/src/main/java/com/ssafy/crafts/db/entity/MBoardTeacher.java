@@ -24,21 +24,21 @@ public class MBoardTeacher {
     @Convert(converter = BooleanToYNConverter.class)
     private boolean agreeYn = false;  // 클래스 개설 수강생 동의 여부
 
-    // N:1 관계 : 매칭보드_선생님 - 회원
+    // N:1 관계 : 선생님_매칭보드 - 회원
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Member teacher;
 
-    // 1:1 관계 : 매칭_선생님 - 매칭보드
+    // 1:1 관계 : 선생님_매칭보드 - 매칭보드
     @ManyToOne
     @JoinColumn(name = "mboard_id")
     private MBoard mBoard;
 
-    // 1:1 관계 : 매칭_선생님 - 채팅방
+    // 1:1 관계 : 선생님_매칭보드 - 채팅방
     @OneToOne(mappedBy = "mBoardTeacher")
     private ChatRoom chatRoom;
 
-    // 1:1 관계 : 매칭_선생님 - 1:1수업
+    // 1:1 관계 : 선생님_매칭보드 - 1:1수업
     @OneToOne(mappedBy = "mBoardTeacher")
     private PrivateClass privateClass;
 
