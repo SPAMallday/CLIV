@@ -1,48 +1,34 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import ClassCreate from '../../components/class/create/ClassCreate';
-import QnaItem from '../../components/qna/QnaItem';
-import ReserveClass from '../../components/class/reserve/ReserveClass';
-import CloseClass from '../../components/class/close/CloseClass';
-
 import './ClassManage.css';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`classmanage-tabpanel-${index}`}
-      className={'classmanage-tabpanel'}
-      aria-labelledby={`classmanage-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 function ClassManage() {
-  const [value, setValue] = React.useState(0);
+  const location = useLocation();
+
+  let nowValue;
+  switch (location.pathname) {
+    case '/classmanage':
+    case '/classmanage/reserve':
+      nowValue = 0;
+      break;
+    case '/classmanage/close':
+      nowValue = 1;
+      break;
+    case '/classmanage/create':
+      nowValue = 2;
+      break;
+    case '/classmanage/qna':
+      nowValue = 3;
+      break;
+    default:
+      break;
+  }
+
+  const [value, setValue] = React.useState(nowValue);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -56,6 +42,34 @@ function ClassManage() {
     };
   });
 
+  let customOutlet;
+  switch (nowValue) {
+    case 0:
+    case 1:
+      customOutlet = <Outlet />;
+      break;
+    case 2:
+      customOutlet = (
+        <>
+          <p className="classManageTitle">클래스 생성</p>
+          <Outlet />
+        </>
+      );
+      break;
+    case 3:
+      customOutlet = (
+        <>
+          <p className="classManageTitle">Q & A 관리</p>
+          <Box sx={{ px: 8, pt: 4 }}>
+            <Outlet />
+          </Box>
+        </>
+      );
+      break;
+
+    default:
+      break;
+  }
   return (
     <Box
       sx={{
@@ -76,32 +90,15 @@ function ClassManage() {
           borderRight: 1,
           borderColor: 'divider',
           bgcolor: '#f7ecde',
-          minWidth: '80px',
+          minWidth: '6.5rem',
         }}
       >
-        <Tab label="예정 클래스" {...a11yProps(0)} />
-        <Tab label="지난 클래스" {...a11yProps(1)} />
-        <Tab label="클래스 생성" {...a11yProps(2)} />
-        <Tab label="Q & A 관리" {...a11yProps(3)} />
+        <Tab label="예정 클래스" component={Link} to="reserve" />
+        <Tab label="지난 클래스" component={Link} to="close" />
+        <Tab label="클래스 생성" component={Link} to="create" />
+        <Tab label="Q & A 관리" component={Link} to="qna" />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <ReserveClass />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CloseClass />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <p className="classManageTitle">클래스 생성</p>
-
-        <ClassCreate />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <p className="classManageTitle">Q & A 관리</p>
-
-        <Box sx={{ px: 8, pt: 4 }}>
-          <QnaItem />
-        </Box>
-      </TabPanel>
+      <Box sx={{ p: 3, width: '100%' }}>{customOutlet}</Box>
     </Box>
   );
 }

@@ -89,46 +89,6 @@ function NavBar() {
     setNotiTabValue(newValue);
   };
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: '20px',
-    backgroundColor: 'rgba(223, 120, 97, 0.8)',
-    '&:hover': {
-      backgroundColor: 'rgba(223, 120, 97, 1.0)',
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 'auto',
-    },
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  }));
-
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      maxWidth: '15ch',
-      color: 'white',
-    },
-  }));
-
   /* <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
@@ -223,6 +183,46 @@ function NavBar() {
     </Box>
   );
 
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: '20px',
+    backgroundColor: 'rgba(223, 120, 97, 0.8)',
+    '&:hover': {
+      backgroundColor: 'rgba(223, 120, 97, 1.0)',
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 'auto',
+    },
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      maxWidth: '15ch',
+      color: 'white',
+    },
+  }));
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav" position="relative">
@@ -307,6 +307,7 @@ function NavBar() {
               flexGrow: 1,
               display: { xs: 'none', nav: 'flex' },
               justifyContent: 'flex-end',
+              alignItems: 'center',
             }}
           >
             <Search id="search">

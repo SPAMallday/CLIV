@@ -8,6 +8,16 @@ export const apiClient = axios.create({
   baseURL: BASE_URL, // 환경변수로 지정한 BASE_URL을 사용
 });
 
+export const openViduApiClient = axios.create({
+  baseURL:
+    BASE_URL + ':' + process.env.REACT_APP_OPENVIDU_PORT + '/openvidu/api', // 환경변수로 지정한 BASE_URL을 사용
+  headers: {
+    // base64 Encode (OPENVIDU_SECRET)
+    Authorization:
+      'Basic ' + btoa(`OPENVIDUAPP:${process.env.REACT_APP_OPENVIDU_SECRET}`),
+  },
+});
+
 const Interceptor = ({ children }) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.userInfo.user.token);

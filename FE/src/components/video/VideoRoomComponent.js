@@ -48,7 +48,6 @@ class VideoRoomComponent extends Component {
     // this.updateLayout = this.updateLayout.bind(this);
     this.camStatusChanged = this.camStatusChanged.bind(this);
     this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.nicknameChanged = this.nicknameChanged.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.switchCamera = this.switchCamera.bind(this);
     this.screenShare = this.screenShare.bind(this);
@@ -296,15 +295,6 @@ class VideoRoomComponent extends Component {
     localUser.getStreamManager().publishAudio(localUser.isAudioActive());
     this.sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
     this.setState({ localUser: localUser });
-  }
-
-  nicknameChanged(nickname) {
-    let localUser = this.state.localUser;
-    localUser.setNickname(nickname);
-    this.setState({ localUser: localUser });
-    this.sendSignalUserChanged({
-      nickname: this.state.localUser.getNickname(),
-    });
   }
 
   deleteSubscriber(stream) {
@@ -674,10 +664,7 @@ class VideoRoomComponent extends Component {
                     className="OT_root OT_publisher custom-class"
                     id="localUser"
                   >
-                    <StreamComponent
-                      user={localUser}
-                      handleNickname={this.nicknameChanged}
-                    />
+                    <StreamComponent user={localUser} />
                   </div>
                 )}
             </div>
@@ -726,6 +713,9 @@ class VideoRoomComponent extends Component {
    *   3) The token must be consumed in Session.connect() method
    */
 
+  // 별도의 서버없이 로컬에서 Openvidu 서버만으로 테스트하는 경우 사용하는 코드
+  // 세션 관리 불가
+  /*
   getToken() {
     return this.createSession(this.state.mySessionId).then((sessionId) =>
       this.createToken(sessionId),
@@ -801,5 +791,6 @@ class VideoRoomComponent extends Component {
         .catch((error) => reject(error));
     });
   }
+  */
 }
 export default VideoRoomComponent;
