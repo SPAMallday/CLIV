@@ -73,7 +73,7 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED))
                 .orderBy(qClassInfo.classDatetime.desc())
-                .limit(5)
+                .limit(4)
                 .fetch();
     }
 
@@ -88,7 +88,7 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED))
                 .orderBy(qClassInfo.headcount.subtract(qClassInfo.members.size()).asc())
-                .limit(5)
+                .limit(4)
                 .fetch();
     }
 
