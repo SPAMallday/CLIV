@@ -122,4 +122,18 @@ public class ClassInfoQuerydslRepository {
                 .orderBy(qClassInfo.classDatetime.desc())
                 .fetch();
     }
+
+    public List<ClassInfo> findClassInfoByRegdate() {
+        /**
+         * @Method Name : findClassInfoByRegdate
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 개설순으로 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
+    }
 }
