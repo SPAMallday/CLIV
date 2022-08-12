@@ -21,9 +21,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @FileName : ClassServiceImpl
@@ -132,5 +130,16 @@ public class ClassServiceImpl implements ClassService{
             new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이 개설한 수업을 신청할 수 없습니다.");
 
         classInfo.addMember(member.get());
+    }
+
+    @Override
+    public List<ClassInfoResponse> findClassListByRegdate() {
+        /**
+         * @Method Name : findClassListByRegdate
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 생성순으로 수업 리스트 조회
+         */
+        List<ClassInfo> classInfoList = classInfoQuerydslRepository.findClassInfoByRegdate();
+        return MainServiceImpl.classInfoToDto(classInfoList) != null? MainServiceImpl.classInfoToDto(classInfoList) : Collections.emptyList();
     }
 }

@@ -76,7 +76,7 @@ public class MainServiceImpl implements MainService {
         return classInfoToDto(classInfoList) != null? classInfoToDto(classInfoList) : Collections.emptyList();
     }
 
-    private static List<ClassInfoResponse> classInfoToDto(List<ClassInfo> list){
+    public static List<ClassInfoResponse> classInfoToDto(List<ClassInfo> list){
         /**
          * @Method Name : classInfoToDto
          * @작성자 : 허성은
