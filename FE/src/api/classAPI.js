@@ -1,8 +1,5 @@
 import { apiClient } from '.';
 
-const user = useSelector((state) => state.userInfo.user);
-console.log(user);
-
 // 클래스 생성
 export const classCreate = async () => {
   try {
@@ -16,8 +13,18 @@ export const classCreate = async () => {
 // 클래스 목록
 export const classList = async () => {
   try {
-    const res = await apiClient.get(`/api/class`);
-    return res.json();
+    const res = await apiClient.get(`/api/class/list`);
+    return res.data;
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
+// 메인 클래스 목록
+export const mainList = async () => {
+  try {
+    const res = await apiClient.get(`/api/main/list`);
+    return res;
   } catch (err) {
     console.log('Error >>', err);
   }
@@ -27,7 +34,7 @@ export const classList = async () => {
 export const classDetail = async (classId) => {
   try {
     const res = await apiClient.get(`/api/class/${classId}`);
-    return res.json();
+    return res.data;
   } catch (err) {
     console.log('Error >>', err);
   }

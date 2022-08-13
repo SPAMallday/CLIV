@@ -56,16 +56,11 @@ export const userInfoSlice = createSlice({
       // return state;
     },
     // logout 성공 시
-    logoutSuccess: (state) => {
+    logout: (state) => {
       // state.id = action.payload.id;
       // state.role = action.payload.role;
       // state.nickname = action.payload.nickname;
       state.isLogin = false;
-      // return state;
-    },
-    // logout 실패 시
-    logoutFailure: (state) => {
-      state.isLogin = true;
       // return state;
     },
   },
@@ -75,6 +70,7 @@ export const userInfoSlice = createSlice({
         console.log('pending');
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        sessionStorage.setItem('jwt', action.payload.appToken);
         state.user.token = action.payload.appToken; // jwt 토큰, 분해해야됨
 
         const decoded = jwtDecode(action.payload.appToken);
@@ -96,6 +92,6 @@ export const userInfoSlice = createSlice({
   },
 });
 
-// export const { loginSuccess, loginFailure } = userInfoSlice.actions;
+export const { loginSuccess, loginFailure, logout } = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;

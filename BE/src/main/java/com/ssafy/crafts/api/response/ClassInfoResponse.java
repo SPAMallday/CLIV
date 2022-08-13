@@ -2,7 +2,10 @@ package com.ssafy.crafts.api.response;
 
 import com.ssafy.crafts.db.entity.Member;
 import lombok.*;
+import org.joda.time.DateTime;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,9 +25,10 @@ public class ClassInfoResponse {
     String className;
     int price;
     int headcount;
-    String classDatetime;
+    Timestamp classDatetime;
     String content;
     String classImg;
     String classStatus;
     int level;
+    Timestamp regdate;
 }

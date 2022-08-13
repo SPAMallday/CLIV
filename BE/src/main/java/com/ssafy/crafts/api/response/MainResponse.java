@@ -19,7 +19,7 @@ import java.util.List;
 public class MainResponse {
     List<ClassInfoResponse> madeCL;
     List<ClassInfoResponse> appliedCL;
-//    List<ClassInfoResponse> categoryCL;
+    //    List<ClassInfoResponse> categoryCL;
     List<ClassInfoResponse> classTimeCL;
     List<ClassInfoResponse> headcountCL;
     List<ClassInfoResponse> all;

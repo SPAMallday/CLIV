@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * @FileName : ClassServiceImpl
@@ -62,8 +62,8 @@ public class ClassServiceImpl implements ClassService{
         classInfoRequest.setClassImgUrl(thumbnailUrl);
 
         ClassInfo classInfo = ClassInfo.builder()
-                .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()))
-                .category(categoryQuerydslRepository.findCategoryById(classInfoRequest.getCategoryId()).get())
+                .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()).get())
+                .category(categoryQuerydslRepository.findCategoryById(classInfoRequest.getCategoryId()))
                 .classDatetime(Timestamp.valueOf(timeStampFormat.format(classDate)))
                 .className(classInfoRequest.getClassName())
                 .headcount(classInfoRequest.getHeadcount())
@@ -101,11 +101,12 @@ public class ClassServiceImpl implements ClassService{
                 .className(classInfo.getClassName())
                 .price(classInfo.getPrice())
                 .headcount(classInfo.getHeadcount())
-                .classDatetime(timeStampFormat.format(classInfo.getClassDatetime()))
+                .classDatetime(classInfo.getClassDatetime())
                 .content(classInfo.getContent())
                 .classImg(classInfo.getClassImg())
                 .classStatus(classInfo.getClassStatus().toString())
                 .level(classInfo.getLevel())
+                .regdate(classInfo.getRegdate())
                 .build();
     }
 
@@ -118,8 +119,9 @@ public class ClassServiceImpl implements ClassService{
          */
         ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
-        Member member = Optional.ofNullable(memberQuerydslRepository.findMemberByAuthId(memberId))
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다."));
+        Optional<Member> member = memberQuerydslRepository.findMemberByAuthId(memberId);
+        if(!member.isPresent())
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");
         // 인원수 다 찼으면 거절
         if(classInfo.getHeadcount() <= classInfo.getMembers().size())
             new ResponseStatusException(HttpStatus.FORBIDDEN, "해당 수업은 신청 인원이 마감되었습니다.");
@@ -127,6 +129,17 @@ public class ClassServiceImpl implements ClassService{
         if(classInfo.getTeacher().getId() == memberId)
             new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이 개설한 수업을 신청할 수 없습니다.");
 
-        classInfo.addMember(member);
+        classInfo.addMember(member.get());
+    }
+
+    @Override
+    public List<ClassInfoResponse> findClassListByRegdate() {
+        /**
+         * @Method Name : findClassListByRegdate
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 생성순으로 수업 리스트 조회
+         */
+        List<ClassInfo> classInfoList = classInfoQuerydslRepository.findClassInfoByRegdate();
+        return MainServiceImpl.classInfoToDto(classInfoList) != null? MainServiceImpl.classInfoToDto(classInfoList) : Collections.emptyList();
     }
 }
