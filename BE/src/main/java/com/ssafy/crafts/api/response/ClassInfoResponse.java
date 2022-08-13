@@ -2,10 +2,8 @@ package com.ssafy.crafts.api.response;
 
 import com.ssafy.crafts.db.entity.Member;
 import lombok.*;
-import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,9 +17,9 @@ import java.util.List;
 @Builder
 public class ClassInfoResponse {
     int classId;
-    String teacherId;
+    String teacherNickname;
     List<Member> members;
-    int categoryId;
+    String category;
     String className;
     int price;
     int headcount;

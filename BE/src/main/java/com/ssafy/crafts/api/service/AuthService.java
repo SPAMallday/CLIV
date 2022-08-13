@@ -88,7 +88,7 @@ public class AuthService {
         }
 
         try {
-            Member member =  memberQuerydslRepository.findMemberByAuthId(claims.getSubject()).get();;
+            Member member =  memberQuerydslRepository.findMemberByAuthId(claims.getSubject()).get();
             return member.getId();
 
         } catch (NullPointerException e) {

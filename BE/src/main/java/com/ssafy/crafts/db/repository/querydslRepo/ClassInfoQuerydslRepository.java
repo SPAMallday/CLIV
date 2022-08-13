@@ -10,6 +10,7 @@ import com.ssafy.crafts.db.entity.QClassInfo;
 import com.ssafy.crafts.db.entity.QMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

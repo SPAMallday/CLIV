@@ -16,11 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -95,9 +93,9 @@ public class ClassServiceImpl implements ClassService{
 
         return ClassInfoResponse.builder()
                 .classId(classInfo.getId())
-                .teacherId(classInfo.getTeacher().getId())
+                .teacherNickname(classInfo.getTeacher().getNickname())
                 .members(classInfo.getMembers())
-                .categoryId(classInfo.getCategory().getId())
+                .category(classInfo.getCategory().getContent())
                 .className(classInfo.getClassName())
                 .price(classInfo.getPrice())
                 .headcount(classInfo.getHeadcount())
@@ -119,7 +117,6 @@ public class ClassServiceImpl implements ClassService{
          */
         ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
-
         Optional<Member> member = memberQuerydslRepository.findMemberByAuthId(memberId);
         if(!member.isPresent())
             new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");

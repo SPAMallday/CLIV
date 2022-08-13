@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ import java.text.ParseException;
 @Api(value = "수업 관련 API", tags = {"ClassController"}, description = "수업 관련 컨트롤러")
 @RestController
 @Slf4j
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/main")
 @RequiredArgsConstructor
 public class MainController {
