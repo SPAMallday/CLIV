@@ -28,17 +28,6 @@ public class ChatRoomController {
 
     private final ChatService chatService;
 
-//    @PostMapping("/room/{mtId}")
-//    @ApiOperation(value = "새로운 채팅방을 생성한다.", response = String.class)
-//    public ResponseEntity<Object> createChatRoom(@PathVariable int mtId) {
-//
-//        if(chatService.getChatRoomById(mtId) != null){
-//            chatService.createChatRoom(mtId);
-//            return new ResponseEntity<>(HttpStatus.CREATED);
-//        }
-//
-//    }
-
     /**
      * @Method Name : createRoom
      * @작성자 : 김민주

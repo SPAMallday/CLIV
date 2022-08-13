@@ -53,6 +53,11 @@ public class PrivateClassController {
 //        String token = JwtHeaderUtil.getAccessToken(request);
 //        privateClassRequest.setTeacherId(authService.getAuthId(token));
 
+//        log.info("매칭여부 확인");
+//        if(matchingService.getMatStatusByMtId(mtId)=="Y"){
+//            return new ResponseEntity<>("매칭이 완료된 글입니다.", HttpStatus.CONFLICT);
+//        }
+
         log.info("1:1 수업 정보 등록");
         privateClassService.createPrivateClass(privateClassRequest, mtId);
         log.info("매칭글의 매칭 여부 업데이트");

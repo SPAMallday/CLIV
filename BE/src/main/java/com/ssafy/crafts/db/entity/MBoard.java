@@ -73,8 +73,4 @@ public class MBoard {
         this.wantedDay = wantedDay;
     }
 
-//    public static enum EnumYn {
-//        Y,
-//        N
-//    }
 }

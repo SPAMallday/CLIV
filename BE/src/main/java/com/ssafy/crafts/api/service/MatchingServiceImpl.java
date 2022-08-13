@@ -5,10 +5,14 @@ import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.db.entity.MBoard;
 import com.ssafy.crafts.db.entity.MBoardTeacher;
+import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.repository.jpaRepo.MBoardRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.MBoardTeacherRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.MatchingRepository;
+import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,10 +27,13 @@ import java.util.Optional;
  * @Class 설명 : 매칭기능 관련 비즈니스 처리 로직을 위한 서비스 구현 정의
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MatchingServiceImpl implements MatchingService{
 
     private final MatchingRepository matchingRepository;
+    private final MemberRepository memberRepository;
+    private final MBoardRepository mBoardRepository;
     private final MatchingQuerydslRepository matchingQuerydslRepository;
     private final MBoardTeacherQuerydslRepository mBoardTeacherQuerydslRepository;
     private final MBoardTeacherRepository mBoardTeacherRepository;
@@ -34,7 +41,7 @@ public class MatchingServiceImpl implements MatchingService{
     private final CategoryQuerydslRepository categoryQuerydslRepository;
 
     @Override
-    public void createMBoard(MatchingRequest matchingRequest) {
+    public int createMBoard(MatchingRequest matchingRequest) {
         /**
          * @Method Name : createMBoard
          * @작성자 : 김민주
@@ -48,12 +55,36 @@ public class MatchingServiceImpl implements MatchingService{
                 .content(matchingRequest.getContent())
                 .regDate(matchingRequest.getRegDate())
                 .matStatus(matchingRequest.isMatStatus())
-                .category(categoryQuerydslRepository.findCategoryById(matchingRequest.getCategoryId()).get())
-                .member(memberQuerydslRepository.findMemberByAuthId(matchingRequest.getAuthId()))
+                .category(categoryQuerydslRepository.findCategoryById(matchingRequest.getCategoryId()))
+                .member(memberQuerydslRepository.findMemberByAuthId(matchingRequest.getAuthId()).get())
                 .build();
 
 //        matchingRepository.save(matchingRequest.toEntity());
         matchingRepository.save(mBoard);
+        return mBoard.getId();
+    }
+
+    @Override
+    public void matching(int mBoardId, int categoryId, String gender) {
+        /**
+         * @Method Name : matching
+         * @작성자 : 김민주
+         * @Method 설명 : 조건에 일치하는 선생님 매칭 하기
+         */
+
+        log.info("요청글의 카데고리와 성별이 일치하는 선생님 조회");
+        List<Member> teachers = memberQuerydslRepository.findByCategoryAndGender(categoryId, gender);
+
+        // 매칭율? 매칭횟수?
+
+        for(Member teacher : teachers){
+
+            MBoardTeacher mBoardTeacher = MBoardTeacher.builder()
+                    .mBoard(mBoardRepository.findById(mBoardId).get())
+                    .teacher(teacher)
+                    .build();
+            mBoardTeacherRepository.save(mBoardTeacher);
+        }
     }
 
     @Override
@@ -82,47 +113,6 @@ public class MatchingServiceImpl implements MatchingService{
         }
         return list;
     }
-
-
-//    @Override
-//    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
-//        /**
-//         * @Method Name : findMBoardIdByTeacherId
-//         * @작성자 : 김민주
-//         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 id 리스트 조회
-//        */
-//        List<Integer> mBoardIdList = matchingQuerydslRepository.findMBoardIdListByTeacherId(teacherId);
-//
-//        return mBoardIdList;
-//    }
-
-//    @Override
-//    public List<MatchingResponse> findMBoardListByTeacherId(String teacherId) {
-//        /**
-//         * @Method Name : findMBTeacherListByTeacherId
-//         * @작성자 : 김민주
-//         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 정보 리스트 조회
-//         */
-//        //List<MBoardTeacher> mBoardTeacherList = mBoardTeacherQuerydslRepository.findMBTeacherListByTeacherId(teacherId);
-//        //List<MBoardTeacherResponse> list = new ArrayList<>();
-//
-//        List<MBoard> mBoardList = matchingQuerydslRepository.findMBoardByteacherId(teacherId);
-//        List<MatchingResponse> list = new ArrayList<>();
-//
-//        for(MBoard mBoard : mBoardList){
-//            list.add(MatchingResponse.builder()
-//                    .id(mBoard.getId())
-//                    .title(mBoard.getTitle())
-//                    .wantedDay(mBoard.getWantedDay())
-//                    .teacherGender(mBoard.getTeacherGender())
-//                    .content(mBoard.getContent())
-//                    .authId(mBoard.getMember().getId())
-//                    .categoryId(mBoard.getCategory().getId())
-//                    .matStatus(mBoard.isMatStatus())
-//                    .build());
-//        }
-//        return list;
-//    }
 
     @Override
     public MatchingResponse findMBoardById(int id) {

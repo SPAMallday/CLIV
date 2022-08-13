@@ -56,8 +56,13 @@ public class MatchingController {
         //atchingRequest.setAuthId(authService.getAuthId(token));
         matchingRequest.setAuthId("1");     // test용
 
+
         log.info("매칭글 정보 등록");
-        matchingService.createMBoard(matchingRequest);
+        int mBoardId = matchingService.createMBoard(matchingRequest);
+
+        log.info("매칭 조건에 일치하는 선생님에게 요청글 등록");
+        matchingService.matching(mBoardId, matchingRequest.getCategoryId(), matchingRequest.getTeacherGender());
+
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
@@ -75,44 +80,6 @@ public class MatchingController {
         log.info("return 반환");
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
-//    @GetMapping("tboard/list/{teacherId}")
-//    @ApiOperation(value = "강사 id로 해당 강사가 요청받은 매칭정보(MBoard_Teacher) 목록 조회")
-//    public ResponseEntity<?> getMBoardListByTeacherId(@PathVariable String teacherId){
-//        /**
-//         * @Method Name : getMBoardListByTeacherId
-//         * @작성자 : 김민주
-//         * @Method 설명 : 강사 id로 매칭 요청글 리스트를 조회한다.
-//         */
-//        log.info("매칭글 리스트 조회 시작");
-//        //List<Integer> mboardIdList = matchingService.findMBoardIdListByTeacherId(teacherId);
-//        //log.info("강사 id로 MBoardTeacher 리스트 얻어오기");
-//        //List<MBoardTeacherResponse> mboardTeacherList = matchingService.findMBTeacherListByTeacherId(teacherId);
-//
-//        log.info("강사 id로 MBoard 리스트 얻어오기");
-//        List<MatchingResponse> mBoardList = matchingService.findMBoardListByTeacherId(teacherId);
-//        return new ResponseEntity<>(mBoardList, HttpStatus.OK);
-//    }
-
-
-//    @GetMapping("tboard/detail/{mtId}")
-//    @ApiOperation(value = "강사 보드의 매칭글 id로 해당 매칭글 상세정보 조회")
-
-
-//    @GetMapping("/board/list/{authId}")
-//    @ApiOperation(value = "회원 id로 회원이 작성한 매칭글 조회")
-//    public  ResponseEntity<?> getMBoardListByAuthId(@PathVariable String authId){
-//        /**
-//         * @Method Name : getMBoardListByAuthId
-//         * @작성자 : 김민주
-//         * @Method 설명 : 회원 id로 매칭 요청글 리스트를 조회한다.
-//         */
-//        log.info("매칭 리스트 조회 시작");
-//        List<MatchingResponse> mBoardList = matchingService.findMBoardListByAuthId(authId);
-//        log.info("return 반환");
-//        return new ResponseEntity<>(mBoardList, HttpStatus.OK);
-//    }
-
 
     @GetMapping("/board/list/{authId}")
     @ApiOperation(value = "회원 id로 회원이 작성한 매칭글 조회")

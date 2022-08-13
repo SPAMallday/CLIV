@@ -15,7 +15,8 @@ import java.util.List;
  */
 public interface MatchingService {
 
-    void createMBoard(MatchingRequest matchingRequest);
+    int createMBoard(MatchingRequest matchingRequest);
+    void matching(int mBoardId, int categoryId, String gender);
     //List<Integer> findMBoardIdListByTeacherId(String teacherId);
     //List<MBoardTeacherResponse> findMBTeacherListByTeacherId(String teacherId);
     List<MBoardTeacherResponse> getMBoardTeacherListByTeacherId(String teacherId);

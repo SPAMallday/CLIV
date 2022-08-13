@@ -28,6 +28,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath id = createString("id");
 
+    public final ListPath<MBoardTeacher, QMBoardTeacher> mBoardTeachers = this.<MBoardTeacher, QMBoardTeacher>createList("mBoardTeachers", MBoardTeacher.class, QMBoardTeacher.class, PathInits.DIRECT2);
+
     public final StringPath nickname = createString("nickname");
 
     public final StringPath profileImage = createString("profileImage");
