@@ -17,9 +17,7 @@ const classTitle = ['title']; // 서버에서 받아올 것들
 function Main() {
   // const [class, setClass] = useState(null);
   // const { count } = useSelector((state) => state.counter);
-  console.log('hi1');
   useEffect(() => {
-    console.log('hi');
     const data = mainList();
     console.log(data);
   });

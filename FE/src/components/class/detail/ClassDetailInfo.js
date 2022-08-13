@@ -82,7 +82,7 @@ function ClassDetailInfo({ value }) {
               sx={{ width: '50%', height: '3rem', borderRadius: '1.5rem' }}
             >
               <Typography fontWeight={700}>
-                {teacherAuth ? '클래스 정보 수정' : '수강신청'}
+                {teacherAuth === 'TEACHER' ? '클래스 정보 수정' : '수강신청'}
               </Typography>
             </Button>
           </Box>

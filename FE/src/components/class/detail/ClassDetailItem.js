@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { Card, CardContent } from '@mui/material';
 import { Stack } from '@mui/material';
+import ReactHtmlParser from 'react-html-parser';
 
 import './ClassDetailItem.css';
 
-function ClassDetailItem(props) {
-  const img = props.value.classImg;
+function ClassDetailItem({ value }) {
+  const img = value.classImg;
   // 'https://item.kakaocdn.net/do/a1bfdf9838f7767f429015f6564cb234f43ad912ad8dd55b04db6a64cddaf76d';
-  const content = props.value.content;
+  const content = value.content;
   // `
   // 국가는 모성의 보호를 위하여 노력하여야 한다. 군인은 현역을 면한 후가 아니면 국무위원으로 임명될 수 없다. 국가는 농·어민과 중소기업의 자조조직을 육성하여야 하며, 그 자율적 활동과 발전을 보장한다.
 
@@ -35,7 +36,7 @@ function ClassDetailItem(props) {
       </Card>
 
       <Card>
-        <CardContent>{content}</CardContent>
+        <CardContent>{ReactHtmlParser(content)}</CardContent>
       </Card>
     </Stack>
   );

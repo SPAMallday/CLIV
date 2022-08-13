@@ -4,7 +4,7 @@ import { apiClient } from '.';
 export const classCreate = async () => {
   try {
     const res = await apiClient.post(`/api/class/create`);
-    return res.json();
+    return res.data;
   } catch (err) {
     console.log('Error >>', err);
   }
@@ -24,7 +24,7 @@ export const classList = async () => {
 export const mainList = async () => {
   try {
     const res = await apiClient.get(`/api/main/list`);
-    return res;
+    return res.data;
   } catch (err) {
     console.log('Error >>', err);
   }
@@ -44,7 +44,7 @@ export const classDetail = async (classId) => {
 export const registClass = async (classId) => {
   try {
     const res = await apiClient.post(`/api/class/${classId}`);
-    return res.json();
+    return res.data;
   } catch (err) {
     console.log('Error >>', err);
   }
@@ -54,7 +54,7 @@ export const registClass = async (classId) => {
 export const reserveClass = async (userId) => {
   try {
     // const res = await apiClient.get(`/api/class/re`);   //**** */
-    // return res.json();
+    // return res.data;
   } catch (err) {
     console.log('Error >>', err);
   }
@@ -64,7 +64,7 @@ export const reserveClass = async (userId) => {
 export const holdClass = async (userId) => {
   try {
     // const res = await apiClient.get(`/api/class/${userId}`);
-    // return res.json();
+    // return res.data;
   } catch (err) {
     console.log('Error >>', err);
   }

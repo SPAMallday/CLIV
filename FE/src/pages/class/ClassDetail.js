@@ -18,7 +18,7 @@ const ClassDetail = () => {
   useEffect(() => {
     classDetail(classId).then((res) => {
       setCDetail(res);
-      console.log(res);
+      // console.log(res);
     });
   }, []);
   // const dispatch = useDispatch();

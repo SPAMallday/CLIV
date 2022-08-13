@@ -54,42 +54,41 @@ function ClassList() {
         <Grid container spacing={4}>
           {cList.regdateCL.map((classTime) => (
             <Grid item key={classTime.classId} sm={6} md={4} lg={3}>
-              <Link
+              {/* <Link
+                to={`/class/detail/${classTime.classId}`}
+                state={{ classId: classTime.classId }}
+              > */}
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+                component={Link}
                 to={`/class/detail/${classTime.classId}`}
                 state={{ classId: classTime.classId }}
               >
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={
-                      {
-                        // pt: '56.25%', // 16:9
-                      }
+                <CardMedia
+                  component="img"
+                  sx={
+                    {
+                      // pt: '56.25%', // 16:9
                     }
-                    image={classTime.classImg}
-                  />
-                  {/* <CardContent sx={{ flexGrow: 1 }}>
+                  }
+                  image={classTime.classImg}
+                />
+                {/* <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       뜨개질입니다.
                     </Typography>
                   </CardContent> */}
-                  <CardActions>
-                    <Typography
-                      gutterBottom
-                      variant="subtitle2"
-                      component="div"
-                    >
-                      {classTime.className}
-                    </Typography>
-                  </CardActions>
-                </Card>
-              </Link>
+                <CardActions>
+                  <Typography gutterBottom variant="subtitle2" component="div">
+                    {classTime.className}
+                  </Typography>
+                </CardActions>
+              </Card>
+              {/* </Link> */}
             </Grid>
           ))}
         </Grid>
