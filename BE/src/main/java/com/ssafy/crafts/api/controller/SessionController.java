@@ -35,7 +35,7 @@ public class SessionController {
     @PostMapping(value="/session/{classId")
     @ApiOperation(value = "세션 생성", notes = "수업 세션을 생성한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 201, message = "생성 성공"),
             @ApiResponse(code = 401, message = "접근 권한 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -51,7 +51,7 @@ public class SessionController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
             ClassRoomResponse classRoomResponse = classRoomService.createClassRoom(authId, classId);
-            return new ResponseEntity<>(classRoomResponse, HttpStatus.OK);
+            return new ResponseEntity<>(classRoomResponse, HttpStatus.CREATED);
         }
     }
 }
