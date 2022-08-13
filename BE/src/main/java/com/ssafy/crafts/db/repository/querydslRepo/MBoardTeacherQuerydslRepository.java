@@ -21,7 +21,8 @@ public class MBoardTeacherQuerydslRepository {
 
     public List<MBoardTeacher> findMBTeacherListByTeacherId(String teacherId) {
         return jpaQueryFactory.select(qmBoardTeacher).from(qmBoardTeacher)
-                .where(qmBoardTeacher.teacher.id.eq(teacherId)).fetch();
+                .where(qmBoardTeacher.teacher.auth.authId.eq(teacherId))
+                .fetch();
     }
 
 }

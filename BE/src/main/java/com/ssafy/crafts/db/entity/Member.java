@@ -47,8 +47,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "teacher")
-//    private List<MBoardTeacher> mBoardTeachers = new ArrayList<>();
+    @OneToMany(mappedBy = "teacher")
+    private List<MBoardTeacher> mBoardTeachers = new ArrayList<>();
 
     @Builder
     public Member(String id, String profileImage, String nickname, String gender, Status status, RoleType roleType, Auth auth) {
@@ -69,7 +69,6 @@ public class Member {
         ACTIVE,
         RESIGNATION
     }
-
 
 }
 
