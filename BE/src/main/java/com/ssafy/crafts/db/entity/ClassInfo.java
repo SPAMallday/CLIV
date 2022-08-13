@@ -74,11 +74,14 @@ public class ClassInfo {
     @Column(name = "status", length = 10, nullable = false)
     private ClassStatus classStatus;
 
+    @Column(name = "session_id", length = 20)
+    private String sessionId;
+
     @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp regdate;
 
     @Builder
-    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus, Timestamp regdate) {
+    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus, String sessionId, Timestamp regdate) {
         this.id = id;
         this.qnaList = qnaList;
         this.reviewList = reviewList;
@@ -94,6 +97,7 @@ public class ClassInfo {
         this.classImg = classImg;
         this.level = level;
         this.classStatus = classStatus;
+        this.sessionId = sessionId;
         this.regdate = regdate;
     }
 

@@ -10,6 +10,7 @@ import com.ssafy.crafts.db.entity.QClassInfo;
 import com.ssafy.crafts.db.entity.QMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -34,6 +35,14 @@ public class ClassInfoQuerydslRepository {
         ClassInfo classInfo = jpaQueryFactory.select(qClassInfo).from(qClassInfo)
                 .where(qClassInfo.id.eq(id)).fetchOne();
         return classInfo;
+    }
+
+    @Transactional
+    public void insertSessionId(String sessionId, int classId){
+        jpaQueryFactory.update(qClassInfo)
+                .set(qClassInfo.sessionId, sessionId)
+                .where(qClassInfo.id.eq(classId))
+                .execute();
     }
     public List<ClassInfo> findClassInfoAll() {
         /**
@@ -66,7 +75,7 @@ public class ClassInfoQuerydslRepository {
         /**
          * @Method Name : findClassInfoByClassTime
          * @작성자 : 허성은
-         * @Method 설명 : 수업 마감 시간이 임박한 수업 5개(변경 가능) 조회
+         * @Method 설명 : 수업 마감 시간이 임박한 수업 4개(변경 가능) 조회
          */
         return jpaQueryFactory
                 .select(qClassInfo)
@@ -81,7 +90,7 @@ public class ClassInfoQuerydslRepository {
         /**
          * @Method Name : findClassInfoByHeadcount
          * @작성자 : 허성은
-         * @Method 설명 : 인원 마감이 임박한 수업 5개(변경 가능) 조회
+         * @Method 설명 : 인원 마감이 임박한 수업 4개(변경 가능) 조회
          */
         return jpaQueryFactory
                 .select(qClassInfo)
@@ -135,5 +144,18 @@ public class ClassInfoQuerydslRepository {
                 .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED))
                 .orderBy(qClassInfo.regdate.desc())
                 .fetch();
+    }
+
+    public List<Member> findClassMemberId(int classId) {
+        /**
+         * @Method Name : findClassMemberId
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 신청을 한 학생들의 아이디를 반환.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo.members)
+                .from(qClassInfo)
+                .where(qClassInfo.id.eq(classId))
+                .fetchOne();
     }
 }

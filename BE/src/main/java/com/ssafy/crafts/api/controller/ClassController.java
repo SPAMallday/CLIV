@@ -29,6 +29,7 @@ import java.text.ParseException;
 @Api(value = "수업 관련 API", tags = {"ClassController"}, description = "수업 관련 컨트롤러")
 @RestController
 @Slf4j
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/class")
 @RequiredArgsConstructor
 public class ClassController {
