@@ -2,10 +2,7 @@ package com.ssafy.crafts.api.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,8 +14,8 @@ import java.util.List;
  * @Class 설명 : 리뷰 관련 API 요청에 필요한 리퀘스트 바디 정의
  */
 @Getter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ApiModel("ReviewRequest")
 @Builder
 public class ReviewRequest {
@@ -36,7 +33,7 @@ public class ReviewRequest {
     private int classId;    // 수업 id
 
     @ApiModelProperty(name = "prList")
-    private List<Integer> prList = new ArrayList<>();   // 선택한 리뷰문구 리스트
+    private List<Integer> prList;  // 선택한 리뷰문구 리스트
 
     public void setAuthId(String authId){
         this.authId = authId;
