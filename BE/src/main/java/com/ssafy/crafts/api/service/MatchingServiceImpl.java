@@ -75,7 +75,7 @@ public class MatchingServiceImpl implements MatchingService{
         log.info("요청글의 카데고리와 성별이 일치하는 선생님 조회");
         List<Member> teachers = memberQuerydslRepository.findByCategoryAndGender(categoryId, gender);
 
-        // 매칭율? 매칭횟수?
+
 
         for(Member teacher : teachers){
 
