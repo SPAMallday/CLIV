@@ -21,4 +21,10 @@ public class CategoryQuerydslRepository {
                 .where(qCategory.id.eq(id)).fetchOne();
         return category;
     }
+
+    public String findCategoryContentById(int id) {
+        String content = jpaQueryFactory.select(qCategory.content).from(qCategory)
+                .where(qCategory.id.eq(id)).fetchOne();
+        return content;
+    }
 }
