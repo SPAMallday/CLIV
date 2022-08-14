@@ -1,12 +1,14 @@
 import MyCalendar from '../../mycalendar/MyCalendar';
 import ClassListItem from '../list/ClassListItem';
 
-import { Typography, Divider } from '@mui/material';
+import { Typography, Divider, CircularProgress, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import { getToken } from '../../../api/classAPI';
+import { useNavigate } from 'react-router-dom';
 
 function ReserveClass() {
+  let navigate = useNavigate();
   const nowTime = new Date();
   // api 호출 결과값을 reserveData로 사용
   const reserveData = [
@@ -51,40 +53,63 @@ function ReserveClass() {
   });
 
   return (
-    //1개로 통합
-    <Box sx={{ mt: 3, pb: 3 }}>
-      <MyCalendar dateArr={dateArr} type={'reserve'} />
-      <Typography className="miniTitle" sx={{ mt: 5 }}>
-        예정 클래스
-      </Typography>
-      <Divider
-        sx={{
-          borderWidth: '1px',
-          borderColor: 'rgba(0, 0, 0, 0.3)',
-          my: 1,
-        }}
-      />
-      {reserveData.map((reserve, i) => {
-        const fun = () => {
-          getToken(reserve.classId);
-        };
+    <>
+      <Box sx={{ mt: 3, pb: 3 }}>
+        <MyCalendar dateArr={dateArr} type={'reserve'} />
+        <Typography className="miniTitle" sx={{ mt: 5 }}>
+          예정 클래스
+        </Typography>
+        <Divider
+          sx={{
+            borderWidth: '1px',
+            borderColor: 'rgba(0, 0, 0, 0.3)',
+            my: 1,
+          }}
+        />
+        {reserveData.map((reserve, i) => {
+          const fun = async () => {
+            const token = await getToken(reserve.classId);
+            if (!!token) {
+              navigate(`/video/${reserve.classId}`, {
+                state: { token: token },
+              });
+            } else {
+              alert('수업 입장에 실패했습니다.');
+            }
+          };
 
-        const typeHandler = {
-          type: 'reserve',
-          work: fun,
-          text: '클래스 입장',
-        };
+          const typeHandler = {
+            type: 'reserve',
+            work: fun,
+            text: '클래스 입장',
+          };
 
-        return (
-          <ClassListItem
-            data={reserve}
-            key={i}
-            typeHandler={typeHandler}
-            nowTime={nowTime}
+          return (
+            <ClassListItem
+              data={reserve}
+              key={i}
+              typeHandler={typeHandler}
+              nowTime={nowTime}
+            />
+          );
+        })}
+      </Box>
+      // 수정 필요
+      <Backdrop
+      // sx={{ color: '#fff', zIndex: 2 }}
+      // open={loading}
+      // onClick={() => {
+      //   handleCloseFail();
+      // }}
+      >
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress
+            color="warning"
+            sx={{ position: 'absolute', left: '50%', top: '50%' }}
           />
-        );
-      })}
-    </Box>
+        </Box>
+      </Backdrop>
+    </>
   );
 }
 

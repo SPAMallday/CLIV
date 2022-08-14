@@ -48,6 +48,7 @@ function NavBar() {
   // 로그인 상태 확인
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userInfo.isLogin);
+  const role = useSelector((state) => state.userInfo.user.role);
 
   // 알림 개수
   const notiNum = 27;
@@ -305,15 +306,17 @@ function NavBar() {
                 <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
               </Menu>
             </Box>
-            <Button
-              component={Link}
-              to={'/classmanage'}
-              variant="text"
-              disableRipple
-              sx={{ color: 'black', width: '6rem' }}
-            >
-              클래스 관리
-            </Button>
+            {isLogin && role === 'TEACHER' && (
+              <Button
+                component={Link}
+                to={'/classmanage'}
+                variant="text"
+                disableRipple
+                sx={{ color: 'black', width: '6rem' }}
+              >
+                클래스 관리
+              </Button>
+            )}
           </Box>
 
           <Box
