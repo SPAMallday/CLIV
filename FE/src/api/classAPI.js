@@ -1,7 +1,8 @@
+import { useSelector } from 'react-redux';
 import { apiClient } from '.';
 
-const user = useSelector((state) => state.userInfo.user);
-console.log(user);
+// const user = useSelector((state) => state.userInfo.user);
+// console.log(user);
 
 // 클래스 생성
 export const classCreate = async () => {
@@ -58,6 +59,16 @@ export const holdClass = async (userId) => {
   try {
     // const res = await apiClient.get(`/api/class/${userId}`);
     // return res.json();
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
+// 클래스 입장
+export const getToken = async (classId) => {
+  try {
+    const res = await apiClient.post(`/api/class/session/${classId}`);
+    return res.data.token;
   } catch (err) {
     console.log('Error >>', err);
   }
