@@ -39,12 +39,13 @@ function RequestModal(props) {
           <Box sx={style}>
             <Stack spacing={1}>
               <Typography fontWeight={700}>
-                [{item.category}] {item.title}
+                [{item.categoryContent}] {item.title}
               </Typography>
               <Typography>요청자 : {item.requestperson} </Typography>
-              <Typography>요청일 : {item.requestdate} </Typography>
-              <Typography>원하는 시간 : {item.time} </Typography>
-              <Typography>예상 금액 : {item.amount} </Typography>
+              <Typography>요청일 : {item.regDate.slice(0, 10)} </Typography>
+              <Typography>원하는 시간 : {item.wantedDay} </Typography>
+              {/* <Typography>예상 금액 : {item.amount} </Typography> */}
+              {/* Back단에 해당 내용이 없어서 지웠음 (HJ) */}
               <Typography fontWeight={700}>요청 내용</Typography>
               <Typography>{item.content}</Typography>
             </Stack>

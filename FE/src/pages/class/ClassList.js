@@ -21,8 +21,10 @@ function ClassList() {
   useEffect(() => {
     classList().then((res) => {
       setCList(res);
+      // console.log(res);
     });
   }, []);
+
   return (
     <main>
       {/* Hero unit */}

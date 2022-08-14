@@ -18,7 +18,7 @@ const ClassDetail = () => {
   useEffect(() => {
     classDetail(classId).then((res) => {
       setCDetail(res);
-      // console.log(res);
+      console.log(res);
     });
   }, []);
   // const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const ClassDetail = () => {
         <Grid item xs={12} md={4}>
           <Stack spacing={6}>
             <ClassDetailInfo value={cDetail} />
-            {/* <MyCalendar type="detail" /> */}
+            <MyCalendar type="detail" />
           </Stack>
         </Grid>
       </Grid>

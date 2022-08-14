@@ -31,8 +31,7 @@ function ClassDetailInfo({ value }) {
       <Card>
         <CardContent>
           <Box>
-            <Typography>{value.categoryId || ''}</Typography>
-            {/* 이거 백에 수정요청해야됨 */}
+            <Typography>{value.category || ''}</Typography>
           </Box>
 
           <Typography sx={{ fontWeight: '800', fontSize: '1.4rem' }}>
@@ -45,8 +44,7 @@ function ClassDetailInfo({ value }) {
               justifyContent: 'flex-end',
             }}
           >
-            강의자 : {value.teacherId || ''}
-            {/* 이것도.. 백에 수정요청해야됨 */}
+            강의자 : {value.teacherNickname || ''}
           </Typography>
           <Typography
             sx={{
