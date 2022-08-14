@@ -21,8 +21,3 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-
-#ovenvidu
-openvidu:
-  url: https://i7a605.p.ssafy.io:8443/
-  secret: MY_SECRET
