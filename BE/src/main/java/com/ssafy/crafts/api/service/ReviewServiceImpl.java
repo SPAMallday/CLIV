@@ -30,7 +30,6 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final MemberQuerydslRepository memberQuerydslRepository;
     private final ClassInfoRepository classInfoRepository;
-    private final ReviewResponse reviewResponse;
     private final ReviewQuerydslRepository reviewQuerydslRepository;
     private final PhraseReviewRepository phraseReviewRepository;
 
