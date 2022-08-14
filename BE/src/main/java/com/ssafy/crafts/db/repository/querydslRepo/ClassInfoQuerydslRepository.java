@@ -169,4 +169,15 @@ public class ClassInfoQuerydslRepository {
                 .where(qClassInfo.id.eq(id)).fetchOne();
         return className;
     }
+
+    public String findTeacherIdByClassId(int id) {
+        /**
+         * @Method Name : findTeacherIdByClassId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 아이디로 선생님 아이디 조회
+         */
+        String className = jpaQueryFactory.select(qClassInfo.teacher.id).from(qClassInfo)
+                .where(qClassInfo.id.eq(id)).fetchOne();
+        return className;
+    }
 }

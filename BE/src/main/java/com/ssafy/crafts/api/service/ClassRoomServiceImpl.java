@@ -74,7 +74,13 @@ public class ClassRoomServiceImpl implements ClassRoomService{
             // 선생님과 참여자에게 수업 생성 알림 보내기
             String sessionUrl = OPENVIDU_URL + "/openvidu/api/sessions/" + sessionId;
             String message = classInfoQuerydslRepository.findClassNameByClassId(classId) + " 수업을 들을 시간이에요!";
-            notificationService.send(authId, Notification.NotiType.ClassStart, message, sessionUrl);
+            // 선생님에게 알림 보내기
+            notificationService.send(classInfoQuerydslRepository.findTeacherIdByClassId(classId), Notification.NotiType.ClassStart, message, sessionUrl);
+            // 참여 학생에게 알림 보내기
+            List<Member> members = classInfoQuerydslRepository.findClassMemberId(classId);
+            for (Member mem : members) {
+                notificationService.send(mem.getId(), Notification.NotiType.ClassStart, message, sessionUrl);
+            }
         }
         // 토큰 생성
         ClassRoomResponse classRoomResponse = getToken(sessionId,
