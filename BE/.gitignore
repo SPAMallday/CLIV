@@ -4,7 +4,11 @@ build/classes
 build/generated
 build/resources
 build/tmp
+<<<<<<< HEAD
 ssafy-web.log
+=======
+./ssafy-web.log
+>>>>>>> 0c0d31201b9de1717c3a07831bc874a3cc3ccc71
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

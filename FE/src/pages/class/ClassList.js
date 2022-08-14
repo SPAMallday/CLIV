@@ -7,12 +7,22 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useState, useEffect } from 'react';
+import { classList } from '../../api/classAPI';
+import { Link } from 'react-router-dom';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8]; // 현재 8개 보여줌
 const classImage = ['images/sample.jpg']; // card내용 서버에서 받아오기 / 썸네일, 강의제목
 const classTitle = ['title']; // 서버에서 받아올 것들
 
 function ClassList() {
+  const [cList, setCList] = useState({ regdateCL: [] });
+
+  useEffect(() => {
+    classList().then((res) => {
+      setCList(res);
+    });
+  }, []);
   return (
     <main>
       {/* Hero unit */}
@@ -42,14 +52,21 @@ function ClassList() {
       <Container sx={{ py: 8 }} maxWidth="lg">
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} sm={6} md={4} lg={3}>
+          {cList.regdateCL.map((classTime) => (
+            <Grid item key={classTime.classId} sm={6} md={4} lg={3}>
+              {/* <Link
+                to={`/class/detail/${classTime.classId}`}
+                state={{ classId: classTime.classId }}
+              > */}
               <Card
                 sx={{
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
+                component={Link}
+                to={`/class/detail/${classTime.classId}`}
+                state={{ classId: classTime.classId }}
               >
                 <CardMedia
                   component="img"
@@ -58,9 +75,7 @@ function ClassList() {
                       // pt: '56.25%', // 16:9
                     }
                   }
-                  // image="https://source.unsplash.com/random"
-                  image="images/sample.jpg"
-                  alt="random"
+                  image={classTime.classImg}
                 />
                 {/* <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -69,10 +84,11 @@ function ClassList() {
                   </CardContent> */}
                 <CardActions>
                   <Typography gutterBottom variant="subtitle2" component="div">
-                    뜨개구리
+                    {classTime.className}
                   </Typography>
                 </CardActions>
               </Card>
+              {/* </Link> */}
             </Grid>
           ))}
         </Grid>

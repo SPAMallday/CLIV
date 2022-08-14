@@ -1,7 +1,6 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
-import com.ssafy.crafts.api.request.HashtagRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
@@ -11,13 +10,18 @@ import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.HashtagQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * @FileName : ClassServiceImpl
@@ -25,8 +29,11 @@ import java.util.Optional;
  * @Class 설명 : 수업 관련 비즈니스 처리 로직을 위한 서비스 구현 정의
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ClassServiceImpl implements ClassService{
+    static SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    static SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy. MM. dd. a hh:mm:ss", Locale.KOREA);
 
     private final ClassInfoRepository classInfoRepository;
     private final ClassInfoQuerydslRepository classInfoQuerydslRepository;
@@ -36,7 +43,7 @@ public class ClassServiceImpl implements ClassService{
     private final HashtagQuerydslRepository hashtagQuerydslRepository;
 
     @Override
-    public void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail) {
+    public void insertClassInfo(ClassInfoRequest classInfoRequest, MultipartFile thumbnail) throws ParseException {
         /**
          * @Method Name : insertClassInfo
          * @작성자 : 허성은
@@ -49,13 +56,16 @@ public class ClassServiceImpl implements ClassService{
         } catch(Exception e) {
             e.printStackTrace();
         }
+        log.info("수업 생성 서비스");
+        // String -> Date
+        Date classDate = inputFormat.parse(classInfoRequest.getClassDatetime());
         classInfoRequest.setClassImgUrl(thumbnailUrl);
 
         ClassInfo classInfo = ClassInfo.builder()
-                .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()))
-                .category(categoryQuerydslRepository.findCategoryById(classInfoRequest.getCategoryId()).get())
+                .teacher(memberQuerydslRepository.findMemberByAuthId(classInfoRequest.getTeacherId()).get())
+                .category(categoryQuerydslRepository.findCategoryById(classInfoRequest.getCategoryId()))
+                .classDatetime(Timestamp.valueOf(timeStampFormat.format(classDate)))
                 .className(classInfoRequest.getClassName())
-                .durationH(classInfoRequest.getDurationH())
                 .headcount(classInfoRequest.getHeadcount())
                 .price(classInfoRequest.getPrice())
                 .content(classInfoRequest.getContent())
@@ -64,8 +74,8 @@ public class ClassServiceImpl implements ClassService{
                 .classStatus(ClassInfo.ClassStatus.EXPECTED)
                 .build();
 
-        List<HashtagRequest> taggingList = classInfoRequest.getTaggingRequest();
-
+//        List<HashtagRequest> taggingList = classInfoRequest.getTaggingRequest();
+//
 //        for(int i = 0; i < taggingList.size(); i++){
 //            classInfo.addTagging(hashtagQuerydslRepository.findHashtagById(taggingList.get(i).getHashtagId()).get());
 //        }
@@ -80,19 +90,23 @@ public class ClassServiceImpl implements ClassService{
          * @작성자 : 허성은
          * @Method 설명 : 수업 아이디로 수업 찾기
          */
-        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id).get())
+        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
 
         return ClassInfoResponse.builder()
                 .classId(classInfo.getId())
                 .teacherId(classInfo.getTeacher().getId())
+                .members(classInfo.getMembers())
+                .categoryId(classInfo.getCategory().getId())
                 .className(classInfo.getClassName())
-                .durationH(classInfo.getDurationH())
-                .memberCnt(classInfo.getMembers().size())
                 .price(classInfo.getPrice())
+                .headcount(classInfo.getHeadcount())
+                .classDatetime(classInfo.getClassDatetime())
                 .content(classInfo.getContent())
-                .classImgUrl(classInfo.getClassImg())
+                .classImg(classInfo.getClassImg())
+                .classStatus(classInfo.getClassStatus().toString())
                 .level(classInfo.getLevel())
+                .regdate(classInfo.getRegdate())
                 .build();
     }
 
@@ -103,10 +117,11 @@ public class ClassServiceImpl implements ClassService{
          * @작성자 : 허성은
          * @Method 설명 : 수업 참여하기
          */
-        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id).get())
+        ClassInfo classInfo = Optional.ofNullable(classInfoQuerydslRepository.findClassInfoById(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "수업 정보가 존재하지 않습니다."));
-        Member member = Optional.ofNullable(memberQuerydslRepository.findMemberByAuthId(memberId))
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다."));
+        Optional<Member> member = memberQuerydslRepository.findMemberByAuthId(memberId);
+        if(!member.isPresent())
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "회원 정보가 존재하지 않습니다.");
         // 인원수 다 찼으면 거절
         if(classInfo.getHeadcount() <= classInfo.getMembers().size())
             new ResponseStatusException(HttpStatus.FORBIDDEN, "해당 수업은 신청 인원이 마감되었습니다.");
@@ -114,6 +129,17 @@ public class ClassServiceImpl implements ClassService{
         if(classInfo.getTeacher().getId() == memberId)
             new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이 개설한 수업을 신청할 수 없습니다.");
 
-        classInfo.addMember(member);
+        classInfo.addMember(member.get());
+    }
+
+    @Override
+    public List<ClassInfoResponse> findClassListByRegdate() {
+        /**
+         * @Method Name : findClassListByRegdate
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 생성순으로 수업 리스트 조회
+         */
+        List<ClassInfo> classInfoList = classInfoQuerydslRepository.findClassInfoByRegdate();
+        return MainServiceImpl.classInfoToDto(classInfoList) != null? MainServiceImpl.classInfoToDto(classInfoList) : Collections.emptyList();
     }
 }

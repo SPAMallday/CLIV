@@ -2,6 +2,8 @@ package com.ssafy.crafts.api.controller;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
+import com.ssafy.crafts.api.response.ClassListResponse;
+import com.ssafy.crafts.api.response.MainResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.ClassService;
 import com.ssafy.crafts.common.util.AuthToken;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 /**
  * @FileName : ClassController
@@ -28,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RequestMapping("/api/class")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class ClassController {
     private final ClassService classService;
     private final AuthService authService;
@@ -46,7 +48,7 @@ public class ClassController {
     public ResponseEntity<Object> insertClassInfo(HttpServletRequest request,
                                                   @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
                                                   @RequestPart(value = "classInfoRequest") ClassInfoRequest classInfoRequest
-    ) {
+    ) throws ParseException {
         /**
          * @Method Name : insertClassInfo
          * @작성자 : 허성은
@@ -57,7 +59,6 @@ public class ClassController {
         String token = JwtHeaderUtil.getAccessToken(request);
         log.info("토큰에서 아이디 정보 얻어 선생님 아이디로 할당");
         classInfoRequest.setTeacherId(authService.getAuthId(token));
-//        classInfoRequest.setTeacherId("");
         log.info("수업 정보와 썸네일 등록");
         classService.insertClassInfo(classInfoRequest, thumbnail);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -77,8 +78,6 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 수업 id로 수업 정보를 조회한다.
          */
-        System.out.println("class detail");
-        log.debug("class detail");
         ClassInfoResponse classInfoResponse = classService.findClassInfoById(classId);
         if(classInfoResponse == null) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(classInfoResponse, HttpStatus.OK);
@@ -92,7 +91,7 @@ public class ClassController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     public ResponseEntity<Object> joinClassByClassId(HttpServletRequest request,
-            @PathVariable @ApiParam(value = "조회할 수업 정보의 id", required = true) int classId){
+                                                     @PathVariable @ApiParam(value = "조회할 수업 정보의 id", required = true) int classId){
         /**
          * @Method Name : joinClassByClassId
          * @작성자 : 허성은
@@ -102,4 +101,25 @@ public class ClassController {
         classService.joinClassByMemberId(classId, authService.getAuthId(token));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "최신 생성 수업 리스트 조회", notes = "클래스 화면에서 수업을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 204, message = "조회할 데이터가 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<ClassListResponse> findClassListByRegdate(){
+        /**
+         * @Method Name : findClassListByRegdate
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 화면에서 수업을 조회한다.
+         */
+        ClassListResponse classListResponse = ClassListResponse.builder().regdateCL(classService.findClassListByRegdate()).build();
+        if(classListResponse == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(classListResponse, HttpStatus.OK);
+    }
+
 }

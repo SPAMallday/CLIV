@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -23,7 +23,8 @@ import LogoPath from '../../assets/Logo2.png';
 
 import './NavBar.css';
 import NotiCenter from '../notification/notiCenter';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../store/modules/loginUser';
 import {
   AppBar,
   Drawer,
@@ -36,8 +37,16 @@ import {
 
 const drawerWidth = 240;
 
+// const dispatch = useDispatch();
+// const logoutBtn = () => {
+//   console.log('out');
+//   useEffect(() => {
+//     dispatch(logout());
+//   }, dispatch);
+// };
 function NavBar() {
   // 로그인 상태 확인
+  const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userInfo.isLogin);
 
   // 알림 개수
@@ -106,6 +115,11 @@ function NavBar() {
   };
   const handleDrawMy = () => {
     setOpenDrawMy(!openDrawMy);
+  };
+
+  const logoutBtn = () => {
+    console.log('out');
+    dispatch(logout());
   };
 
   // navbar가 줄어들었을 때 표시할 내용
@@ -426,12 +440,11 @@ function NavBar() {
                   <MenuItem component={Link} to={'/myprofile'}>
                     마이프로필
                   </MenuItem>
-
                   <MenuItem component={Link} to={'/myhistory'}>
                     나의수강내역
                   </MenuItem>
-
-                  <MenuItem>로그아웃</MenuItem>
+                  <MenuItem onClick={logoutBtn}>로그아웃</MenuItem>{' '}
+                  {/* 수정필요 */}
                 </Menu>
               </>
             ) : (
