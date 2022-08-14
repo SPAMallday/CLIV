@@ -1,12 +1,8 @@
 package com.ssafy.crafts.api.response;
 
-import io.swagger.annotations.ApiModelProperty;
-import javassist.bytecode.stackmap.TypeData;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
-
-import java.util.ArrayList;
+import com.ssafy.crafts.db.entity.Review;
+import lombok.*;
+import java.lang.*;
 import java.util.List;
 
 /**
@@ -15,7 +11,8 @@ import java.util.List;
  * @Class 설명 : 리뷰 조회 API 요청에 대한 리스폰스 바디 정의
  */
 @Getter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ReviewResponse {
     private int id;             // 리뷰 id

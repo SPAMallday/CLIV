@@ -23,4 +23,16 @@ public class ReviewQuerydslRepository {
                 .fetchOne();
     }
 
+    public List<Review> findAllByAuthId(String authId){
+        return jpaQueryFactory.selectFrom(qReview)
+                .where(qReview.member.id.eq(authId))
+                .fetch();
+    }
+
+    public List<Review> findAllByTeacherId(String teacherId){
+        return jpaQueryFactory.selectFrom(qReview)
+                .where(qReview.classInfo.teacher.id.eq(teacherId))
+                .fetch();
+    }
+
 }

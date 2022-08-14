@@ -4,9 +4,11 @@ import com.ssafy.crafts.api.request.MatchingRequest;
 import com.ssafy.crafts.api.request.ReviewRequest;
 import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
+import com.ssafy.crafts.api.response.ReviewResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
 import com.ssafy.crafts.api.service.ReviewService;
+import com.ssafy.crafts.db.entity.Review;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -71,6 +73,34 @@ public class ReviewController {
         }
         return new ResponseEntity<>(HttpStatus.CONFLICT);
 
+    }
+
+    @GetMapping("list/{authId}")
+    @ApiOperation(value = "회원 id로 자신이 작성한 리뷰 목록 조회")
+    public ResponseEntity<?> getReviewListByAuthId(@PathVariable String authId){
+        /**
+         * @Method Name : getReviewListByAuthId
+         * @작성자 : 김민주
+         * @Method 설명 : 회원 id로 자신이 작성한 리뷰 목록을 조회한다.
+         */
+        log.info("리뷰 목록 조회 시작");
+        List<ReviewResponse> list = reviewService.getReviewListByAuthId(authId);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("list/teacher/{teacherId}")
+    @ApiOperation(value = "선생님 id로 받은 리뷰 목록 조회")
+    public ResponseEntity<?> getReviewListByTeacherId(@PathVariable String teacherId){
+        /**
+         * @Method Name : getReviewListByTeacherId
+         * @작성자 : 김민주
+         * @Method 설명 : 선생님 id로 받은 리뷰 목록을 조회한다.
+         */
+        log.info("리뷰 목록 조회 시작");
+        List<ReviewResponse> list = reviewService.getReviewListByTeacherId(teacherId);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

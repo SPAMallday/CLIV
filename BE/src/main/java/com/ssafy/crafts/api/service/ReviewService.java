@@ -4,6 +4,7 @@ import com.ssafy.crafts.api.request.MatchingRequest;
 import com.ssafy.crafts.api.request.ReviewRequest;
 import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
+import com.ssafy.crafts.api.response.ReviewResponse;
 import com.ssafy.crafts.db.entity.Review;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ReviewService {
 
     void createReview(ReviewRequest reviewRequest);
     Review findByAuthIdAndClassId(String authId, int classId);
+    List<ReviewResponse> getReviewListByAuthId(String authId);
+    List<ReviewResponse> getReviewListByTeacherId(String teacherId);
 }

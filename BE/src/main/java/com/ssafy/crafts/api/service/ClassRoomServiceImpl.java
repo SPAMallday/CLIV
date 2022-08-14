@@ -5,7 +5,7 @@ import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
-import io.openvidu.java.client.*;
+//import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
