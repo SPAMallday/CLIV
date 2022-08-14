@@ -30,7 +30,7 @@ public class ClassInfoQuerydslRepository {
         /**
          * @Method Name : findClassInfoById
          * @작성자 : 허성은
-         * @Method 설명 : 클래스 아이디로 비디오 조회
+         * @Method 설명 : 클래스 아이디로 수업 조회
          */
         ClassInfo classInfo = jpaQueryFactory.select(qClassInfo).from(qClassInfo)
                 .where(qClassInfo.id.eq(id)).fetchOne();
@@ -157,5 +157,16 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .where(qClassInfo.id.eq(classId))
                 .fetchOne();
+    }
+
+    public String findClassNameByClassId(int id) {
+        /**
+         * @Method Name : findClassNameByClassId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 아이디로 수업 이름 조회
+         */
+        String className = jpaQueryFactory.select(qClassInfo.className).from(qClassInfo)
+                .where(qClassInfo.id.eq(id)).fetchOne();
+        return className;
     }
 }

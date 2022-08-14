@@ -24,5 +24,5 @@ cloud:
 
 #ovenvidu
 openvidu:
-  url: https://i7a605.p.ssafy.io:8443/
+  url: https://i7a605.p.ssafy.io:8443
   secret: MY_SECRET
