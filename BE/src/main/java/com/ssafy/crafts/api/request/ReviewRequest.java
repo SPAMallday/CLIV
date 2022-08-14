@@ -1,5 +1,6 @@
 package com.ssafy.crafts.api.request;
 
+import com.ssafy.crafts.db.entity.PhraseReview;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,7 +34,7 @@ public class ReviewRequest {
     private int classId;    // 수업 id
 
     @ApiModelProperty(name = "prList")
-    private List<Integer> prList;  // 선택한 리뷰문구 리스트
+    private List<PhraseReviewRequest> prList;  // 선택한 리뷰문구id 리스트
 
     public void setAuthId(String authId){
         this.authId = authId;

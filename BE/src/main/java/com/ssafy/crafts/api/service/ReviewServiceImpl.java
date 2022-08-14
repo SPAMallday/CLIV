@@ -1,16 +1,21 @@
 package com.ssafy.crafts.api.service;
 
+import com.ssafy.crafts.api.request.PhraseReviewRequest;
 import com.ssafy.crafts.api.request.ReviewRequest;
 import com.ssafy.crafts.api.response.ReviewResponse;
+import com.ssafy.crafts.db.entity.PhraseReview;
 import com.ssafy.crafts.db.entity.Review;
 import com.ssafy.crafts.db.repository.jpaRepo.*;
 import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @FileName : ReviewServiceImpl
@@ -27,6 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ClassInfoRepository classInfoRepository;
     private final ReviewResponse reviewResponse;
     private final ReviewQuerydslRepository reviewQuerydslRepository;
+    private final PhraseReviewRepository phraseReviewRepository;
 
     @Override
     public void createReview(ReviewRequest reviewRequest) {
@@ -36,10 +42,17 @@ public class ReviewServiceImpl implements ReviewService {
          * @Method 설명 : 리뷰 생성
          */
 
+        List<PhraseReviewRequest> phraseReviewRequests = reviewRequest.getPrList();
+        List<PhraseReview> prList = new ArrayList<>();
+
+        for (PhraseReviewRequest phraseReviewRequest : phraseReviewRequests){
+            prList.add(phraseReviewRepository.findById(phraseReviewRequest.getPrId()).get());
+        }
+
         Review review = Review.builder()
                 .score(reviewRequest.getScore())
                 .textRv(reviewRequest.getTextRv())
-                .prList(reviewRequest.getPrList())
+                .prList(prList)
                 .classInfo(classInfoRepository.findById(reviewRequest.getClassId()).get())
                 .member(memberQuerydslRepository.findMemberByAuthId(reviewRequest.getAuthId()).get())
                 .build();

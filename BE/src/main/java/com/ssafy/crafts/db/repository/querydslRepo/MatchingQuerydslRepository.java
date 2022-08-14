@@ -40,13 +40,4 @@ public class MatchingQuerydslRepository {
                 .execute();
     }
 
-//    public List<MBoard> findMBoardByteacherId(String teacherId) {
-//
-//
-//        return jpaQueryFactory.select(qmBoard).from(qmBoard)
-//                .join(qmBoard.mBoardTeacher, qmBoardTeacher)
-//                .where(qmBoard.mBoardTeacher.teacher.id.eq(teacherId))
-//                .fetch();
-//    }
-
 }

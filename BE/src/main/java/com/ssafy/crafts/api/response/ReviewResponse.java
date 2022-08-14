@@ -1,7 +1,10 @@
 package com.ssafy.crafts.api.response;
 
+import com.ssafy.crafts.db.entity.PhraseReview;
 import com.ssafy.crafts.db.entity.Review;
 import lombok.*;
+
+import javax.persistence.ElementCollection;
 import java.lang.*;
 import java.util.List;
 
@@ -11,13 +14,14 @@ import java.util.List;
  * @Class 설명 : 리뷰 조회 API 요청에 대한 리스폰스 바디 정의
  */
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ReviewResponse {
     private int id;             // 리뷰 id
     private int score;          // 별점
-    private List<Integer> prList;   // 선택한 리뷰문구Id 리스트
+
+    private List<PhraseReview> prList;   // 선택한 리뷰문구 리스트
     private String textRv;      // 텍스트 리뷰
     private int classId;        // 수업 id
     private String className;   // 강의명

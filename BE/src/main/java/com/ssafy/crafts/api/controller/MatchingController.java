@@ -1,6 +1,7 @@
 package com.ssafy.crafts.api.controller;
 
 import com.ssafy.crafts.api.request.MatchingRequest;
+import com.ssafy.crafts.api.response.CategoryResponse;
 import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.api.service.AuthService;
@@ -113,4 +114,11 @@ public class MatchingController {
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/category")
+    @ApiOperation(value = "카테고리 ID와 이름을 조회")
+    public ResponseEntity<?> getCategoryList() {
+
+        List<CategoryResponse> list = matchingService.getCategoryList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }
