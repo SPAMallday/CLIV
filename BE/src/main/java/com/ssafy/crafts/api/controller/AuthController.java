@@ -3,7 +3,7 @@ package com.ssafy.crafts.api.controller;
 import com.ssafy.crafts.api.request.AuthRequest;
 import com.ssafy.crafts.api.response.AuthResponse;
 import com.ssafy.crafts.api.service.AuthService;
-import com.ssafy.crafts.common.model.ApiResponse;
+import com.ssafy.crafts.common.model.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
