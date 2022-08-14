@@ -59,7 +59,6 @@ public class MatchingServiceImpl implements MatchingService{
                 .member(memberQuerydslRepository.findMemberByAuthId(matchingRequest.getAuthId()).get())
                 .build();
 
-//        matchingRepository.save(matchingRequest.toEntity());
         matchingRepository.save(mBoard);
         return mBoard.getId();
     }
