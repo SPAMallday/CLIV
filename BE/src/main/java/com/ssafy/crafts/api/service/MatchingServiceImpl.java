@@ -1,15 +1,14 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.MatchingRequest;
+import com.ssafy.crafts.api.response.CategoryResponse;
 import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
+import com.ssafy.crafts.db.entity.Category;
 import com.ssafy.crafts.db.entity.MBoard;
 import com.ssafy.crafts.db.entity.MBoardTeacher;
 import com.ssafy.crafts.db.entity.Member;
-import com.ssafy.crafts.db.repository.jpaRepo.MBoardRepository;
-import com.ssafy.crafts.db.repository.jpaRepo.MBoardTeacherRepository;
-import com.ssafy.crafts.db.repository.jpaRepo.MatchingRepository;
-import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
+import com.ssafy.crafts.db.repository.jpaRepo.*;
 import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +38,7 @@ public class MatchingServiceImpl implements MatchingService{
     private final MBoardTeacherRepository mBoardTeacherRepository;
     private final MemberQuerydslRepository memberQuerydslRepository;
     private final CategoryQuerydslRepository categoryQuerydslRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public int createMBoard(MatchingRequest matchingRequest) {
@@ -115,47 +115,6 @@ public class MatchingServiceImpl implements MatchingService{
 
     }
 
-
-//    @Override
-//    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
-//        /**
-//         * @Method Name : findMBoardIdByTeacherId
-//         * @작성자 : 김민주
-//         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 id 리스트 조회
-//        */
-//        List<Integer> mBoardIdList = matchingQuerydslRepository.findMBoardIdListByTeacherId(teacherId);
-//
-//        return mBoardIdList;
-//    }
-
-//    @Override
-//    public List<MatchingResponse> findMBoardListByTeacherId(String teacherId) {
-//        /**
-//         * @Method Name : findMBTeacherListByTeacherId
-//         * @작성자 : 김민주
-//         * @Method 설명 : 강사 id로 강사가 받은 매칭 요청글 정보 리스트 조회
-//         */
-//        //List<MBoardTeacher> mBoardTeacherList = mBoardTeacherQuerydslRepository.findMBTeacherListByTeacherId(teacherId);
-//        //List<MBoardTeacherResponse> list = new ArrayList<>();
-//
-//        List<MBoard> mBoardList = matchingQuerydslRepository.findMBoardByteacherId(teacherId);
-//        List<MatchingResponse> list = new ArrayList<>();
-//
-//        for(MBoard mBoard : mBoardList){
-//            list.add(MatchingResponse.builder()
-//                    .id(mBoard.getId())
-//                    .title(mBoard.getTitle())
-//                    .wantedDay(mBoard.getWantedDay())
-//                    .teacherGender(mBoard.getTeacherGender())
-//                    .content(mBoard.getContent())
-//                    .authId(mBoard.getMember().getId())
-//                    .categoryId(mBoard.getCategory().getId())
-//                    .matStatus(mBoard.isMatStatus())
-//                    .build());
-//        }
-//        return list;
-//    }
-
     @Override
     public MatchingResponse findMBoardById(int id) {
         /**
@@ -172,8 +131,9 @@ public class MatchingServiceImpl implements MatchingService{
                 .teacherGender(mBoard.getTeacherGender())
                 .content(mBoard.getContent())
                 .authId(mBoard.getMember().getId())
-                .categoryId(mBoard.getCategory().getId())
+                .categoryContent(mBoard.getCategory().getContent())
                 .matStatus(mBoard.isMatStatus())
+                .regDate(mBoard.getRegDate())
                 .build();
     }
 
@@ -195,8 +155,9 @@ public class MatchingServiceImpl implements MatchingService{
                         .teacherGender(mBoard.getTeacherGender())
                         .content(mBoard.getContent())
                         .authId(mBoard.getMember().getId())
-                        .categoryId(mBoard.getCategory().getId())
+                        .categoryContent(mBoard.getCategory().getContent())
                         .matStatus(mBoard.isMatStatus())
+                        .regDate(mBoard.getRegDate())
                         .build());
         }
         return list;
@@ -234,6 +195,21 @@ public class MatchingServiceImpl implements MatchingService{
     @Override
     public void updateMatStatus(int mtId) {
         matchingQuerydslRepository.updateMatStatus(mBoardTeacherRepository.findById(mtId).get().getMBoard().getId());
+    }
+
+    @Override
+    public List<CategoryResponse> getCategoryList() {
+        List<Category> categoryList = categoryRepository.findAll();
+        List<CategoryResponse> list = new ArrayList<>();
+
+        for (Category category : categoryList){
+            list.add(CategoryResponse.builder()
+                    .id(category.getId())
+                    .content(category.getContent())
+                    .build());
+        }
+
+        return list;
     }
 
 }
