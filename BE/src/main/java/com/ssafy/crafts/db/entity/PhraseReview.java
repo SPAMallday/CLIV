@@ -19,7 +19,7 @@ public class PhraseReview {
     private int id;
 
     @Column(nullable = false, length = 20)
-    private String content;     // 리뷰문구 내용
+    private String content;
 
     @Builder
     public PhraseReview(int id, String content) {

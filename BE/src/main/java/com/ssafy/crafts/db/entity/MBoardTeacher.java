@@ -25,12 +25,12 @@ public class MBoardTeacher {
     private boolean agreeYn = false;  // 클래스 개설 수강생 동의 여부
 
     // N:1 관계 : 선생님_매칭보드 - 회원
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Member teacher;
 
     // 1:1 관계 : 선생님_매칭보드 - 매칭보드
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "mboard_id")
     private MBoard mBoard;
 

@@ -1,6 +1,5 @@
 package com.ssafy.crafts.db.entity;
 
-import io.swagger.models.auth.In;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,21 +19,16 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    private int id;     // 리뷰 id
+    private int id;
 
     @Column(nullable = false)
-    private int score;      // 별점
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "SELECTED_PHRASE",joinColumns = @JoinColumn(name="review_id"))
-    @Column(name = "phrase_review_id", nullable = false)
-    private List<Integer> prList = new ArrayList<>();   // 리뷰문구 리스트 (prId로 저장)
+    private int score;
 
     @Column(name = "text_review", length = 500)
-    private String textRv;      // 텍스트 리뷰
+    private String textRv;
 
     @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp regDate;  // 작성일
+    private Timestamp regdate;
 
     @ManyToOne
     @JoinColumn(name = "class_id")
@@ -44,18 +38,18 @@ public class Review {
     @JoinColumn(name = "auth_id")
     private Member member;
 
-//    @ManyToMany
-//    @JoinTable(name = "SELECTED_PHRASE",
-//            joinColumns = @JoinColumn(name = "review_id"),
-//            inverseJoinColumns = @JoinColumn(name = "pr_id"))
-//    private List<PhraseReview> prList = new ArrayList<>();      // 선택한 리뷰문구 리스트
+    @ManyToMany
+    @JoinTable(name = "SELECTED_PHRASE",
+            joinColumns = @JoinColumn(name = "review_id"),
+            inverseJoinColumns = @JoinColumn(name = "pr_id"))
+    private List<PhraseReview> prList = new ArrayList<>();
 
     @Builder
-    public Review(int id, int score, String textRv, Timestamp regDate, ClassInfo classInfo, Member member, List<Integer> prList) {
+    public Review(int id, int score, String textRv, Timestamp regdate, ClassInfo classInfo, Member member, List<PhraseReview> prList) {
         this.id = id;
         this.score = score;
         this.textRv = textRv;
-        this.regDate = regDate;
+        this.regdate = regdate;
         this.classInfo = classInfo;
         this.member = member;
         this.prList = prList;

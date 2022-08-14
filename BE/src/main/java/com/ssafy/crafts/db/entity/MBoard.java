@@ -49,7 +49,7 @@ public class MBoard {
     private Category category;
 
     // N:1 관계 : 매칭보드 - 회원
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "auth_id")
     private Member member;
 
