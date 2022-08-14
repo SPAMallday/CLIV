@@ -177,6 +177,8 @@ dependencies {
 	implementation("com.querydsl:querydsl-apt:${querydslVer}")
 	def querydslDir = '$buildDir/generated/querydsl'
 
+	//openvidu
+	implementation 'io.openvidu:openvidu-java-client:2.20.0'
 }
 
 test {

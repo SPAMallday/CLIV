@@ -85,8 +85,9 @@ public class MainServiceImpl implements MainService {
         List<ClassInfoResponse> result =new ArrayList<>();
         for (ClassInfo classInfo: list) {
             result.add(ClassInfoResponse.builder()
-                    .categoryId(classInfo.getCategory().getId())
-                    .teacherId(classInfo.getTeacher().getAuth().getAuthId())
+                    .classId(classInfo.getId())
+                    .category(classInfo.getCategory().getContent())
+                    .teacherNickname(classInfo.getTeacher().getNickname())
                     .members(classInfo.getMembers())
                     .className(classInfo.getClassName())
                     .classDatetime(classInfo.getClassDatetime())
