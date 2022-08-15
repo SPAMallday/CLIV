@@ -210,4 +210,17 @@ public class ClassInfoQuerydslRepository {
                 .orderBy(qClassInfo.regdate.desc())
                 .fetch();
     }
+
+    public String findSessionIdByClassId(int classId) {
+        /**
+         * @Method Name : findSessionIdByClassId
+         * @작성자 : 허성은
+         * @Method 설명 : 수업 아이디로 세션 아이디를 조회
+         */
+        return jpaQueryFactory
+                .select(qClassInfo.sessionId)
+                .from(qClassInfo)
+                .where(qClassInfo.id.eq(classId))
+                .fetchOne();
+    }
 }

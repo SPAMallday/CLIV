@@ -12,4 +12,5 @@ public interface ClassRoomService {
     ClassRoomResponse createClassRoom(String authId, int classId);
     String createSession();
     ClassRoomResponse getToken(String sessionId, String teacherId);
+    boolean closeSession(int classId, String authId);
 }

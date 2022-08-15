@@ -36,7 +36,7 @@ public class SessionController {
     @ApiOperation(value = "세션 생성", notes = "수업 세션을 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "생성 성공"),
-            @ApiResponse(code = 404, message = "실패"),
+            @ApiResponse(code = 401, message = "실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<ClassRoomResponse> createClassRoom(HttpServletRequest request, @PathVariable int classId) {
@@ -52,6 +52,28 @@ public class SessionController {
         } else {
             ClassRoomResponse classRoomResponse = classRoomService.createClassRoom(authId, classId);
             return new ResponseEntity<>(classRoomResponse, HttpStatus.CREATED);
+        }
+    }
+
+    @PatchMapping(value="/session/{classId")
+    @ApiOperation(value = "세션 종료", notes = "수업 세션을 종료한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "종료 성공"),
+            @ApiResponse(code = 401, message = "권한 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<?> closeClassRoom(HttpServletRequest request, @PathVariable int classId) {
+        /**
+         * @Method Name : closeClassRoom
+         * @작성자 : 허성은
+         * @Method 설명 : 선생님일 경우만 수업 세션을 종료한다.
+         */
+        String token = JwtHeaderUtil.getAccessToken(request);
+        String authId = authService.getAuthId(token);
+        if (!classRoomService.closeSession(classId, authId)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 }
