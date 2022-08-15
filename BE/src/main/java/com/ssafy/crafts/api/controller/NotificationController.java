@@ -1,10 +1,9 @@
 package com.ssafy.crafts.api.controller;
 
-import com.ssafy.crafts.api.response.ClassRoomResponse;
 import com.ssafy.crafts.api.response.NotiResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.NotificationService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -48,9 +47,8 @@ public class NotificationController {
          *               이전에 받지 못한 이벤트가 존재하는 경우 "Last-Event-ID"를 통해 마지막 이벤트 아이디를 받을 수 있으며, 필수 값은 아니다.
          */
         response.setCharacterEncoding("UTF-8");
-        String token = JwtHeaderUtil.getAccessToken(request);
-        String authId = authService.getAuthId(token);
-        return new ResponseEntity<>(notificationService.subscribe(authId, lastEventId), HttpStatus.OK);
+        Member member = authService.getMember();
+        return new ResponseEntity<>(notificationService.subscribe(member.getId(), lastEventId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/noti")
@@ -66,9 +64,8 @@ public class NotificationController {
          * @작성자 : 허성은
          * @Method 설명 : 알림창을 눌러 전체 알림을 조회한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        String authId = authService.getAuthId(token);
-        return notificationService.findAllNotifications(authId);
+        Member member = authService.getMember();
+        return notificationService.findAllNotifications(member.getId());
     }
 
     @PostMapping("/noti/{notificationId}")
@@ -84,8 +81,7 @@ public class NotificationController {
          * @작성자 : 허성은
          * @Method 설명 : 알림 한 개를 선택하면 읽음 처리한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        String authId = authService.getAuthId(token);
-        notificationService.readNotification(notificationId, authId);
+        Member member = authService.getMember();
+        notificationService.readNotification(notificationId, member.getId());
     }
 }

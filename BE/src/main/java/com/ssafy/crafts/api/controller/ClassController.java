@@ -5,7 +5,7 @@ import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.api.response.ClassListResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.ClassService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +43,7 @@ public class ClassController {
             @ApiResponse(code = 404, message = "등록 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<Object> insertClassInfo(HttpServletRequest request,
-                                                  @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
+    public ResponseEntity<Object> insertClassInfo(@RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
                                                   @RequestPart(value = "classInfoRequest") ClassInfoRequest classInfoRequest
     ) throws ParseException {
         /**
@@ -54,9 +53,9 @@ public class ClassController {
          */
         log.info("수업 정보 등록 시작");
         log.info("토큰 얻어오기");
-        String token = JwtHeaderUtil.getAccessToken(request);
-        log.info("토큰에서 아이디 정보 얻어 선생님 아이디로 할당");
-        classInfoRequest.setTeacherId(authService.getAuthId(token));
+        Member member = authService.getMember();
+        log.info("아이디 = " + member.getId());
+        classInfoRequest.setTeacherId(member.getId());
         log.info("수업 정보와 썸네일 등록");
         classService.insertClassInfo(classInfoRequest, thumbnail);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -95,8 +94,8 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 수업 id로 조회된 수업을 참여한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        classService.joinClassByMemberId(classId, authService.getAuthId(token));
+        Member member = authService.getMember();
+        classService.joinClassByMemberId(classId, member.getId());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -133,9 +132,9 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 클래스 화면에서 예정된 수업 목록을 조회한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
+        Member member = authService.getMember();
         ClassListResponse classListResponse =
-                ClassListResponse.builder().classList(classService.findExpectedClassListByTeacherId(authService.getAuthId(token))).build();
+                ClassListResponse.builder().classList(classService.findExpectedClassListByTeacherId(member.getId())).build();
         if(classListResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
@@ -155,9 +154,9 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 클래스 화면에서 종료된 수업 목록을 조회한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
+        Member member = authService.getMember();
         ClassListResponse classListResponse =
-                ClassListResponse.builder().classList(classService.findEndedClassListByTeacherId(authService.getAuthId(token))).build();
+                ClassListResponse.builder().classList(classService.findEndedClassListByTeacherId(member.getId())).build();
         if(classListResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else

@@ -42,4 +42,9 @@ public class MemberQuerydslRepository {
                 .fetch();
     }
 
+    public Optional<Member> findMemberByNickname(String nickname) {
+        Member member = jpaQueryFactory.select(qMember).from(qMember)
+                .where(qMember.nickname.eq(nickname)).fetchOne();
+        return Optional.ofNullable(member);
+    }
 }

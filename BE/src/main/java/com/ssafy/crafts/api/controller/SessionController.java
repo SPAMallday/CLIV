@@ -3,7 +3,7 @@ package com.ssafy.crafts.api.controller;
 import com.ssafy.crafts.api.response.ClassRoomResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.ClassRoomService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -45,12 +45,11 @@ public class SessionController {
          * @작성자 : 허성은
          * @Method 설명 : 수업 세션을 생성하고 토큰을 반환한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        String authId = authService.getAuthId(token);
-        if (!classRoomService.checkValidation(authId, classId)) {
+        Member member = authService.getMember();
+        if (!classRoomService.checkValidation(member.getId(), classId)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
-            ClassRoomResponse classRoomResponse = classRoomService.createClassRoom(authId, classId);
+            ClassRoomResponse classRoomResponse = classRoomService.createClassRoom(member.getId(), classId);
             return new ResponseEntity<>(classRoomResponse, HttpStatus.CREATED);
         }
     }
@@ -68,9 +67,8 @@ public class SessionController {
          * @작성자 : 허성은
          * @Method 설명 : 선생님일 경우만 수업 세션을 종료한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        String authId = authService.getAuthId(token);
-        if (!classRoomService.closeSession(classId, authId)) {
+        Member member = authService.getMember();
+        if (!classRoomService.closeSession(classId, member.getId())) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
             return new ResponseEntity<>(HttpStatus.OK);

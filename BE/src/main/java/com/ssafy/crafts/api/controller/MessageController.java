@@ -1,18 +1,13 @@
 package com.ssafy.crafts.api.controller;
 
 import com.ssafy.crafts.api.request.ChatMessageRequest;
-import com.ssafy.crafts.api.response.ChatMessageResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.ChatService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
-import com.ssafy.crafts.db.entity.ChatMessage;
+import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +43,8 @@ public class MessageController {
      */
     @MessageMapping("/message")     // 클라이언트에서 /pub/message 로 메시지를 발행한다.
     public void message(HttpServletRequest request, ChatMessageRequest message) {
-
-        String token = JwtHeaderUtil.getAccessToken(request);
-        message.setSenderId(authService.getAuthId(token));
+        Member member = authService.getMember();
+        message.setSenderId(member.getId());
 
         log.info("채팅 저장");
         chatService.saveMessage(message);

@@ -2,13 +2,12 @@ package com.ssafy.crafts.api.controller;
 
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.UserService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.PATCH;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,8 +32,8 @@ public class UserController {
          * @작성자 : 허성은
          * @Method 설명 : 선생님으로 RoleType을 변경한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        userService.changeRoleType(token);
+        Member member = authService.getMember();
+        userService.changeRoleType(member.getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

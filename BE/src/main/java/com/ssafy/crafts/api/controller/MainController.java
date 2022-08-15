@@ -3,7 +3,7 @@ package com.ssafy.crafts.api.controller;
 import com.ssafy.crafts.api.response.MainResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MainServiceImpl;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
 
 /**
  * @FileName : MainController
@@ -48,8 +47,8 @@ public class MainController {
          * @작성자 : 허성은
          * @Method 설명 : 메인화면 수업 리스트를 조회한다.
          */
-        String token = JwtHeaderUtil.getAccessToken(request);
-        MainResponse mainResponse = mainServiceImpl.findAllClassList(authService.getAuthId(token));
+        Member member = authService.getMember();
+        MainResponse mainResponse = mainServiceImpl.findAllClassList(member.getId());
         if(mainResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else

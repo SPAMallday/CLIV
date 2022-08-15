@@ -5,6 +5,7 @@ import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
+import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,10 +51,10 @@ public class MatchingController {
          */
         log.info("매칭 정보 등록 시작");
         log.info("토큰 얻어오기");
-        //String token = JwtHeaderUtil.getAccessToken(request);
+        Member member = authService.getMember();
         log.info("토큰에서 아이디 정보 얻어 회원 아이디로 할당");
-        //atchingRequest.setAuthId(authService.getAuthId(token));
-        matchingRequest.setAuthId("1");     // test용
+        matchingRequest.setAuthId(member.getId());
+//        matchingRequest.setAuthId("1");     // test용
 
 
         log.info("매칭글 정보 등록");

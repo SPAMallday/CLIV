@@ -1,7 +1,7 @@
 package com.ssafy.crafts.config;
 
 import com.ssafy.crafts.common.auth.JwtAuthenticationFilter;
-import com.ssafy.crafts.common.util.AuthTokenProvider;
+import com.ssafy.crafts.common.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,7 +26,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthTokenProvider authTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
+    @Bean
+    public BCryptPasswordEncoder encodePassword() {
+        return new BCryptPasswordEncoder();
+    }
     /**
      * 스프링 시큐리티 룰을 무시하게 하는 Url 규칙
      * -> Swagger UI v2 사용시 404 에러를 방지하기 위해 예외 처리
@@ -37,20 +42,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        JwtAuthenticationFilter jwtAuthFilter = new JwtAuthenticationFilter(authTokenProvider);
+        JwtAuthenticationFilter jwtAuthFilter = new JwtAuthenticationFilter(jwtTokenProvider);
+        http.cors().configurationSource(corsConfigurationSource());
+        http.csrf().disable().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.headers().frameOptions().disable();
+        http.authorizeRequests();
 
         http
-                .authorizeRequests()// 보호된 리소스 URI에 접근할 수 있는 권한을 설정
-                .antMatchers(HttpMethod.OPTIONS).permitAll() // CORS Preflight 방지 위해 로그인요청 url 이전에 OPTIONS 요청 보내기
-                .antMatchers("/api/kakao/**").permitAll() //전체 접근 허용
-                .anyRequest().permitAll().and() // 해당 요청을 인증된 사용자만 사용 가능
-                .headers()
-                .frameOptions()
-                .sameOrigin().and()
-                .cors().and()
-                .csrf().disable() // csrf 보안 설정을 비활성화
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
+            .authorizeRequests()// 보호된 리소스 URI에 접근할 수 있는 권한을 설정
+            .antMatchers(HttpMethod.OPTIONS).permitAll() // CORS Preflight 방지 위해 로그인요청 url 이전에 OPTIONS 요청 보내기
+            .antMatchers(HttpMethod.POST, "/api/kakao/login").permitAll() //전체 접근 허용
+            .antMatchers(HttpMethod.GET, "/api/class/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/main/list").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/class/list").permitAll()
+            .anyRequest().authenticated(); // 해당 요청을 인증된 사용자만 사용 가능
 //            .and()
 //            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // UsernamePasswordAuthenticationFilter :
@@ -64,12 +70,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
+//        configuration.setAllowCredentials(true);
+//        configuration.addAllowedOrigin("http://localhost:3000");
+//        configuration.addAllowedOrigin("https://i7a605.p.saffy.io");
+//        configuration.addAllowedOrigin("http://i7a605.p.saffy.io");
         configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
-//        configuration.setAllowCredentials(true);
-
+        configuration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

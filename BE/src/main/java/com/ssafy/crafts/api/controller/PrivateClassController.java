@@ -4,7 +4,6 @@ import com.ssafy.crafts.api.request.PrivateClassRequest;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
 import com.ssafy.crafts.api.service.PrivateClassService;
-import com.ssafy.crafts.common.util.JwtHeaderUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
