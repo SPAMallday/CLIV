@@ -3,6 +3,7 @@ package com.ssafy.crafts.api.service;
 import com.ssafy.crafts.api.response.ClassRoomResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.entity.Notification;
 import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import io.openvidu.java.client.*;
@@ -33,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ClassRoomServiceImpl implements ClassRoomService{
     private final MemberQuerydslRepository memberQuerydslRepository;
     private final ClassInfoQuerydslRepository classInfoQuerydslRepository;
+    private final NotificationService notificationService;
     @Value("${openvidu.url}")
     private String OPENVIDU_URL;
     @Value("${openvidu.secret}")
@@ -69,6 +71,16 @@ public class ClassRoomServiceImpl implements ClassRoomService{
             sessionId = createSession();
             // 생성한 sessionId class 정보에 추가하기
             classInfoQuerydslRepository.insertSessionId(sessionId, classId);
+            // 선생님과 참여자에게 수업 생성 알림 보내기
+            String sessionUrl = OPENVIDU_URL + "/openvidu/api/sessions/" + sessionId;
+            String message = classInfoQuerydslRepository.findClassNameByClassId(classId) + " 수업을 들을 시간이에요!";
+            // 선생님에게 알림 보내기
+            notificationService.send(classInfoQuerydslRepository.findTeacherIdByClassId(classId), Notification.NotiType.ClassStart, message, sessionUrl);
+            // 참여 학생에게 알림 보내기
+            List<Member> members = classInfoQuerydslRepository.findClassMemberId(classId);
+            for (Member mem : members) {
+                notificationService.send(mem.getId(), Notification.NotiType.ClassStart, message, sessionUrl);
+            }
         }
         // 토큰 생성
         ClassRoomResponse classRoomResponse = getToken(sessionId,

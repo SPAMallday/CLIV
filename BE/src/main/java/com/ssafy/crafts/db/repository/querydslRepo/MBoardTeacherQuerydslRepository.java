@@ -25,4 +25,9 @@ public class MBoardTeacherQuerydslRepository {
                 .fetch();
     }
 
+    public int findMBoardIdById(int mtId) {
+        return jpaQueryFactory.select(qmBoardTeacher.mBoard.id).from(qmBoardTeacher)
+                .where(qmBoardTeacher.id.eq(mtId))
+                .fetchOne();
+    }
 }

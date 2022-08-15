@@ -21,5 +21,7 @@ public interface ClassService {
     void joinClassByMemberId(int id, String memberId);
 
     List<ClassInfoResponse> findClassListByRegdate();
+    List<ClassInfoResponse> findExpectedClassListByTeacherId(String authId);
+    List<ClassInfoResponse> findEndedClassListByTeacherId(String authId);
 
 }
