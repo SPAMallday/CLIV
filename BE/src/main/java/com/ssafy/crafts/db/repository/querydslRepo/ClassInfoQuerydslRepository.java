@@ -180,4 +180,34 @@ public class ClassInfoQuerydslRepository {
                 .where(qClassInfo.id.eq(id)).fetchOne();
         return className;
     }
+
+    public List<ClassInfo> findExpectedClassListByTeacherId(String authId) {
+        /**
+         * @Method Name : findExpectedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 선생님 아이디로 예정된 수업 리스트를 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)
+                        .and(qClassInfo.teacher.id.eq(authId)))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
+    }
+
+    public List<ClassInfo> findEndedClassListByTeacherId(String authId) {
+        /**
+         * @Method Name : findEndedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 선생님 아이디로 종료된 수업 리스트를 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.ENDED)
+                        .and(qClassInfo.teacher.id.eq(authId)))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
+    }
 }

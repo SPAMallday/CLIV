@@ -17,5 +17,5 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ClassListResponse {
-    List<ClassInfoResponse> regdateCL;
+    List<ClassInfoResponse> classList;
 }

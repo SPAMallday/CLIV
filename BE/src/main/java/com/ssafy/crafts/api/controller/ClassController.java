@@ -3,11 +3,8 @@ package com.ssafy.crafts.api.controller;
 import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.api.response.ClassListResponse;
-import com.ssafy.crafts.api.response.MainResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.ClassService;
-import com.ssafy.crafts.common.util.AuthToken;
-import com.ssafy.crafts.common.util.AuthTokenProvider;
 import com.ssafy.crafts.common.util.JwtHeaderUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -92,7 +89,7 @@ public class ClassController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     public ResponseEntity<Object> joinClassByClassId(HttpServletRequest request,
-            @PathVariable @ApiParam(value = "조회할 수업 정보의 id", required = true) int classId){
+                                                     @PathVariable @ApiParam(value = "조회할 수업 정보의 id", required = true) int classId){
         /**
          * @Method Name : joinClassByClassId
          * @작성자 : 허성은
@@ -116,11 +113,54 @@ public class ClassController {
          * @작성자 : 허성은
          * @Method 설명 : 클래스 화면에서 수업을 조회한다.
          */
-        ClassListResponse classListResponse = ClassListResponse.builder().regdateCL(classService.findClassListByRegdate()).build();
+        ClassListResponse classListResponse = ClassListResponse.builder().classList(classService.findClassListByRegdate()).build();
         if(classListResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
             return new ResponseEntity<>(classListResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/manage/expected")
+    @ApiOperation(value = "선생님이 예정된 수업 목록을 조회", notes = "클래스 화면에서 예정된 수업 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 204, message = "조회할 데이터가 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<ClassListResponse> findExpectedClassListByTeacherId(HttpServletRequest request){
+        /**
+         * @Method Name : findExpectedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 화면에서 예정된 수업 목록을 조회한다.
+         */
+        String token = JwtHeaderUtil.getAccessToken(request);
+        ClassListResponse classListResponse =
+                ClassListResponse.builder().classList(classService.findExpectedClassListByTeacherId(authService.getAuthId(token))).build();
+        if(classListResponse == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(classListResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/manage/close")
+    @ApiOperation(value = "선생님이 종료된 수업 목록을 조회", notes = "클래스 화면에서 종료된 수업 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 204, message = "조회할 데이터가 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<ClassListResponse> findEndedClassListByTeacherId(HttpServletRequest request){
+        /**
+         * @Method Name : findEndedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 화면에서 종료된 수업 목록을 조회한다.
+         */
+        String token = JwtHeaderUtil.getAccessToken(request);
+        ClassListResponse classListResponse =
+                ClassListResponse.builder().classList(classService.findEndedClassListByTeacherId(authService.getAuthId(token))).build();
+        if(classListResponse == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(classListResponse, HttpStatus.OK);
+    }
 }
