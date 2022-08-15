@@ -23,9 +23,6 @@ public class ChatRoom {
     @Column(name = "croom_id")
     private int croomId;     // PK
 
-//    @Column(name = "roomId")
-//    private String roomId;  // 채팅방 id
-
     @Column(name = "roomName")
     private String roomName;    // 채팅방 이름
 
@@ -56,8 +53,9 @@ public class ChatRoom {
      * @param name 방 이름
      * @Method 설명 : 채팅방 생성
      */
-    public static ChatRoom createRoom(String name){
+    public static ChatRoom createRoom(int croomId, String name){
         return ChatRoom.builder()
+                .croomId(croomId)
                 .roomName(name)
                 .build();
     }

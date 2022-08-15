@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -19,44 +20,27 @@ public class ChatRoomQuerydslRepository {
     QMBoardTeacher qmBoardTeacher = QMBoardTeacher.mBoardTeacher;
 
     public List<ChatRoom> findAllRoomByAuthId(String authId) {
-        return jpaQueryFactory.selectFrom(qChatRoom)
+        /**
+         * @Method Name : findAllRoomByAuthId
+         * @작성자 : 김민주
+         * @Method 설명 : 회원 아이디로 채팅방 목록 조회
+         */
+        List chatRooms = jpaQueryFactory.selectFrom(qChatRoom)
                 .where(qChatRoom.mBoardTeacher.mBoard.member.id.eq(authId)).fetch();
+        // 채팅방 생성순서 최근 순으로 반환
+        Collections.reverse(chatRooms);
+        return chatRooms;
     }
 
     public ChatRoom findByMtId(int mtId){
+        /**
+         * @Method Name : findByMtId
+         * @작성자 : 김민주
+         * @Method 설명 : 선생님_매칭보드 아이디로 채팅방 조회
+         */
         return jpaQueryFactory.selectFrom(qChatRoom)
                 .where(qChatRoom.mBoardTeacher.id.eq(mtId))
                 .fetchOne();
     }
-
-
-//    public List<Integer> findMBoardIdListByTeacherId(String teacherId) {
-//        List<Integer> mBoardIdList = jpaQueryFactory.select(qmBoardTeacher.mBoard.id)
-//                .from(qmBoardTeacher)
-//                .where(qmBoardTeacher.teacher.id.eq(teacherId)).fetch();
-//        return mBoardIdList;
-//    }
-//
-//    public List<MBoard> findMBoardListByAuthId(String authId) {
-//        return jpaQueryFactory.select(qmBoard).from(qmBoard)
-//                    .where(qmBoard.member.id.eq(authId)).fetch();
-//    }
-//
-//    @Transactional
-//    public void updateMatStatus(int mboardId){
-//        jpaQueryFactory.update(qmBoard)
-//                .set(qmBoard.matStatus, true)
-//                .where(qmBoard.id.eq(mboardId))
-//                .execute();
-//    }
-
-//    public List<MBoard> findMBoardByteacherId(String teacherId) {
-//
-//
-//        return jpaQueryFactory.select(qmBoard).from(qmBoard)
-//                .join(qmBoard.mBoardTeacher, qmBoardTeacher)
-//                .where(qmBoard.mBoardTeacher.teacher.id.eq(teacherId))
-//                .fetch();
-//    }
 
 }

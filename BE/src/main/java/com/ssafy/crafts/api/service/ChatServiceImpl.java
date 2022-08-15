@@ -25,7 +25,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 
-//    private Map<String, ChatRoom> chatRooms;
     private final ChatRoomRepository chatRoomRepository;;
     private final ChatRoomQuerydslRepository chatRoomQuerydslRepository;
     private final MBoardTeacherRepository mBoardTeacherRepository;
@@ -34,11 +33,7 @@ public class ChatServiceImpl implements ChatService {
 
     // authId로 채팅방 목록 불러오기
     public List<ChatRoomResponse> findAllRoom(String authId) {
-//        //채팅방 최근 생성 순으로 반환
-//        List<ChatRoom> result = new ArrayList<>(chatRooms.values());
-//        Collections.reverse(result);
-//
-//        return result;
+
         List<ChatRoom> chatRoomList = chatRoomQuerydslRepository.findAllRoomByAuthId(authId);
         List<ChatRoomResponse> list = new ArrayList<>();
 
