@@ -56,9 +56,9 @@ configurations {
 	providedRuntime
 }
 
-/*task npmInstall(type: NpmTask, overwrite: true) {
-    args = ['install']
-}*/
+//task npmInstall(type: NpmTask, overwrite: true) {
+//    args = ['install']
+//}
 
 //task webpack(type: NpmTask, dependsOn: 'npmInstall') {
 //	args = ['run', 'build']
@@ -124,6 +124,7 @@ dependencies {
 
 	//STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
+	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	//STOMP 관련 프론트 라이브러리
 	implementation('org.webjars.bower:jquery:3.3.1')
 	implementation('org.webjars:sockjs-client:1.1.2')
@@ -159,12 +160,13 @@ dependencies {
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
 	compile("javax.annotation:javax.annotation-api:1.2")
 
-	implementation("org.projectlombok:lombok:1.18.20")
-	annotationProcessor("org.projectlombok:lombok:1.18.20")
+	implementation("org.projectlombok:lombok:1.18.24")
+	annotationProcessor("org.projectlombok:lombok:1.18.24")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 	implementation('com.google.code.gson:gson:2.8.7')
+	implementation("javax.interceptor:javax.interceptor-api:1.2.2")
 
 	// querydsl
 	compile("com.querydsl:querydsl-jpa") // querydsl

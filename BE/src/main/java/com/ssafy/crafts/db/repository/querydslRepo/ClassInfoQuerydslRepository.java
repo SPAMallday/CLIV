@@ -30,7 +30,7 @@ public class ClassInfoQuerydslRepository {
         /**
          * @Method Name : findClassInfoById
          * @작성자 : 허성은
-         * @Method 설명 : 클래스 아이디로 비디오 조회
+         * @Method 설명 : 클래스 아이디로 수업 조회
          */
         ClassInfo classInfo = jpaQueryFactory.select(qClassInfo).from(qClassInfo)
                 .where(qClassInfo.id.eq(id)).fetchOne();
@@ -112,7 +112,7 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .leftJoin(qClassInfo.members, qMember)
                 .where(qClassInfo.members.contains(qMember)
-                    .and(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)))
+                        .and(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)))
                 .orderBy(qClassInfo.classDatetime.desc())
                 .fetch();
     }
@@ -157,5 +157,57 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .where(qClassInfo.id.eq(classId))
                 .fetchOne();
+    }
+
+    public String findClassNameByClassId(int id) {
+        /**
+         * @Method Name : findClassNameByClassId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 아이디로 수업 이름 조회
+         */
+        String className = jpaQueryFactory.select(qClassInfo.className).from(qClassInfo)
+                .where(qClassInfo.id.eq(id)).fetchOne();
+        return className;
+    }
+
+    public String findTeacherIdByClassId(int id) {
+        /**
+         * @Method Name : findTeacherIdByClassId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 아이디로 선생님 아이디 조회
+         */
+        String className = jpaQueryFactory.select(qClassInfo.teacher.id).from(qClassInfo)
+                .where(qClassInfo.id.eq(id)).fetchOne();
+        return className;
+    }
+
+    public List<ClassInfo> findExpectedClassListByTeacherId(String authId) {
+        /**
+         * @Method Name : findExpectedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 선생님 아이디로 예정된 수업 리스트를 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)
+                        .and(qClassInfo.teacher.id.eq(authId)))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
+    }
+
+    public List<ClassInfo> findEndedClassListByTeacherId(String authId) {
+        /**
+         * @Method Name : findEndedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 선생님 아이디로 종료된 수업 리스트를 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.ENDED)
+                        .and(qClassInfo.teacher.id.eq(authId)))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
     }
 }

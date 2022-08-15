@@ -36,7 +36,7 @@ public class SessionController {
     @ApiOperation(value = "세션 생성", notes = "수업 세션을 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "생성 성공"),
-            @ApiResponse(code = 401, message = "접근 권한 없음"),
+            @ApiResponse(code = 404, message = "실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<ClassRoomResponse> createClassRoom(HttpServletRequest request, @PathVariable int classId) {

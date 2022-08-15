@@ -1,0 +1,25 @@
+version: "3.9"
+services: 
+  frontend:
+    image: frontend:0.2
+    build: 
+      context: ./FE
+    ports: 
+      - 3000:80
+    networks:
+      - cliv
+    restart: unless-stopped
+    depends_on:
+      - backend
+  backend:
+    image: backend:0.2
+    build: 
+      context: ./BE
+    ports: 
+      - 8080:8080
+    networks:
+      - cliv
+    restart: unless-stopped
+    
+networks: 
+  cliv:

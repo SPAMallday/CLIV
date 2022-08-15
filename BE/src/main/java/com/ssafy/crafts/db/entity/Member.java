@@ -46,6 +46,10 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "teacher")
+    private List<MBoardTeacher> mBoardTeachers = new ArrayList<>();
+
     @Builder
     public Member(String id, String profileImage, String nickname, String gender, Status status, RoleType roleType, Auth auth) {
         this.id = id;
@@ -65,11 +69,6 @@ public class Member {
         ACTIVE,
         RESIGNATION
     }
-
-    // MBoardTeacher 엔티티에 있는 Member 필드와 매핑 되었다는 것을 의미.
-    // 이 mBoardTeacher 필드는 읽기 전용 필드이다.
-    @OneToOne(mappedBy = "member")
-    private MBoardTeacher mBoardTeacher;
 
 }
 
