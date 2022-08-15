@@ -7,19 +7,29 @@ import './MyCalendar.css';
 import { Box, Stack, Typography } from '@mui/material';
 
 function MyCalendar(props) {
+  const type = props.type;
+
   const [value, onChange] = useState(new Date());
 
   // const [mark, setMark] = useState([]);
+  // state로 관리하지 않고 단순히 단 1번만 렌더링에 필요하기 때문에 변수로 관리
+  // state로 관리하면서 모든 값을 복사해서 집어넣으면 그 때마다
+  // re-rendering이 되기 때문에 무한루프 또는 너무 많은 렌더링이라고 react에서 거부함
+  // const [reserveMark, setReserveMark] = useState([]);
+  // const [closeMark, setCloseMark] = useState([]);
+  let reserveMark = [];
+  let closeMark = [];
 
-  const date = new Date(2022, 7, 8, 12, 30, 45, 789);
-  const [mark, setMark] = useState(
-    props.dateArr.map((date, i) => {
-      console.log(date);
-      return new Date(date);
-    }),
-  );
-
-  const type = props.type;
+  if (type === 'reserve' || type === 'detail') {
+    reserveMark = props.dateArr.map((date, i) => {
+      return moment(date).format('YYYY-MM-DD');
+    });
+  } else if (type === 'close') {
+    closeMark = props.dateArr.map((date, i) => {
+      return moment(date).format('YYYY-MM-DD');
+    });
+  } else {
+  }
 
   // const { data } = useQuery(
   //   ['logDate', month],
@@ -64,16 +74,29 @@ function MyCalendar(props) {
           // 날짜 타일에 컨텐츠 추가하기 (html 태그)
           // 추가할 html 태그를 변수 초기화
           let html = [];
-          // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-          if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
-            if (type === 'reserve') {
+
+          if (type === 'reserve' || type === 'detail') {
+            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+            if (
+              reserveMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
+            ) {
               html.push(<div className="circle-dot"></div>);
-            } else if (type === 'close') {
-              html.push(<div className="square-dot"></div>);
-            } else {
+            }
+          } else if (type === 'close') {
+            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+            if (
+              closeMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
+            ) {
               html.push(<div className="square-dot"></div>);
             }
+          } else {
+            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+            // if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
+            // }
+            // if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
+            // }
           }
+
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
           return (
             <>

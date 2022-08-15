@@ -28,20 +28,6 @@ function ClassManage() {
       break;
   }
 
-  const [value, setValue] = React.useState(nowValue);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  React.useEffect(() => {
-    document.getElementById('bodyContainer').style.padding = 0;
-
-    return () => {
-      document.getElementById('bodyContainer').style = '';
-    };
-  });
-
   let customOutlet;
   switch (nowValue) {
     case 0:
@@ -70,6 +56,21 @@ function ClassManage() {
     default:
       break;
   }
+
+  const [value, setValue] = React.useState(nowValue);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  React.useEffect(() => {
+    document.getElementById('bodyContainer').style.padding = 0;
+
+    return () => {
+      document.getElementById('bodyContainer').style = '';
+    };
+  });
+
   return (
     <Box
       sx={{

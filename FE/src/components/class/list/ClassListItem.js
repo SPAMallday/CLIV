@@ -6,20 +6,13 @@ import StarRating from '../../starrating/StarRating';
 
 import './ClassListItem.css';
 
-// 선생님이 클래스 입장 (내 클래스)
-// 선생님이 클래스 입장 (다른 사람 클래스)
-// 학생이 클래스 입장
-// 리뷰 쓰기
-// 리뷰 보기
-// 선생님이 클래스 입장
-
 // 지난클래스면 항상 ok
 // 예정클래스면 필터필요
 
 function ClassListItem(props) {
   let timeCheck = false;
   const year = props.data.classDatetime.getFullYear();
-  const month = props.data.classDatetime.getMonth();
+  const month = props.data.classDatetime.getMonth() + 1;
   const date = props.data.classDatetime.getDate();
   const hour = props.data.classDatetime.getHours();
   const min = props.data.classDatetime.getMinutes();

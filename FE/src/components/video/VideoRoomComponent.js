@@ -622,16 +622,18 @@ class VideoRoomComponent extends Component {
       classEnd: false,
     });
     // 해당 수업의 classId를 가지고 이동
-    this.props.navigate('/review', { state: { classId: this.state.classId } });
+    this.props.navigate('/class/review', {
+      state: { classId: this.state.classId },
+    });
   }
 
   // 주소를 직접 입력해서 접근하면 이전 페이지에서 수행하는
   // token을 가져오는 동작을 하지 않아서 location에 state가 없음
   validateAccess() {
-    // if (!this.props.location.state) {
-    //   alert('잘못된 접근입니다.');
-    //   return false;
-    // }
+    if (!this.props.location.state) {
+      alert('잘못된 접근입니다.');
+      return false;
+    }
     return true;
   }
 

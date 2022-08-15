@@ -95,6 +95,26 @@ export const getToken = async (classId) => {
   }
 };
 
+// 클래스 관리 - 예정 클래스 조회
+export const getExClass = async () => {
+  try {
+    const res = await apiClient.get(`/api/class/manage/expected`);
+    return res.data;
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
+// 클래스 관리 - 예정 클래스 조회
+export const getClosedClass = async () => {
+  try {
+    const res = await apiClient.get(`/api/class/manage/close`);
+    return res.data;
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
 // 실시간 클래스 퇴장
 export const exitClass = async (classId) => {
   try {
