@@ -10,12 +10,10 @@ import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -149,5 +147,30 @@ public class ClassRoomServiceImpl implements ClassRoomService{
         String sessionId = "id";
         for(int i = 0; i < 8; i++) sessionId = sessionId + String.valueOf(new Random().nextInt(9) + 1);
         return sessionId;
+    }
+
+    @Override
+    public boolean closeSession(int classId, String authId) {
+        /**
+         * @Method Name : closeSession
+         * @작성자 : 허성은
+         * @Method 설명 : 종료 요청이 호스트로부터 온 경우에만 세션 아이디를 전달 받아 세션을 종료한다.
+         */
+        // 호스트로부터 온 요청이 아니라면 거절
+        ClassInfo classInfo = classInfoQuerydslRepository.findClassInfoById(classId);
+        if (classInfo.getTeacher().getId() != authId) {
+            return false;
+        }
+        String sessionId = classInfoQuerydslRepository.findSessionIdByClassId(classId);
+        String targetUrl = OPENVIDU_URL + "/openvidu/api/sessions/" + sessionId;
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", "application/json");
+        httpHeaders.add("Authorization", "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU");
+
+        HttpEntity<Map<String, String>> openviduSessionReq = new HttpEntity<>(httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.exchange(targetUrl, HttpMethod.DELETE, openviduSessionReq, HashMap.class);
+        return true;
     }
 }
