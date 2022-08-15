@@ -28,7 +28,13 @@ function MyCalendar(props) {
     closeMark = props.dateArr.map((date, i) => {
       return moment(date).format('YYYY-MM-DD');
     });
-  } else {
+  } else if (type === 'history') {
+    reserveMark = props.reDateArr.map((date, i) => {
+      return moment(date).format('YYYY-MM-DD');
+    });
+    closeMark = props.clDateArr.map((date, i) => {
+      return moment(date).format('YYYY-MM-DD');
+    });
   }
 
   // const { data } = useQuery(
@@ -83,18 +89,24 @@ function MyCalendar(props) {
               html.push(<div className="circle-dot"></div>);
             }
           } else if (type === 'close') {
-            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
             if (
               closeMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
             ) {
               html.push(<div className="square-dot"></div>);
             }
-          } else {
-            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-            // if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
-            // }
-            // if (mark.find((x) => x === moment(date).format('YYYY-MM-DD'))) {
-            // }
+          } else if (type === 'history') {
+            // 현재 날짜가 post 작성한 날짜 배열에 있다면, dot div 추가
+            // 지난, 예정 모두 추가
+            if (
+              reserveMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
+            ) {
+              html.push(<div className="circle-dot"></div>);
+            }
+            if (
+              closeMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
+            ) {
+              html.push(<div className="square-dot"></div>);
+            }
           }
 
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.

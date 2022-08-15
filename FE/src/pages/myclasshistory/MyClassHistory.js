@@ -48,8 +48,6 @@ function MyClassHistory() {
       let tempCl = resCl.classList.slice();
       setReDateArr(
         tempCl.map((close, i) => {
-          // 달력에 들어갈 날짜만 추려낸 배열을 만들면서 기존 JSON 데이터에 있는
-          // 날짜 문자열을 Date형식으로 변환해서 저장해줌
           close.classDatetime = new Date(close.classDatetime);
           return close.classDatetime;
         }),

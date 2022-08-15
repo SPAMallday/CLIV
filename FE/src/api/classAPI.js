@@ -105,7 +105,7 @@ export const getExClass = async () => {
   }
 };
 
-// 클래스 관리 - 예정 클래스 조회
+// 클래스 관리 - 지난 클래스 조회
 export const getClosedClass = async () => {
   try {
     const res = await apiClient.get(`/api/class/manage/close`);

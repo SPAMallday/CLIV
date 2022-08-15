@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -122,6 +122,80 @@ function NavBar() {
     console.log('out');
     dispatch(logout());
   };
+
+  // SSE 적용
+  const [listening, setListening] = useState(false);
+  const [notiData, setNotiData] = useState([]);
+  const [notiValue, setNotiValue] = useState(null);
+
+  const [meventSource, msetEventSource] = useState(undefined);
+
+  let eventSource = undefined;
+
+  useEffect(() => {
+    console.log('매번 실행되는지');
+    console.log('listening', listening);
+
+    if (!listening && isLogin) {
+      // Server Sent Event 요청시 header 에 Authorization 를 설정하는 부분
+      const eventSourceInitDict = {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+        },
+      };
+      // EventSource 로 Server Sent Event 를 호출하는 부분
+      const eventSource = new EventSource(
+        process.env.REACT_APP_BASE_URL + '/api/sub',
+        eventSourceInitDict,
+      );
+
+      msetEventSource(eventSource);
+
+      //Custom listener
+      // eventSource.addEventListener("Progress", (event) => {
+      //   const result = JSON.parse(event.data);
+      //   console.log("received:", result);
+      //   setData(result)
+      // });
+
+      console.log('eventSource', eventSource);
+
+      eventSource.onopen = (event) => {
+        console.log('connection opened');
+      };
+      // FIXME - 연결은 됐는데 왜 authId가 null이 나오지?
+      // 부적절한 JWT토큰이라고 함 늘 쓰는 헤더 그대로 가져다 썼는데
+
+      // send랑 sendNotification 차이?
+      // 시작하면 sendNoti로 오는데 세팅은 send로 되어있고 어느걸로 맞춰야하는지
+      // sse에 eventId는 뭐지?
+      // 선생님 카테고리는 어떻게 선택함?
+      eventSource.onmessage = (event) => {
+        console.log('result', event.data);
+        setNotiData((old) => [...old, event.data]);
+        setNotiValue(event.data);
+      };
+
+      eventSource.onerror = (event) => {
+        console.log(event.target.readyState);
+        if (event.target.readyState === EventSource.CLOSED) {
+          console.log('eventsource closed (' + event.target.readyState + ')');
+        }
+        eventSource.close();
+      };
+
+      // TODO
+      // 연결에 성공하면 전체 알림을 가져와서 데이터 갖고 Noti로 전달하면
+      // Noti에서 받아서 데이터를 매핑
+
+      setListening(true);
+    }
+
+    return () => {
+      eventSource.close();
+      console.log('eventsource closed');
+    };
+  }, []);
 
   // navbar가 줄어들었을 때 표시할 내용
   const drawer = (
