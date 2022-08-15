@@ -1,36 +1,50 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-// import {ThemeProvider as StyledThemeProvider} from "styled-components"
+import React from 'react';
+import { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
+import { mainList } from '../../api/classAPI';
 const cards = [1, 2, 3, 4, 5, 6, 7, 8]; // 현재 8개 보여줌
-const classImage = ["images/sample.jpg"]; // card내용 서버에서 받아오기 / 썸네일, 강의제목
-const classTitle = ["title"]; // 서버에서 받아올 것들
+const classImage = ['images/sample.jpg']; // card내용 서버에서 받아오기 / 썸네일, 강의제목
+const classTitle = ['title']; // 서버에서 받아올 것들
 
 function Main() {
+  // const [class, setClass] = useState(null);
+  // const { count } = useSelector((state) => state.counter);
+
+  const [cList, setCList] = useState({ regdateCL: [] });
+
+  useEffect(() => {
+    mainList().then((res) => {
+      setCList(res);
+      console.log(res);
+      console.log('hihi');
+    });
+  }, []);
+
   return (
     <main>
       {/* Hero unit */}
       <Box
         sx={{
           pt: 8,
-          pb: 6,
         }}
       >
         <Container maxWidth="lg">
           <Typography
-            component="h1"
-            variant="h3"
+            component="h4"
+            variant="h4"
             align="left"
             color="text.primary"
             gutterBottom
           >
-            추천 클래스
+            추천1 클래스
           </Typography>
         </Container>
       </Box>
@@ -41,9 +55,9 @@ function Main() {
             <Grid item key={card} sm={6} md={4} lg={3}>
               <Card
                 sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
                 <CardMedia
@@ -64,7 +78,7 @@ function Main() {
                   </CardContent> */}
                 <CardActions>
                   <Typography gutterBottom variant="subtitle2" component="div">
-                    뜨개구리
+                    뜨개구리11
                   </Typography>
                 </CardActions>
               </Card>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MyReview from './MyReview';
@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import { FormControl, Select, MenuItem } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { myReview, teacherReview } from '../../api/reviewAPI';
 
 import './MyReview.css';
 
@@ -46,7 +48,11 @@ function a11yProps(index) {
 }
 
 function MyReviewTabs(props) {
+  const userId = useSelector((state) => state.userInfo.user.id);
+  const role = useSelector((state) => state.userInfo.user.role);
   const [valueTitle, setValueTitle] = React.useState(0);
+  const [myRvw, setMyRvw] = React.useState([]);
+  const [teacherRvw, setTeacherRvw] = React.useState([]);
   const handleChangeTitle = (event, newValue) => {
     setValueTitle(newValue);
   };
@@ -60,6 +66,19 @@ function MyReviewTabs(props) {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  useEffect(() => {
+    myReview(userId).then((res) => {
+      setMyRvw(res);
+      console.log('res' + res);
+    });
+
+    if (role === 'TEACHER') {
+      teacherReview(userId).then((res) => {
+        setTeacherRvw(res);
+      });
+    }
+  }, []);
 
   return (
     <Box className="myreviewbox">
@@ -115,10 +134,10 @@ function MyReviewTabs(props) {
               </FormControl>
             </Box>
             <TabPanel value={valueMiniTitle} index={0}>
-              <MyReview />
+              <MyReview value={myRvw} />
             </TabPanel>
             <TabPanel value={valueMiniTitle} index={1}>
-              <MyReview />
+              <MyReview value={teacherRvw} />
             </TabPanel>
           </Box>
         </TabPanel>

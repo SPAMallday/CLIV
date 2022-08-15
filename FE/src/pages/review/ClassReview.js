@@ -6,15 +6,45 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import ReviewButton from '../../components/review/ReviewButton';
-import StarRating from '../../components/starrating/StarRating';
+import { applyReview } from '../../api/reviewAPI.js';
+import { useSelector } from 'react-redux';
 
 function ClassReview() {
-  const [value, setValue] = React.useState('Controlled');
+  const userId = useSelector((state) => state.userInfo.user.id);
+  const [score, setScore] = useState(0);
+  const [textRv, setValue] = useState('');
+  const [prList, setPrList] = useState([]);
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleScoreChange = (event) => {
+    // event.preventDefault();
+    setScore(event.target.value);
+  };
+
+  const handletextRvChange = (event) => {
+    // event.preventDefault();
+    setValue(event.target.value.tostr);
+  };
+
+  const saveHandler = (event) => {
+    // event.preventDefault();
+    const data = {
+      authId: userId,
+      score: score,
+      textRv: textRv,
+      classId: 1,
+      prList: prList,
+    };
+    console.log(data);
+    console.log(userId);
+    applyReview(data).then((res) => {
+      console.log(res);
+    });
+  };
+  console.log(prList);
+  const getprList = (pList) => {
+    setPrList(prList);
   };
 
   return (
@@ -43,16 +73,14 @@ function ClassReview() {
         >
           별점 :
         </Typography>
-        <Rating
-          value={value}
-          precision={0.5}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        />
+        <Rating value={score} precision={1} onChange={handleScoreChange} />
       </Paper>
 
-      <ReviewButton />
+      <Typography className="miniTitle" sx={{ mt: 5 }}>
+        수업은 어땠나요?
+      </Typography>
+
+      <ReviewButton getprList={getprList} />
 
       <Typography className="miniTitle" sx={{ mt: 5 }}>
         상세 리뷰 작성하기 (선택)
@@ -70,16 +98,26 @@ function ClassReview() {
         autoComplete="off"
       >
         <div>
-          <TextField multiline rows={15} color="secondary" />
+          <TextField
+            multiline
+            rows={10}
+            color="secondary"
+            onChange={handletextRvChange}
+          />
         </div>
       </Box>
       <Box sx={{ textAlign: 'center', my: 3 }}>
-        <Button variant="contained" color="secondary" sx={{ mx: 1 }}>
-          수정
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ mx: 1 }}
+          onClick={saveHandler}
+        >
+          완료
         </Button>
-        <Button variant="outlined" color="error" sx={{ mx: 1 }}>
+        {/* <Button variant="outlined" color="error" sx={{ mx: 1 }}>
           삭제
-        </Button>
+        </Button> */}
       </Box>
     </>
   );

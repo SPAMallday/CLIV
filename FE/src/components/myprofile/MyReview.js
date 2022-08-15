@@ -31,70 +31,64 @@ function MyReview(props) {
 
   return (
     <Grid item>
-      {reviewDatas.map((review, i) => {
-        return (
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              borderRadius: '15px',
-              alignItems: 'center',
-            }}
-          >
-            <Box sx={{ flex: '75%' }}>
-              <Stack spacing={1}>
-                <Grid container columnSpacing={2} sx={{ width: 'fit-content' }}>
-                  <Grid item xs>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography fontWeight={700} sx={{ width: '2.5rem' }}>
-                        별점 :
-                      </Typography>
-                      <StarRating ratingValue={review.rating} type="review" />
-                    </Box>
-                  </Grid>
-                  <Grid item xs>
-                    <Typography>강의자 : {review.teacher}</Typography>
-                  </Grid>
+      {props.value.map((review) => (
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            borderRadius: '15px',
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ flex: '75%' }}>
+            <Stack spacing={1}>
+              <Grid container columnSpacing={2} sx={{ width: 'fit-content' }}>
+                <Grid item xs>
+                  <Box sx={{ display: 'flex' }}>
+                    <Typography fontWeight={700} sx={{ width: '2.5rem' }}>
+                      별점 :
+                    </Typography>
+                    <StarRating ratingValue={review.score} type="review" />
+                  </Box>
                 </Grid>
-                <Grid container>
-                  <Grid item sx={{ mr: 1 }}>
-                    <Typography>[{review.category}]</Typography>
-                  </Grid>
-                  <Grid item xs={9}>
-                    <Typography>{review.title}</Typography>
-                  </Grid>
+                <Grid item xs>
+                  <Typography>강의자 : {review.nickname}</Typography>
                 </Grid>
-                <Grid container>
-                  {review.selectReview.map((item, i) => {
-                    return (
-                      <Grid item xs={6} md={3}>
-                        <Paper className="reviewpaper" sx={{ p: 0.5 }}>
-                          <Typography>{item}</Typography>
-                        </Paper>
-                      </Grid>
-                    );
-                  })}
+              </Grid>
+              <Grid container>
+                <Grid item sx={{ mr: 1 }}>
+                  <Typography>[{review.category}]</Typography>
                 </Grid>
-                <Grid xs>
-                  <Typography>{review.content}</Typography>
+                <Grid item xs={9}>
+                  <Typography>{review.className}</Typography>
                 </Grid>
-              </Stack>
-            </Box>
-            <Box sx={{ flex: '25%', textAlign: 'center' }}>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ mx: 1, my: 1 }}
-              >
-                수정
-              </Button>
-              <Button variant="outlined" color="error" sx={{ mx: 1, my: 1 }}>
-                삭제
-              </Button>
-            </Box>
-          </Paper>
-        );
-      })}
+              </Grid>
+              <Grid container>
+                {review.prList.map((item, i) => {
+                  return (
+                    <Grid item xs={6} md={3}>
+                      <Paper className="reviewpaper" sx={{ p: 0.5 }}>
+                        <Typography>{item}</Typography>
+                      </Paper>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+              <Grid xs>
+                <Typography>{review.textRv}</Typography>
+              </Grid>
+            </Stack>
+          </Box>
+          <Box sx={{ flex: '25%', textAlign: 'center' }}>
+            <Button variant="contained" color="secondary" sx={{ mx: 1, my: 1 }}>
+              수정
+            </Button>
+            <Button variant="outlined" color="error" sx={{ mx: 1, my: 1 }}>
+              삭제
+            </Button>
+          </Box>
+        </Paper>
+      ))}
     </Grid>
   );
 }

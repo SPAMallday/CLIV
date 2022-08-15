@@ -3,28 +3,37 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import { Card, CardContent, Typography, Button, Stack } from '@mui/material';
 import StarRating from '../../starrating/StarRating';
+import { registClass } from '../../../api/classAPI';
 
 import './ClassDetailInfo.css';
-
-const handleSubmitButton = (teacherAuth) => {
-  // 선생님인 경우
-  if (teacherAuth === 'TEACHER') {
-    // ('MEMBER') {
-    // 클래스 정보 수정
-  }
-  // 학생인 경우
-  else {
-    // 수강신청
-  }
-};
+import { useLocation } from 'react-router-dom';
 
 function ClassDetailInfo({ value }) {
+  const location = useLocation(); // 추가된 부분
+  const classId = location.state?.classId; // 추가된 부분
+
   const [rating, setRating] = useState(3);
+  const [btnClick, setBtnClick] = useState(false);
   const teacherAuth = useSelector((state) => state.userInfo.user.role);
   // useEffect(() => {
   //   setRating(value.level);
   //   console.log('rating  ' + rating);
   // }, []);
+  console.log('aa' + classId);
+
+  const handleSubmitButton = (teacherAuth) => {
+    // 선생님인 경우
+    // if (teacherAuth === 'TEACHER') {
+    // 클래스 정보 수정
+    // 이게 본인이 생성한 수업일때만 수정이 떠야될거같은데
+    // 작성자 아이디랑 로그인 아이디 비교하는 방식으로? 해야될거같음 (HJ)
+    // }
+    // 학생인 경우
+    // else if (teacherAuth === 'MEMBER') {
+    // 수강신청
+    registClass(classId);
+    // }
+  };
 
   return (
     <Box>
@@ -65,7 +74,8 @@ function ClassDetailInfo({ value }) {
                 </Box>
                 <Typography>
                   수강 인원({(value.member || []).length} /{' '}
-                  {value.headcount || 0}){/* member.length 하면 에러남  */}
+                  {value.headcount || 0})
+                  {/* value.member.length 하면 에러남  */}
                 </Typography>
               </Stack>
             </CardContent>
@@ -76,7 +86,7 @@ function ClassDetailInfo({ value }) {
               variant="contained"
               component="label"
               size="large"
-              onClick={handleSubmitButton(teacherAuth)}
+              onClick={() => handleSubmitButton(teacherAuth)}
               sx={{ width: '50%', height: '3rem', borderRadius: '1.5rem' }}
             >
               <Typography fontWeight={700}>

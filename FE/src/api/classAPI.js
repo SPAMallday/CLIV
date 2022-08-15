@@ -1,14 +1,14 @@
 import { apiClient } from '.';
 
 // 클래스 생성
-export const classCreate = async () => {
-  try {
-    const res = await apiClient.post(`/api/class/create`);
-    return res.data;
-  } catch (err) {
-    console.log('Error >>', err);
-  }
-};
+// export const classCreate = async () => {
+//   try {
+//     const res = await apiClient.post(`/api/class/create`);
+//     return res.data;
+//   } catch (err) {
+//     console.log('Error >>', err);
+//   }
+// };
 
 // 클래스 목록
 export const classList = async () => {
@@ -43,7 +43,8 @@ export const classDetail = async (classId) => {
 // 클래스 신청
 export const registClass = async (classId) => {
   try {
-    const res = await apiClient.post(`/api/class/${classId}`);
+    const res = await apiClient.post(`/api/class/${classId}`, null);
+    console.log(res);
     return res.data;
   } catch (err) {
     console.log('Error >>', err);

@@ -31,24 +31,19 @@ function ClassList() {
       <Box
         sx={{
           pt: 8,
-          pb: 6,
+          // pb: 6,
         }}
       >
         <Container maxWidth="lg">
           <Typography
-            component="h1"
-            variant="h3"
+            component="h4"
+            variant="h4"
             align="left"
             color="text.primary"
             gutterBottom
           >
-            추천 클래스
+            최신 클래스
           </Typography>
-          <Box sx={{ flex: '25%', textAlign: 'center' }}>
-            <Button variant="contained" color="secondary">
-              "A"
-            </Button>
-          </Box>
         </Container>
       </Box>
       <Container sx={{ py: 8 }} maxWidth="lg">
