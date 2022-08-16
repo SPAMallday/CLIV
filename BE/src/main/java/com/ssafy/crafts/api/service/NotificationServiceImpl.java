@@ -111,14 +111,14 @@ public class NotificationServiceImpl implements NotificationService{
 
     @Override
     @Async
-    public void send(String authId, Notification.NotiType notificationType, String message, String url) {
+    public void send(String authId, Notification.NotiType notificationType, String message) {
         /**
          * @Method Name : send
          * @작성자 : 허성은
          * @Method 설명 : 이벤트가 발생하면 비동기 처리 방식으로 알림을 전송한다.
          */
         Notification notification =
-                notificationRepository.save(createNotification(memberRepository.getOne(authId), notificationType, message, url));
+                notificationRepository.save(createNotification(memberRepository.getOne(authId), notificationType, message));
 
         String eventId = authId + "_" + System.currentTimeMillis();
         Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByMemberId(authId);
@@ -131,7 +131,7 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public Notification createNotification(Member receiver, Notification.NotiType notificationType, String content, String url) {
+    public Notification createNotification(Member receiver, Notification.NotiType notificationType, String content) {
         /**
          * @Method Name : createNotification
          * @작성자 : 허성은
@@ -141,7 +141,6 @@ public class NotificationServiceImpl implements NotificationService{
                 .receiver(receiver)
                 .notiType(notificationType)
                 .message(content)
-                .notiUrl(url)
                 .isRead(false)
                 .build();
     }

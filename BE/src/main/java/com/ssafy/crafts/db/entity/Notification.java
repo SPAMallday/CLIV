@@ -22,7 +22,7 @@ public class Notification {
     @Column(name = "message", length = 100, nullable = false)
     private String message;
 
-    @Column(name = "noti_uri", length = 50, nullable = false)
+    @Column(name = "noti_uri", length = 50, nullable = true)
     private String notiUrl;
 
     @Column(nullable = false)

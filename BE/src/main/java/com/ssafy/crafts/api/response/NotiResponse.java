@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 public class NotiResponse {
     private int id;
     private String message;
-    private String notiUrl;
+    private String notiType;
     private String authId;
     private boolean isRead;
 
     public static NotiResponse create(Notification notification) {
         return new NotiResponse(notification.getNotiId(), notification.getMessage(),
-                notification.getNotiUrl(), notification.getReceiver().getId(), notification.getIsRead());
+                notification.getNotiType().toString(), notification.getReceiver().getId(), notification.getIsRead());
     }
 }

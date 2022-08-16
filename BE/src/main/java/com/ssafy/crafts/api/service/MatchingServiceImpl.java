@@ -78,10 +78,10 @@ public class MatchingServiceImpl implements MatchingService{
         List<Member> teachers = memberQuerydslRepository.findByCategoryAndGender(categoryId, gender);
         //알림 보내기
         String url = "https://i7a605.ssafy.p.io/api/matching/" + mBoardId;
-        String message = categoryQuerydslRepository.findCategoryContentById(categoryId) + " 에 대한 제안을 받았습니다!";
+        String message = categoryQuerydslRepository.findCategoryContentById(categoryId);
         // 요청서 받은 선생님들에게 알림 보내기
         for (Member teacher : teachers) {
-            notificationService.send(teacher.getId(), Notification.NotiType.ClassStart, message, url);
+            notificationService.send(teacher.getId(), Notification.NotiType.ClassStart, message);
         }
 
 
