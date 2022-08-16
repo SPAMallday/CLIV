@@ -3,6 +3,7 @@ import MyReviewTabs from '../../components/myprofile/MyReviewTabs';
 import Badge from '../../components/myprofile/Badge';
 
 import './MyProfile.css';
+import { Button } from '@mui/material';
 
 function MyProfile() {
   return (
@@ -14,6 +15,9 @@ function MyProfile() {
         {/* <div className="rightside">
           <Badge />
         </div> */}
+        <Button variant="contained" color="secondary">
+          선생님 전환
+        </Button>
       </div>
       <MyReviewTabs />
     </div>

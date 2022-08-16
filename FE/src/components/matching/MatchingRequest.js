@@ -23,7 +23,7 @@ import { cateList, matchingCreate } from '../../api/matchingAPI';
 import './MatchingRequest.css';
 import { useSelector } from 'react-redux';
 
-const steps = ['카테고리 선택', '제목', '원하는 시간', '내용'];
+const steps = ['카테고리 선택', '제목', '원하는 시간', '성별', '내용'];
 
 function MatchingRequest() {
   const color = '#DF7861';
@@ -233,6 +233,34 @@ function MatchingRequest() {
                 </Box>
               )}
               {activeStep === 3 && (
+                <Box className="matchingContainer">
+                  <div sx={{ width: '100%' }}>
+                    어떤 종류의 수업을 듣고 싶으신가요?
+                  </div>
+
+                  <FormControl className="matchingRadioBox">
+                    <RadioGroup
+                      className="matchingRadio"
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={value}
+                      onChange={handleChange}
+                      row
+                    >
+                      {categoryArr.map((category) => (
+                        <FormControlLabel
+                          className="matchingRadioBtn"
+                          value={category.id}
+                          control={<Radio color="secondary" />}
+                          label={category.content}
+                          key={category.id}
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+              )}
+              {activeStep === 4 && (
                 <Box>
                   <Box
                     component="form"
