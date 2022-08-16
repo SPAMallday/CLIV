@@ -234,28 +234,31 @@ function MatchingRequest() {
               )}
               {activeStep === 3 && (
                 <Box className="matchingContainer">
-                  <div sx={{ width: '100%' }}>
-                    어떤 종류의 수업을 듣고 싶으신가요?
-                  </div>
+                  <div sx={{ width: '100%' }}>강사님의 성별을 골라 주세요!</div>
 
                   <FormControl className="matchingRadioBox">
                     <RadioGroup
                       className="matchingRadio"
-                      aria-labelledby="demo-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
+                      name="radio-buttons-group"
                       value={value}
                       onChange={handleChange}
                       row
                     >
-                      {categoryArr.map((category) => (
-                        <FormControlLabel
-                          className="matchingRadioBtn"
-                          value={category.id}
-                          control={<Radio color="secondary" />}
-                          label={category.content}
-                          key={category.id}
-                        />
-                      ))}
+                      <FormControlLabel
+                        value="F"
+                        control={<Radio />}
+                        label="여자"
+                      />
+                      <FormControlLabel
+                        value="M"
+                        control={<Radio />}
+                        label="남자"
+                      />
+                      <FormControlLabel
+                        value="X"
+                        control={<Radio />}
+                        label="무관"
+                      />
                     </RadioGroup>
                   </FormControl>
                 </Box>
