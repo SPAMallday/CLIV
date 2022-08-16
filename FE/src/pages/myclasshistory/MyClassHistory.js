@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import './MyClassHistory.css';
 import { useNavigate } from 'react-router-dom';
 import { useLayoutEffect, useState } from 'react';
-import { getClosedClass, getExClass } from '../../api/classAPI';
+import { getClosedClassHistory, getExClassHistory } from '../../api/classAPI';
 
 const reserveType = {
   work: () => {},
@@ -31,9 +31,8 @@ function MyClassHistory() {
   useLayoutEffect(() => {
     async function getData() {
       // api 호출 결과값을 Data로 사용
-      // FIXME - 수강신청자용 API로 바꿔야함
-      const resEx = await getExClass();
-      const resCl = await getClosedClass();
+      const resEx = await getExClassHistory();
+      const resCl = await getClosedClassHistory();
 
       let tempEx = resEx.classList.slice();
       setReDateArr(

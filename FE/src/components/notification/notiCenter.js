@@ -1,23 +1,19 @@
-import {
-  Box,
-  Button,
-  Divider,
-  MenuItem,
-  Stack,
-  styled,
-  Tab,
-  Tabs,
-  Typography,
-} from '@mui/material';
+import { Box, MenuList, Stack, Tab, Tabs, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import NotiItem from './notiItem';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <Box sx={{ p: 1, width: '400px' }}>{children}</Box>}
+      {value === index && (
+        <Box
+          sx={{ p: 1, width: '350px', maxHeight: '300px', overflow: 'scroll' }}
+        >
+          {children}
+        </Box>
+      )}
     </div>
   );
 }
@@ -28,89 +24,100 @@ TabPanel.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-const EmNotiTypograpy = styled(Typography)(({ theme }) => ({
-  fontSize: '0.8rem',
-  fontWeight: 700,
-  color: theme.palette.secondary.main,
-  maxWidth: '60%',
-  display: 'inline-block',
-}));
-
 function NotiCenter(props) {
+  const notiData = props.notiData;
+  let classNotiArr = [],
+    chatNotiArr = [];
+
+  if (notiData.length > 0) {
+    for (const noti of notiData) {
+      if (noti.notiType === 'ClassStart') {
+        classNotiArr.push({
+          id: noti.id,
+          msg: noti.message,
+        });
+      }
+      // 수업 관련 메세지가 아니라면
+      else {
+        chatNotiArr.push({
+          id: noti.id,
+          msg: noti.message,
+        });
+      }
+    }
+  }
+
   return (
     <Box sx={{ width: '100%' }}>
+      {console.log(classNotiArr)}
       <Tabs
         value={props.notiTabValue}
         onChange={props.handleChangeNotiTab}
         textColor="secondary"
         indicatorColor="secondary"
         variant="fullWidth"
+        sx={{
+          borderBottom: '1px solid rgba(0, 0, 0, .2)',
+        }}
       >
         <Tab value="normal" label="수업" />
         <Tab value="chat" label="채팅" />
       </Tabs>
       <TabPanel value={props.notiTabValue} index="normal">
-        <MenuItem component={Link} to={'/myhistory'}>
+        {classNotiArr.length > 0 ? (
           <Stack sx={{ width: '100%' }}>
-            <Box sx={{ width: '100%', display: 'flex' }}>
-              <EmNotiTypograpy noWrap>
-                [{'카테고리'}] {'클래스 제목(요청 제목) '}dddddddd
-              </EmNotiTypograpy>
-              <Typography fontSize={'0.8rem'} sx={{ display: 'inline-block' }}>
-                수업 시작 10분 전입니다!
-              </Typography>
-            </Box>
-            <Box display={'flex'} justifyContent={'center'}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="small"
-                disableRipple
-                sx={{
-                  fontSize: '0.7rem',
-                  px: '3px',
-                  py: '1px',
-                  mt: '2px',
-                }}
-              >
-                여기를 눌러 수업을 시작하세요!
-              </Button>
-            </Box>
+            <MenuList sx={{ width: '100%' }}>
+              {classNotiArr.map((noti, i) => {
+                return (
+                  <NotiItem
+                    type="class"
+                    noti={noti}
+                    nowTime={props.nowTime}
+                    setTargetNotiId={props.setTargetNotiId}
+                    key={i}
+                  />
+                );
+              })}
+            </MenuList>
           </Stack>
-        </MenuItem>
-
-        <Divider sx={{ my: '1px !important' }} />
+        ) : (
+          <Typography
+            fontSize={'0.8rem'}
+            color="gray"
+            textAlign={'center'}
+            sx={{ mt: 2 }}
+          >
+            표시할 알림이 없습니다!
+          </Typography>
+        )}
       </TabPanel>
       <TabPanel value={props.notiTabValue} index="chat">
-        <MenuItem component={Link} to={'/matching/receiverequest'}>
+        {chatNotiArr.length > 0 ? (
           <Stack sx={{ width: '100%' }}>
-            <Box sx={{ width: '100%', display: 'flex' }}>
-              <EmNotiTypograpy noWrap>
-                [{'카테고리'}] {'클래스 제목(요청 제목)'}ddddd
-              </EmNotiTypograpy>
-              <Typography fontSize={'0.8rem'} sx={{ display: 'inline-block' }}>
-                에 대한 제안을 받았습니다!
-              </Typography>
-            </Box>
-            <Box display={'flex'} justifyContent={'center'}>
-              <Button
-                variant="outlined"
-                size="small"
-                color="secondary"
-                disableRipple
-                sx={{
-                  fontSize: '0.7rem',
-                  px: '3px',
-                  py: '1px',
-                  mt: '2px',
-                }}
-              >
-                여기를 눌러 자세한 내용을 확인하세요!
-              </Button>
-            </Box>
+            <MenuList sx={{ width: '100%' }}>
+              {chatNotiArr.map((noti, i) => {
+                return (
+                  <NotiItem
+                    type="chat"
+                    noti={noti}
+                    nowTime={props.nowTime}
+                    setTargetNotiId={props.setTargetNotiId}
+                    key={i}
+                  />
+                );
+              })}
+            </MenuList>
           </Stack>
-        </MenuItem>
-        <Divider sx={{ my: '1px !important' }} />
+        ) : (
+          <Typography
+            fontSize={'0.8rem'}
+            color="gray"
+            textAlign={'center'}
+            sx={{ mt: 2 }}
+          >
+            표시할 알림이 없습니다!
+          </Typography>
+        )}
       </TabPanel>
     </Box>
   );

@@ -13,8 +13,8 @@ export const getAllNoti = async () => {
 // 선택 알림 확인처리
 export const setNotiRead = async (notificationId) => {
   try {
-    const res = await apiClient.post(`/api/class/${notificationId}`);
-    return res.data;
+    const res = await apiClient.post(`/api/noti/${notificationId}`);
+    return res.status;
   } catch (err) {
     console.log('Error >>', err);
   }

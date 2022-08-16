@@ -115,6 +115,26 @@ export const getClosedClass = async () => {
   }
 };
 
+// 나의 수강내역 - 예정 클래스 조회
+export const getExClassHistory = async () => {
+  try {
+    const res = await apiClient.get(`/api/class/join/expected`);
+    return res.data;
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
+// 나의 수강내역 - 지난 클래스 조회
+export const getClosedClassHistory = async () => {
+  try {
+    const res = await apiClient.get(`/api/class/join/close`);
+    return res.data;
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
 // 실시간 클래스 퇴장
 export const exitClass = async (classId) => {
   try {

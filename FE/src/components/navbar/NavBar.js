@@ -34,9 +34,69 @@ import {
   ListItemText,
   Toolbar,
 } from '@mui/material';
+import { getAllNoti, setNotiRead } from '../../api/notiAPI';
 
-const drawerWidth = 240;
+// 스타일 적용
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: '20px',
+  backgroundColor: 'rgba(223, 120, 97, 0.8)',
+  '&:hover': {
+    backgroundColor: 'rgba(223, 120, 97, 1.0)',
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    width: 'auto',
+  },
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+}));
 
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    maxWidth: '15ch',
+    color: 'white',
+  },
+}));
+
+const paperpropsset = {
+  elevation: 0,
+  sx: {
+    overflow: 'visible',
+    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+    mt: 1.5,
+    '&:before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      top: 0,
+      right: 18,
+      width: 10,
+      height: 10,
+      bgcolor: 'background.paper',
+      transform: 'translateY(-50%) rotate(45deg)',
+      zIndex: 0,
+    },
+  },
+};
 // const dispatch = useDispatch();
 // const logoutBtn = () => {
 //   console.log('out');
@@ -49,9 +109,6 @@ function NavBar() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userInfo.isLogin);
   const role = useSelector((state) => state.userInfo.user.role);
-
-  // 알림 개수
-  const notiNum = 27;
 
   // navbar 열고 닫는 스테이트
   const container = document.getElementById('bodyContainer');
@@ -99,14 +156,6 @@ function NavBar() {
     setNotiTabValue(newValue);
   };
 
-  /* <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-          </Box> */
-
   //navbar가 줄어들었을 때 Drawer에 들어갈 메뉴 리스트들 관리
   const [openDrawMatching, setOpenDrawMatching] = React.useState(false);
   const [openDrawMy, setOpenDrawMy] = React.useState(false);
@@ -126,12 +175,11 @@ function NavBar() {
   // SSE 적용
   const [listening, setListening] = useState(false);
   const [notiData, setNotiData] = useState([]);
-  const [notiValue, setNotiValue] = useState(null);
-
-  const [meventSource, msetEventSource] = useState(undefined);
+  const [targetNotiId, setTargetNotiId] = useState(0);
 
   let eventSource = undefined;
 
+  // 로그인이 됐을 때 1번만 실행 or 로그인인 상태로 새로고침 시 실행
   useEffect(() => {
     console.log('매번 실행되는지');
     console.log('listening', listening);
@@ -149,15 +197,6 @@ function NavBar() {
         eventSourceInitDict,
       );
 
-      msetEventSource(eventSource);
-
-      //Custom listener
-      // eventSource.addEventListener("Progress", (event) => {
-      //   const result = JSON.parse(event.data);
-      //   console.log("received:", result);
-      //   setData(result)
-      // });
-
       console.log('eventSource', eventSource);
 
       eventSource.onopen = (event) => {
@@ -166,7 +205,6 @@ function NavBar() {
       };
       // FIXME - 403 입구컷
 
-      // sse에 eventId는 뭐지?
       // lastEventId 사용하려면 event.lastEventId를 저장
       // notitype 필요
       // message 간소화 수업 이름만 전달
@@ -174,7 +212,6 @@ function NavBar() {
         console.log(event.data);
         const trans = JSON.parse(event.data);
         setNotiData((old) => [...old, trans]);
-        setNotiValue(trans);
       };
 
       eventSource.onerror = (event) => {
@@ -190,13 +227,30 @@ function NavBar() {
       // Noti에서 받아서 데이터를 매핑 1개의 Noti마다 NotiId를 매핑해서
       // 각 알림을 누르면 NotiId에 맞게 post요청을 보내게 구성
       setListening(true);
+
+      getAllNoti().then((res) => {
+        setNotiData(res);
+      });
     }
 
+    // Unmount될 때
     return () => {
       eventSource?.close();
       console.log('eventsource closed');
     };
   }, [isLogin]);
+
+  useEffect(() => {
+    if (targetNotiId !== 0) {
+      // 읽음으로 전환 요청
+      // FIXME -- 이거 호출했을때 db에서 read로 바뀌는 게 맞는지..?
+      // 그리고 모든 알림 조회했을때는 read가 아닌 것만 불러오게
+      if (setNotiRead(targetNotiId) === '200') {
+        // 읽은 알림 제거
+        setNotiData(notiData.filter((noti) => noti.id !== targetNotiId));
+      }
+    }
+  }, [targetNotiId]);
 
   // navbar가 줄어들었을 때 표시할 내용
   const drawer = (
@@ -240,86 +294,59 @@ function NavBar() {
           </ListItemButton>
         </ListItem>
         <Divider />
-        <ListItemButton onClick={handleDrawMy}>
-          <ListItemText primary="나의 정보" />
-          {openDrawMy ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={openDrawMy} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding onClick={handleDrawerToggle}>
-            <ListItemButton component={Link} to={'/myprofile'} sx={{ pl: 4 }}>
-              <ListItemText primary="마이프로필" />
+        {isLogin ? (
+          <>
+            <ListItem disablePadding onClick={handleClickNoti}>
+              <ListItemButton>
+                <ListItemText primary="알림센터" />
+                <Badge
+                  badgeContent={notiData.length}
+                  color="error"
+                  sx={{
+                    right: '20px',
+                  }}
+                ></Badge>
+              </ListItemButton>
+            </ListItem>
+            <ListItemButton onClick={handleDrawMy}>
+              <ListItemText primary="나의 정보" />
+              {openDrawMy ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <ListItemButton component={Link} to={'/myhistory'} sx={{ pl: 4 }}>
-              <ListItemText primary="나의 수강이력" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="로그아웃" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-        <ListItem disablePadding onClick={handleClickNoti}>
+            <Collapse in={openDrawMy} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding onClick={handleDrawerToggle}>
+                <ListItemButton
+                  component={Link}
+                  to={'/myprofile'}
+                  sx={{ pl: 4 }}
+                >
+                  <ListItemText primary="마이프로필" />
+                </ListItemButton>
+                <ListItemButton
+                  component={Link}
+                  to={'/myhistory'}
+                  sx={{ pl: 4 }}
+                >
+                  <ListItemText primary="나의 수강이력" />
+                </ListItemButton>
+                <ListItemButton onClick={logoutBtn} sx={{ pl: 4 }}>
+                  <ListItemText primary="로그아웃" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </>
+        ) : (
           <ListItemButton>
-            <ListItemText primary="알림센터" />
-            <Badge
-              badgeContent={notiNum}
-              color="error"
-              sx={{
-                right: '20px',
-              }}
-            ></Badge>
+            <a className="loginButton" href={KAKAO_AUTH_URL}>
+              <ListItemText primary="로그인" />
+            </a>
           </ListItemButton>
-        </ListItem>
+        )}
       </List>
     </Box>
   );
 
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: '20px',
-    backgroundColor: 'rgba(223, 120, 97, 0.8)',
-    '&:hover': {
-      backgroundColor: 'rgba(223, 120, 97, 1.0)',
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 'auto',
-    },
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  }));
-
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      maxWidth: '15ch',
-      color: 'white',
-    },
-  }));
-
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box>
-        {console.log('노데', notiData)}
-        {console.log('노벨', notiValue)}
-      </Box>
-
       <AppBar component="nav" position="relative">
         <Toolbar
           variant="dense"
@@ -349,43 +376,42 @@ function NavBar() {
             >
               클래스
             </Button>
-            <Box sx={{ display: 'flex' }}>
-              <Button
-                id="matching-button"
-                onClick={handleClickMatching}
-                disableRipple
-                sx={{ color: 'black' }}
-              >
-                매칭
-              </Button>
-              <Menu
-                id="matching-menu"
-                anchorEl={anchorElMatching}
-                open={openMatching}
-                onClose={handleCloseMatching}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
-                <MenuItem
-                  component={Link}
-                  to={'/matching'}
-                  onClick={handleCloseMatching}
+            {isLogin && (
+              <Box sx={{ display: 'flex' }}>
+                <Button
+                  onClick={handleClickMatching}
+                  disableRipple
+                  sx={{ color: 'black' }}
                 >
-                  요청 보내기
-                </MenuItem>
-
-                <MenuItem
-                  component={Link}
-                  to={'/matching/receiverequest'}
-                  onClick={handleCloseMatching}
+                  매칭
+                </Button>
+                <Menu
+                  anchorEl={anchorElMatching}
+                  open={openMatching}
+                  onClose={handleCloseMatching}
                 >
-                  받은 요청
-                </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to={'/matching'}
+                    onClick={handleCloseMatching}
+                  >
+                    요청 보내기
+                  </MenuItem>
 
-                <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
-              </Menu>
-            </Box>
+                  {role === 'TEACHER' && (
+                    <MenuItem
+                      component={Link}
+                      to={'/matching/receiverequest'}
+                      onClick={handleCloseMatching}
+                    >
+                      받은 요청
+                    </MenuItem>
+                  )}
+
+                  <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
+                </Menu>
+              </Box>
+            )}
             {isLogin && role === 'TEACHER' && (
               <Button
                 component={Link}
@@ -405,14 +431,17 @@ function NavBar() {
               display: { xs: 'none', nav: 'flex' },
               justifyContent: 'flex-end',
               alignItems: 'center',
+              pr: 6,
             }}
           >
+            {/* 
+            // 검색바..
             <Search id="search">
               <SearchIconWrapper>
                 <SearchIcon sx={{ color: 'white' }} />
               </SearchIconWrapper>
               <StyledInputBase inputProps={{ 'aria-label': 'search' }} />
-            </Search>
+            </Search> */}
 
             {isLogin === true ? (
               <>
@@ -423,7 +452,7 @@ function NavBar() {
                   disableRipple
                   style={{ backgroundColor: 'transparent', color: 'darkgray' }}
                 >
-                  <Badge badgeContent={notiNum} color="error">
+                  <Badge badgeContent={notiData.length} color="error">
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
@@ -433,30 +462,7 @@ function NavBar() {
                   onClose={handleCloseNoti}
                   // onClick={handleCloseUser}
                   PaperProps={{
-                    elevation: 0,
-                    sx: {
-                      overflow: 'visible',
-                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                      mt: 1.5,
-                      '& .MuiAvatar-root': {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                      },
-                      '&:before': {
-                        content: '""',
-                        display: 'block',
-                        position: 'absolute',
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: 'background.paper',
-                        transform: 'translateY(-50%) rotate(45deg)',
-                        zIndex: 0,
-                      },
-                    },
+                    ...paperpropsset,
                   }}
                   transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                   anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -464,6 +470,9 @@ function NavBar() {
                   <NotiCenter
                     handleChangeNotiTab={handleChangeNotiTab}
                     notiTabValue={notiTabValue}
+                    notiData={notiData}
+                    setTargetNotiId={setTargetNotiId}
+                    nowTime={new Date()}
                   ></NotiCenter>
                 </Menu>
                 <Box
@@ -492,30 +501,7 @@ function NavBar() {
                   onClose={handleCloseUser}
                   // onClick={handleCloseUser}
                   PaperProps={{
-                    elevation: 0,
-                    sx: {
-                      overflow: 'visible',
-                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                      mt: 1.5,
-                      '& .MuiAvatar-root': {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                      },
-                      '&:before': {
-                        content: '""',
-                        display: 'block',
-                        position: 'absolute',
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: 'background.paper',
-                        transform: 'translateY(-50%) rotate(45deg)',
-                        zIndex: 0,
-                      },
-                    },
+                    ...paperpropsset,
                   }}
                   transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                   anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -531,9 +517,15 @@ function NavBar() {
                 </Menu>
               </>
             ) : (
-              <a id="loginButton" href={KAKAO_AUTH_URL}>
-                로그인
-              </a>
+              <Button
+                variant="text"
+                disableRipple
+                sx={{ color: 'black', width: '6rem' }}
+              >
+                <a className="loginButton" href={KAKAO_AUTH_URL}>
+                  로그인
+                </a>
+              </Button>
             )}
           </Box>
           <IconButton
@@ -562,7 +554,7 @@ function NavBar() {
             display: { xs: 'block', nav: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              width: drawerWidth,
+              width: 240,
             },
           }}
         >
