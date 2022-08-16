@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
-function Chatting() {
+export default function Chatting(props) {
   const [formats, setFormats] = React.useState(() => []);
 
   const handleFormat = (event, newFormats) => {
@@ -68,4 +68,3 @@ function Chatting() {
   );
 }
 
-export default Chatting;
