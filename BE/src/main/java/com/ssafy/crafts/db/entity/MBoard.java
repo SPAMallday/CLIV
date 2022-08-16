@@ -46,8 +46,8 @@ public class MBoard {
     private List<MBoardTeacher> mBoardTeacher = new ArrayList<>();
 
     // 1:1 관계 : 매칭보드 - 카테고리
-    @OneToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     // N:1 관계 : 매칭보드 - 회원
