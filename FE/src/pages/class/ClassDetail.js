@@ -30,6 +30,7 @@ const ClassDetail = () => {
           <Stack spacing={4}>
             <ClassDetailItem value={cDetail} />
             <Box>
+              {/* Q&A 뺄거면 ... */}
               <Typography fontWeight={800} fontSize={'1.4rem'}>
                 Q&A
               </Typography>

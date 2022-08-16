@@ -120,17 +120,17 @@ function MyReviewTabs(props) {
                 </Tabs>
               </Box>
               <FormControl sx={{ width: '150px' }}>
-                <InputLabel color="secondary">정렬</InputLabel>
+                {/* <InputLabel color="secondary">정렬</InputLabel>
                 <Select
                   value={age}
                   label="Age"
                   onChange={handleChange}
                   color={'secondary'}
-                >
-                  <MenuItem value={10}>최신순</MenuItem>
+                > */}
+                {/* <MenuItem value={10}>최신순</MenuItem>
                   <MenuItem value={20}>높은 별점 순</MenuItem>
-                  <MenuItem value={30}>낮은 별점 순</MenuItem>
-                </Select>
+                  <MenuItem value={30}>낮은 별점 순</MenuItem> */}
+                {/* </Select> */}
               </FormControl>
             </Box>
             <TabPanel value={valueMiniTitle} index={0}>
