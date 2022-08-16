@@ -15,7 +15,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
         /**
          * Client에서 websocket연결할 때 사용할 API 경로를 설정해주는 메서드.
          */
-        registry.addEndpoint("/ws")     // SockJS 연결 주소
+        registry.addEndpoint("/ws/chat")     // SockJS 연결 주소
                 .setAllowedOriginPatterns("*")      // 서버 환경에 맞게 변경 필요
                 .withSockJS();
 //        registry.addEndpoint("/stomp/chat")
