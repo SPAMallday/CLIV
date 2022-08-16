@@ -113,7 +113,7 @@ function ClassReview() {
           sx={{ mx: 1 }}
           onClick={saveHandler}
         >
-          완료
+          리뷰 작성
         </Button>
         {/* <Button variant="outlined" color="error" sx={{ mx: 1 }}>
           삭제

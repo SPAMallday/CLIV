@@ -10,6 +10,16 @@ export const cateList = async () => {
   }
 };
 
+// 매칭 요청서 생성
+export const matchingCreate = async () => {
+  try {
+    const res = await apiClient.post('/api/matching');
+    return res.data;
+  } catch (err) {
+    console.log('Error >>', err);
+  }
+};
+
 // 내가 이전에 요청한 매칭
 export const myPreReq = async (userId) => {
   try {
