@@ -28,8 +28,8 @@ public class MatchingResponse {
     private String content;     // 내용
     @ApiModelProperty(name = "authId", example = "작성자 아이디")
     private String authId;      // 작성자 아이디
-    @ApiModelProperty(name = "categoryId", example = "카테고리 id")
-    private int categoryId;     // 카데고리 아이디
+    @ApiModelProperty(name = "category", example = "카테고리")
+    private String category;     // 카데고리 아이디
     @ApiModelProperty(name = "matStatus", example = "매칭 완료 여부")
     private boolean matStatus;     // 매칭 완료 여부
 

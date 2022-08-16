@@ -31,12 +31,10 @@ public class AuthTokenProvider {
     private String expiry;
 
     private final Key key;
-    private final MemberQuerydslRepository memberQuerydslRepository;
     private static final String AUTHORITIES_KEY = "role";
 
     public AuthTokenProvider(@Value("${jwt.token.secret-key}") String secretKey) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
-        this.memberQuerydslRepository = new MemberQuerydslRepository(new JPAQueryFactory(new EntityManager()));
     }
 
     public AuthToken createToken(String id, String nickname, Member.RoleType roleType, String expiry) {

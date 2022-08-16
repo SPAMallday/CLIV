@@ -7,6 +7,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -40,8 +42,8 @@ public class MBoard {
     private boolean matStatus = false;      // 매칭 완료 여부
 
     // 1:1 관계 : 매칭보드 - 매칭_선생님
-    @OneToOne(mappedBy="mBoard")
-    private MBoardTeacher mBoardTeacher;
+    @OneToMany(mappedBy = "mBoard")
+    private List<MBoardTeacher> mBoardTeacher = new ArrayList<>();
 
     // 1:1 관계 : 매칭보드 - 카테고리
     @OneToOne
@@ -54,7 +56,7 @@ public class MBoard {
     private Member member;
 
     @Builder
-    public MBoard(int id, String title, String wantedDay, String teacherGender, String content, Timestamp regDate, boolean matStatus, MBoardTeacher mBoardTeacher, Category category, Member member) {
+    public MBoard(int id, String title, String wantedDay, String teacherGender, String content, Timestamp regDate, boolean matStatus, List<MBoardTeacher> mBoardTeacher, Category category, Member member) {
         this.id = id;
         this.title = title;
         this.wantedDay = wantedDay;

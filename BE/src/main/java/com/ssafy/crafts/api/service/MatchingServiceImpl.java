@@ -138,7 +138,7 @@ public class MatchingServiceImpl implements MatchingService{
                 .teacherGender(mBoard.getTeacherGender())
                 .content(mBoard.getContent())
                 .authId(mBoard.getMember().getId())
-                .categoryId(mBoard.getCategory().getId())
+                .category(mBoard.getCategory().getContent())
                 .matStatus(mBoard.isMatStatus())
                 .build();
     }
@@ -161,7 +161,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .teacherGender(mBoard.getTeacherGender())
                         .content(mBoard.getContent())
                         .authId(mBoard.getMember().getId())
-                        .categoryId(mBoard.getCategory().getId())
+                        .category(mBoard.getCategory().getContent())
                         .matStatus(mBoard.isMatStatus())
                         .build());
         }
