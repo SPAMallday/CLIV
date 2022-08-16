@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+
 /**
  * @FileName : ClassInfoRequest
  * @작성자 : 허성은
@@ -20,4 +23,5 @@ public class NotificationRequest {
     private String notiType;
     private String message;
     private String url;
+    private Timestamp regDate;
 }

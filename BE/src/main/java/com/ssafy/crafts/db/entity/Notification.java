@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -36,14 +37,18 @@ public class Notification {
     @JoinColumn(name = "auth_id")
     private Member receiver;
 
+    @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp regdate;
+
     @Builder
-    public Notification(int notiId, String message, String notiUrl, Boolean isRead, NotiType notiType, Member receiver) {
+    public Notification(int notiId, String message, String notiUrl, Boolean isRead, NotiType notiType, Member receiver, Timestamp regdate) {
         this.notiId = notiId;
         this.message = message;
         this.notiUrl = notiUrl;
         this.isRead = isRead;
         this.notiType = notiType;
         this.receiver = receiver;
+        this.regdate = regdate;
     }
 
     // ClassStart : 수업 10분 전 알람

@@ -2,9 +2,10 @@ package com.ssafy.crafts.api.response;
 
 import com.ssafy.crafts.db.entity.Notification;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 /**
  * @FileName : NotiResponse
@@ -20,9 +21,10 @@ public class NotiResponse {
     private String notiType;
     private String authId;
     private boolean isRead;
+    private Timestamp regDate;
 
     public static NotiResponse create(Notification notification) {
         return new NotiResponse(notification.getNotiId(), notification.getMessage(),
-                notification.getNotiType().toString(), notification.getReceiver().getId(), notification.getIsRead());
+                notification.getNotiType().toString(), notification.getReceiver().getId(), notification.getIsRead(), notification.getRegdate());
     }
 }
