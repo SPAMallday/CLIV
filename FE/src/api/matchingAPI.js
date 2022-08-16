@@ -11,9 +11,9 @@ export const cateList = async () => {
 };
 
 // 매칭 요청서 생성
-export const matchingCreate = async () => {
+export const matchingCreate = async (data) => {
   try {
-    const res = await apiClient.post('/api/matching');
+    const res = await apiClient.post('/api/matching', data);
     return res.data;
   } catch (err) {
     console.log('Error >>', err);

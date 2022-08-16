@@ -29,7 +29,7 @@ function MatchingRequest() {
   const color = '#DF7861';
   const date = new Date();
 
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = useState(0);
 
   const [categoryArr, setCategoryArr] = useState([]);
   const [title, setTitle] = useState('');
@@ -39,25 +39,24 @@ function MatchingRequest() {
   const [fail, setFail] = useState(false);
 
   const handleDateTime = (newValue) => {
-    console.log(newValue);
     setDateTime(newValue);
   };
 
   const handletextRvChange = (event) => {
     // event.preventDefault();
-    setValue(event.target.value.tostr);
+    setContent(event.target.value);
   };
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    console.log('event' + event.target.value);
   };
 
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+  };
   useEffect(() => {
     cateList().then((res) => {
       setCategoryArr(res);
-
-      console.log(res);
     });
   }, []);
 
@@ -92,27 +91,33 @@ function MatchingRequest() {
     sendCreate();
   };
 
-  const userNickName = useSelector((state) => state.userInfo.user.nickname);
+  const userId = useSelector((state) => state.userInfo.user.id);
 
   const sendCreate = async () => {
-    let myData = {
-      userNickName: userNickName,
-      categoryId: categoryArr,
-      matchingTitle: title,
+    const myData = {
+      authId: userId,
+      title: title,
+      wantedDay: dateTime.toLocaleString(),
+      teacherGender: 'X',
       content: content,
-      classDatetime: dateTime.toLocaleString(),
+      matStatus: false,
+      categoryId: value,
     };
+    // console.log(myData);
 
-    console.log(myData);
-
-    try {
-      const response = await matchingCreate.post('/api/matching', myData);
-      if (response.status === '201') {
-        handleOpenSuccess();
-      }
-    } catch (error) {
-      handleOpenFail();
-    }
+    matchingCreate(myData).then((res) => {
+      handleOpenSuccess();
+    });
+    // try {
+    //   const response = await matchingCreate(myData);
+    //   if (response.status === '201') {
+    //     handleOpenSuccess();
+    //     console.log(response);
+    //   }
+    // } catch (error) {
+    //   handleOpenFail();
+    //   console.log('erre');
+    // }
   };
 
   const handleOpenSuccess = () => {
@@ -156,109 +161,111 @@ function MatchingRequest() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              {activeStep === 0 && (
-                <Box className="matchingItem">
-                  <Typography lineHeight={2}>
-                    어떤 종류의 수업을 듣고 싶으신가요?
-                  </Typography>
+            {/* <Typography sx={{ mt: 2, mb: 1 }}> */}
+            {/* Typography가 p태그로 변환되어서 에러남!! 일단 주석해둠 (HJ) */}
+            {activeStep === 0 && (
+              <Box className="matchingItem">
+                <Typography lineHeight={2}>
+                  어떤 종류의 수업을 듣고 싶으신가요?
+                </Typography>
 
-                  <FormControl className="matchingRadioBox">
-                    <FormLabel></FormLabel>
-                    <RadioGroup
-                      className="matchingRadio"
-                      aria-labelledby="demo-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
-                      value={value}
-                      onChange={handleChange}
-                      row
-                    >
-                      {categoryArr.map((category) => (
-                        <FormControlLabel
-                          className="matchingRadioBtn"
-                          value={category.id}
-                          control={<Radio color="secondary" />}
-                          label={category.content}
-                          key={category.id}
-                        />
-                      ))}
-                    </RadioGroup>
-                  </FormControl>
-                </Box>
-              )}
-              {activeStep === 1 && (
-                <Box className="matchingItem">
-                  <Typography fontWeight={700}>
-                    <TextField
-                      value={title}
-                      margin="dense"
-                      size="small"
-                      label="매칭 요청 제목"
-                      variant="outlined"
-                      color="secondary"
-                      focused
-                      sx={{ width: '100%' }}
-                    ></TextField>
-                  </Typography>
-                </Box>
-              )}
-              {activeStep === 2 && (
-                <Box className="matchingItem">
-                  <Typography>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <MobileDateTimePicker
-                        value={dateTime}
-                        onChange={handleDateTime}
-                        label="원하는 시간 선택"
-                        minDate={date}
-                        inputFormat="yyyy/MM/dd hh:mm aa"
-                        mask="____/__/__ __:__ __"
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            margin="dense"
-                            // type='datetime-local'
-                            sx={{
-                              svg: { color },
-                              input: { color },
-                              label: { color },
-                            }}
-                          />
-                        )}
+                <FormControl className="matchingRadioBox">
+                  {/* <FormLabel></FormLabel> */}
+                  <RadioGroup
+                    className="matchingRadio"
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={value}
+                    onChange={handleChange}
+                    row
+                  >
+                    {categoryArr.map((category) => (
+                      <FormControlLabel
+                        className="matchingRadioBtn"
+                        value={category.id}
+                        control={<Radio color="secondary" />}
+                        label={category.content}
+                        key={category.id}
+                      />
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+              </Box>
+            )}
+            {activeStep === 1 && (
+              <Box className="matchingItem">
+                {/* <Typography fontWeight={700}> */}
+                <TextField
+                  // value={title}
+                  onChange={handleTitle}
+                  margin="dense"
+                  size="small"
+                  label="매칭 요청 제목"
+                  variant="outlined"
+                  color="secondary"
+                  focused
+                  sx={{ width: '100%' }}
+                ></TextField>
+                {/* </Typography> */}
+              </Box>
+            )}
+            {activeStep === 2 && (
+              <Box className="matchingItem">
+                {/* <Typography> */}
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <MobileDateTimePicker
+                    value={dateTime}
+                    onChange={handleDateTime}
+                    label="원하는 시간 선택"
+                    minDate={date}
+                    inputFormat="yyyy/MM/dd hh:mm aa"
+                    mask="____/__/__ __:__ __"
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        margin="dense"
+                        // type='datetime-local'
                         sx={{
-                          '& input': { color: 'red' },
+                          svg: { color },
+                          input: { color },
+                          label: { color },
                         }}
                       />
-                    </LocalizationProvider>
-                  </Typography>
-                </Box>
-              )}
-              {activeStep === 3 && (
-                <Typography>
-                  {' '}
-                  <Box
-                    component="form"
+                    )}
                     sx={{
-                      '& .MuiTextField-root': {
-                        p: 2,
-                        width: '100%',
-                      },
+                      '& input': { color: 'red' },
                     }}
-                    noValidate
-                    autoComplete="off"
-                  >
-                    <div>
-                      <TextField
-                        multiline
-                        rows={10}
-                        color="secondary"
-                        onChange={handletextRvChange}
-                      />
-                    </div>
-                  </Box>
-                </Typography>
-              )}
-            </Typography>
+                  />
+                </LocalizationProvider>
+                {/* </Typography> */}
+              </Box>
+            )}
+            {activeStep === 3 && (
+              // <Typography>
+              // {' '}
+              <Box
+                component="form"
+                sx={{
+                  '& .MuiTextField-root': {
+                    p: 2,
+                    width: '100%',
+                  },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <div>
+                  <TextField
+                    multiline
+                    rows={10}
+                    color="secondary"
+                    onChange={handletextRvChange}
+                  />
+                </div>
+              </Box>
+              // </Typography>
+            )}
+            {/* </Typography> */}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
                 color="inherit"

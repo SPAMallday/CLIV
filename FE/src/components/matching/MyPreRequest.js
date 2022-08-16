@@ -45,9 +45,6 @@ function MyPreRequest() {
   useEffect(() => {
     myPreReq(userId).then((res) => {
       setMList(res);
-
-      console.log(userId);
-      console.log(res);
     });
   }, []);
 
