@@ -3,9 +3,12 @@
 }
 
 .myprofile .leftside {
-  flex: 60%;
+  flex: 80%;
 }
 
 .myprofile .rightside {
-  flex: 40%;
+  display: flex;
+  flex: 20%;
+  align-items: center;
+  justify-content: center;
 }

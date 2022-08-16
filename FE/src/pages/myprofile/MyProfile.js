@@ -23,13 +23,15 @@ function MyProfile() {
         {/* <div className="rightside">
           <Badge />
         </div> */}
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={changeAuthHandler}
-        >
-          선생님 전환
-        </Button>
+        <div className="rightside">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={changeAuthHandler}
+          >
+            선생님 전환
+          </Button>
+        </div>
       </div>
       <MyReviewTabs />
     </div>
