@@ -89,6 +89,7 @@ function MatchingRequest() {
   // 등록
   const validData = () => {
     sendCreate();
+    window.location.reload();
   };
 
   const userId = useSelector((state) => state.userInfo.user.id);
@@ -151,9 +152,6 @@ function MatchingRequest() {
         </Stepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              매칭 요청이 완료되었습니다.
-            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleReset}>Reset</Button>
@@ -161,126 +159,125 @@ function MatchingRequest() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {/* <Typography sx={{ mt: 2, mb: 1 }}> */}
-            {/* Typography가 p태그로 변환되어서 에러남!! 일단 주석해둠 (HJ) */}
-            {activeStep === 0 && (
-              <Box className="matchingItem">
-                <Typography lineHeight={2}>
-                  어떤 종류의 수업을 듣고 싶으신가요?
-                </Typography>
+            <Box sx={{ mt: 2, mb: 1 }}>
+              {activeStep === 0 && (
+                <Box className="matchingContainer">
+                  <div sx={{ width: '100%' }}>
+                    어떤 종류의 수업을 듣고 싶으신가요?
+                  </div>
 
-                <FormControl className="matchingRadioBox">
-                  {/* <FormLabel></FormLabel> */}
-                  <RadioGroup
-                    className="matchingRadio"
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={value}
-                    onChange={handleChange}
-                    row
-                  >
-                    {categoryArr.map((category) => (
-                      <FormControlLabel
-                        className="matchingRadioBtn"
-                        value={category.id}
-                        control={<Radio color="secondary" />}
-                        label={category.content}
-                        key={category.id}
-                      />
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-              </Box>
-            )}
-            {activeStep === 1 && (
-              <Box className="matchingItem">
-                {/* <Typography fontWeight={700}> */}
-                <TextField
-                  // value={title}
-                  onChange={handleTitle}
-                  margin="dense"
-                  size="small"
-                  label="매칭 요청 제목"
-                  variant="outlined"
-                  color="secondary"
-                  focused
-                  sx={{ width: '100%' }}
-                ></TextField>
-                {/* </Typography> */}
-              </Box>
-            )}
-            {activeStep === 2 && (
-              <Box className="matchingItem">
-                {/* <Typography> */}
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <MobileDateTimePicker
-                    value={dateTime}
-                    onChange={handleDateTime}
-                    label="원하는 시간 선택"
-                    minDate={date}
-                    inputFormat="yyyy/MM/dd hh:mm aa"
-                    mask="____/__/__ __:__ __"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        margin="dense"
-                        // type='datetime-local'
-                        sx={{
-                          svg: { color },
-                          input: { color },
-                          label: { color },
-                        }}
-                      />
-                    )}
-                    sx={{
-                      '& input': { color: 'red' },
-                    }}
-                  />
-                </LocalizationProvider>
-                {/* </Typography> */}
-              </Box>
-            )}
-            {activeStep === 3 && (
-              // <Typography>
-              // {' '}
-              <Box
-                component="form"
-                sx={{
-                  '& .MuiTextField-root': {
-                    p: 2,
-                    width: '100%',
-                  },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <div>
+                  <FormControl className="matchingRadioBox">
+                    <RadioGroup
+                      className="matchingRadio"
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={value}
+                      onChange={handleChange}
+                      row
+                    >
+                      {categoryArr.map((category) => (
+                        <FormControlLabel
+                          className="matchingRadioBtn"
+                          value={category.id}
+                          control={<Radio color="secondary" />}
+                          label={category.content}
+                          key={category.id}
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+              )}
+              {activeStep === 1 && (
+                <Box className="matchingContainer">
                   <TextField
-                    multiline
-                    rows={10}
+                    // value={title}
+                    onChange={handleTitle}
+                    margin="dense"
+                    size="small"
+                    label="매칭 요청 제목"
+                    variant="outlined"
                     color="secondary"
-                    onChange={handletextRvChange}
-                  />
-                </div>
-              </Box>
-              // </Typography>
-            )}
-            {/* </Typography> */}
+                    focused
+                    sx={{ width: '100%' }}
+                  ></TextField>
+                </Box>
+              )}
+              {activeStep === 2 && (
+                <Box className="matchingContainer">
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MobileDateTimePicker
+                      value={dateTime}
+                      onChange={handleDateTime}
+                      label="원하는 시간 선택"
+                      minDate={date}
+                      inputFormat="yyyy/MM/dd hh:mm aa"
+                      mask="____/__/__ __:__ __"
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          margin="dense"
+                          // type='datetime-local'
+                          sx={{
+                            svg: { color },
+                            input: { color },
+                            label: { color },
+                          }}
+                        />
+                      )}
+                      sx={{
+                        '& input': { color: 'red' },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              )}
+              {activeStep === 3 && (
+                <Box>
+                  <Box
+                    component="form"
+                    sx={{
+                      '& .MuiTextField-root': {
+                        p: 2,
+                        width: '100%',
+                      },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                  >
+                    <div>
+                      <TextField
+                        multiline
+                        rows={10}
+                        color="secondary"
+                        onChange={handletextRvChange}
+                      />
+                    </div>
+                  </Box>
+                </Box>
+              )}
+            </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
+              {activeStep !== 0 && (
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+              )}
               <Box sx={{ flex: '1 1 auto' }} />
               {activeStep !== steps.length - 1 && (
-                <Button onClick={handleNext}>'Next'</Button>
+                <Button color="secondary" onClick={handleNext}>
+                  Next
+                </Button>
               )}
               {activeStep === steps.length - 1 && (
-                <Button onClick={validData}>'제출'</Button>
+                <Button color="secondary" onClick={validData}>
+                  요청
+                </Button>
               )}
             </Box>
           </React.Fragment>
