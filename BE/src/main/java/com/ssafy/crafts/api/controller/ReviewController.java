@@ -8,6 +8,7 @@ import com.ssafy.crafts.api.response.ReviewResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
 import com.ssafy.crafts.api.service.ReviewService;
+import com.ssafy.crafts.common.util.JwtHeaderUtil;
 import com.ssafy.crafts.db.entity.Review;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,10 +59,10 @@ public class ReviewController {
          */
         log.info("리뷰 정보 등록 시작");
         log.info("토큰 얻어오기");
-        //String token = JwtHeaderUtil.getAccessToken(request);
+        String token = JwtHeaderUtil.getAccessToken(request);
         log.info("토큰에서 아이디 정보 얻어 회원 아이디로 할당");
-        //atchingRequest.setAuthId(authService.getAuthId(token));
-        reviewRequest.setAuthId("1");     // test용
+        reviewRequest.setAuthId(authService.getAuthId(token));
+//        reviewRequest.setAuthId("1");     // test용
 
         log.info("수업에 대해 작성한 리뷰가 있는지 판단");
         if(reviewService.findByAuthIdAndClassId(reviewRequest.getAuthId(), reviewRequest.getClassId()) == null){
