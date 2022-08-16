@@ -23,5 +23,6 @@ public interface ClassService {
     List<ClassInfoResponse> findClassListByRegdate();
     List<ClassInfoResponse> findExpectedClassListByTeacherId(String authId);
     List<ClassInfoResponse> findEndedClassListByTeacherId(String authId);
-
+    List<ClassInfoResponse> findExpectedClassListByMemberId(String authId);
+    List<ClassInfoResponse> findEndedClassListByMemberId(String authId);
 }

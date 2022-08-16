@@ -211,6 +211,36 @@ public class ClassInfoQuerydslRepository {
                 .fetch();
     }
 
+    public List<ClassInfo> findExpectedClassListByMemberId(String authId) {
+        /**
+         * @Method Name : findExpectedClassListByMemberId
+         * @작성자 : 허성은
+         * @Method 설명 : 회원 아이디로 예정된 수업 리스트를 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)
+                        .and(qClassInfo.members.contains(memberQuerydslRepository.findMemberByAuthId(authId).get())))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
+    }
+
+    public List<ClassInfo> findEndedClassListByMemberId(String authId) {
+        /**
+         * @Method Name : findEndedClassListByTeacherId
+         * @작성자 : 허성은
+         * @Method 설명 : 회원 아이디로 종료된 수업 리스트를 조회.
+         */
+        return jpaQueryFactory
+                .select(qClassInfo)
+                .from(qClassInfo)
+                .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.ENDED)
+                        .and(qClassInfo.members.contains(memberQuerydslRepository.findMemberByAuthId(authId).get())))
+                .orderBy(qClassInfo.regdate.desc())
+                .fetch();
+    }
+
     public String findSessionIdByClassId(int classId) {
         /**
          * @Method Name : findSessionIdByClassId

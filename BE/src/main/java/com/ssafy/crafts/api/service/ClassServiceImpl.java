@@ -165,4 +165,21 @@ public class ClassServiceImpl implements ClassService{
         List<ClassInfo> classInfoList = classInfoQuerydslRepository.findEndedClassListByTeacherId(authId);
         return MainServiceImpl.classInfoToDto(classInfoList) != null? MainServiceImpl.classInfoToDto(classInfoList) : Collections.emptyList();
     }
+
+    @Override
+    public List<ClassInfoResponse> findExpectedClassListByMemberId(String authId) {
+        /**
+         * @Method Name : findExpectedClassListByMemberId
+         * @작성자 : 허성은
+         * @Method 설명 : 회원 아이디로 예정된 수업 리스트를 조회.
+         */
+        List<ClassInfo> classInfoList = classInfoQuerydslRepository.findExpectedClassListByMemberId(authId);
+        return MainServiceImpl.classInfoToDto(classInfoList) != null? MainServiceImpl.classInfoToDto(classInfoList) : Collections.emptyList();
+    }
+
+    @Override
+    public List<ClassInfoResponse> findEndedClassListByMemberId(String authId) {
+        List<ClassInfo> classInfoList = classInfoQuerydslRepository.findEndedClassListByMemberId(authId);
+        return MainServiceImpl.classInfoToDto(classInfoList) != null? MainServiceImpl.classInfoToDto(classInfoList) : Collections.emptyList();
+    }
 }

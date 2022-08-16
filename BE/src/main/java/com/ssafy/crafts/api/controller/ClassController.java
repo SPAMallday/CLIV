@@ -96,8 +96,7 @@ public class ClassController {
          * @Method 설명 : 수업 id로 조회된 수업을 참여한다.
          */
         String token = JwtHeaderUtil.getAccessToken(request);
-        classService.joinClassByMemberId(classId, "2361161147");
-//        classService.joinClassByMemberId(classId, authService.getAuthId(token));
+        classService.joinClassByMemberId(classId, authService.getAuthId(token));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -159,6 +158,50 @@ public class ClassController {
         String token = JwtHeaderUtil.getAccessToken(request);
         ClassListResponse classListResponse =
                 ClassListResponse.builder().classList(classService.findEndedClassListByTeacherId(authService.getAuthId(token))).build();
+        if(classListResponse == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(classListResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/join/expected")
+    @ApiOperation(value = "회원이 참여 예정된 수업 목록을 조회", notes = "클래스 화면에서 예정된 수업 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 204, message = "조회할 데이터가 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<ClassListResponse> findExpectedClassListByMemberId(HttpServletRequest request){
+        /**
+         * @Method Name : findExpectedClassListByMemberId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 화면에서 예정된 수업 목록을 조회한다.
+         */
+        String token = JwtHeaderUtil.getAccessToken(request);
+        ClassListResponse classListResponse =
+                ClassListResponse.builder().classList(classService.findExpectedClassListByMemberId(authService.getAuthId(token))).build();
+        if(classListResponse == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(classListResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/join/close")
+    @ApiOperation(value = "회원이 종료된 수업 목록을 조회", notes = "클래스 화면에서 종료된 수업 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "조회 성공"),
+            @ApiResponse(code = 204, message = "조회할 데이터가 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<ClassListResponse> findEndedClassListByMemberId(HttpServletRequest request){
+        /**
+         * @Method Name : findEndedClassListByMemberId
+         * @작성자 : 허성은
+         * @Method 설명 : 클래스 화면에서 종료된 수업 목록을 조회한다.
+         */
+        String token = JwtHeaderUtil.getAccessToken(request);
+        ClassListResponse classListResponse =
+                ClassListResponse.builder().classList(classService.findEndedClassListByMemberId(authService.getAuthId(token))).build();
         if(classListResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else
