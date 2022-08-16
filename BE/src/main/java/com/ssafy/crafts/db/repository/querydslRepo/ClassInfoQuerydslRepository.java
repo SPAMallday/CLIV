@@ -38,6 +38,22 @@ public class ClassInfoQuerydslRepository {
     }
 
     @Transactional
+    public void updateClassStatusToENDED(int classId){
+        jpaQueryFactory.update(qClassInfo)
+                .set(qClassInfo.classStatus, ClassInfo.ClassStatus.ENDED)
+                .where(qClassInfo.id.eq(classId))
+                .execute();
+    }
+
+    @Transactional
+    public void updateClassStatusToLIVE(int classId){
+        jpaQueryFactory.update(qClassInfo)
+                .set(qClassInfo.classStatus, ClassInfo.ClassStatus.LIVE)
+                .where(qClassInfo.id.eq(classId))
+                .execute();
+    }
+
+    @Transactional
     public void insertSessionId(String sessionId, int classId){
         jpaQueryFactory.update(qClassInfo)
                 .set(qClassInfo.sessionId, sessionId)

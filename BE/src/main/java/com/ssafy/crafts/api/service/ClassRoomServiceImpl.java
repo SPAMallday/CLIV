@@ -65,6 +65,8 @@ public class ClassRoomServiceImpl implements ClassRoomService{
         String sessionId = classInfoQuerydslRepository.findClassInfoById(classId).getSessionId();
         // 처음 세션 요청이 들어온거면 세션 생성
         if(sessionId == null){
+            //수업 상태를 LIVE로 변경하기
+            classInfoQuerydslRepository.updateClassStatusToLIVE(classId);
             // session 생성 후 id 받기
             sessionId = createSession();
             // 생성한 sessionId class 정보에 추가하기
@@ -170,6 +172,9 @@ public class ClassRoomServiceImpl implements ClassRoomService{
         HttpEntity<Map<String, String>> openviduSessionReq = new HttpEntity<>(httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.exchange(targetUrl, HttpMethod.DELETE, openviduSessionReq, HashMap.class);
+
+        // 수업 상태를 ENDED로 변경
+        classInfoQuerydslRepository.updateClassStatusToENDED(classId);
         return true;
     }
 }
