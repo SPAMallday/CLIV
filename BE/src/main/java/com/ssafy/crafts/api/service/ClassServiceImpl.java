@@ -4,6 +4,7 @@ import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.ClassInfoRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.ClassInfoQuerydslRepository;
@@ -35,6 +36,7 @@ public class ClassServiceImpl implements ClassService{
 
     private final ClassInfoRepository classInfoRepository;
     private final ClassInfoQuerydslRepository classInfoQuerydslRepository;
+    private final MemberRepository memberRepository;
     private final FileUploadService fileUploadService;
     private final MemberQuerydslRepository memberQuerydslRepository;
     private final CategoryQuerydslRepository categoryQuerydslRepository;
@@ -126,8 +128,9 @@ public class ClassServiceImpl implements ClassService{
         // 선생님과 동일한 아이디면 거절
         if(classInfo.getTeacher().getId() == memberId)
             new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이 개설한 수업을 신청할 수 없습니다.");
-
-        classInfo.addMember(member.get());
+        log.info("수업 신청");
+        classInfo.getMembers().add(member.get());
+        classInfoRepository.save(classInfo);
     }
 
     @Override

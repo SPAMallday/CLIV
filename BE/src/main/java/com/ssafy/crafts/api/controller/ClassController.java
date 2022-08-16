@@ -96,7 +96,8 @@ public class ClassController {
          * @Method 설명 : 수업 id로 조회된 수업을 참여한다.
          */
         String token = JwtHeaderUtil.getAccessToken(request);
-        classService.joinClassByMemberId(classId, authService.getAuthId(token));
+        classService.joinClassByMemberId(classId, "2361161147");
+//        classService.joinClassByMemberId(classId, authService.getAuthId(token));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
