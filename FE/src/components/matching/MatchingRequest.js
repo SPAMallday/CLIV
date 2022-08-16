@@ -30,9 +30,9 @@ function MatchingRequest() {
   const date = new Date();
 
   const [value, setValue] = useState(0);
-
   const [categoryArr, setCategoryArr] = useState([]);
   const [title, setTitle] = useState('');
+  const [gender, setGender] = useState('');
   const [dateTime, setDateTime] = useState(date);
   const [content, setContent] = useState('');
   const [success, setSuccess] = useState(false);
@@ -49,6 +49,10 @@ function MatchingRequest() {
 
   const handleChange = (event) => {
     setValue(event.target.value);
+  };
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
   };
 
   const handleTitle = (event) => {
@@ -89,7 +93,7 @@ function MatchingRequest() {
   // 등록
   const validData = () => {
     sendCreate();
-    window.location.reload();
+    // window.location.reload();
   };
 
   const userId = useSelector((state) => state.userInfo.user.id);
@@ -99,12 +103,12 @@ function MatchingRequest() {
       authId: userId,
       title: title,
       wantedDay: dateTime.toLocaleString(),
-      teacherGender: 'X',
+      teacherGender: gender,
       content: content,
       matStatus: false,
       categoryId: value,
     };
-    // console.log(myData);
+    console.log(myData);
 
     matchingCreate(myData).then((res) => {
       handleOpenSuccess();
@@ -120,7 +124,7 @@ function MatchingRequest() {
     //   console.log('erre');
     // }
   };
-
+  console.log('gender' + gender);
   const handleOpenSuccess = () => {
     setSuccess(true);
   };
@@ -240,8 +244,8 @@ function MatchingRequest() {
                     <RadioGroup
                       className="matchingRadio"
                       name="radio-buttons-group"
-                      value={value}
-                      onChange={handleChange}
+                      value={gender}
+                      onChange={handleGenderChange}
                       row
                     >
                       <FormControlLabel

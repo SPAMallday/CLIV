@@ -19,7 +19,8 @@ const Interceptor = ({ children }) => {
   useEffect(() => {
     const interceptor = apiClient.interceptors.request.use(
       (config) => {
-        console.log('Interceptor - useEffect');
+        console.log('Interceptor - useEffect : ' + token);
+        console.log();
         if (!config.headers.Authorization) {
           // useSelector((state) => state.userInfo.user.token);
           if (token && token.length > 0) {
