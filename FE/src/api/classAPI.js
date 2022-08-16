@@ -118,7 +118,7 @@ export const getClosedClass = async () => {
 // 실시간 클래스 퇴장
 export const exitClass = async (classId) => {
   try {
-    const res = await apiClient.delete(`/api/class/session/${classId}`);
+    const res = await apiClient.patch(`/api/class/session/${classId}`);
     return res.status;
   } catch (err) {
     // response와 request의 특성, if의 조건문 순서를 이용해서 error를 핸들링

@@ -20,9 +20,10 @@ function ClassListItem(props) {
   if (
     props.typeHandler.type === 'close' ||
     (year == props.nowTime.getFullYear() &&
-      month == props.nowTime.getMonth() &&
-      // date == props.nowTime.getDate()) 테스트용으로 일부러 <로 맞춤
-      date < props.nowTime.getDate())
+      month == props.nowTime.getMonth() + 1 &&
+      date == props.nowTime.getDate())
+    // 테스트용으로 일부러 < 로 맞춤
+    // date < props.nowTime.getDate())
   ) {
     timeCheck = true;
   }

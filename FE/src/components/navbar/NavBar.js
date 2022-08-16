@@ -144,7 +144,7 @@ function NavBar() {
         },
       };
       // EventSource 로 Server Sent Event 를 호출하는 부분
-      const eventSource = new EventSource(
+      eventSource = new EventSource(
         process.env.REACT_APP_BASE_URL + '/api/sub',
         eventSourceInitDict,
       );
@@ -161,19 +161,20 @@ function NavBar() {
       console.log('eventSource', eventSource);
 
       eventSource.onopen = (event) => {
+        // 첫 메세지가 오기 전까지 open인지 모름
         console.log('connection opened');
       };
-      // FIXME - 연결은 됐는데 왜 authId가 null이 나오지?
-      // 부적절한 JWT토큰이라고 함 늘 쓰는 헤더 그대로 가져다 썼는데
+      // FIXME - 403 입구컷
 
-      // send랑 sendNotification 차이?
-      // 시작하면 sendNoti로 오는데 세팅은 send로 되어있고 어느걸로 맞춰야하는지
       // sse에 eventId는 뭐지?
-      // 선생님 카테고리는 어떻게 선택함?
+      // lastEventId 사용하려면 event.lastEventId를 저장
+      // notitype 필요
+      // message 간소화 수업 이름만 전달
       eventSource.onmessage = (event) => {
-        console.log('result', event.data);
-        setNotiData((old) => [...old, event.data]);
-        setNotiValue(event.data);
+        console.log(event.data);
+        const trans = JSON.parse(event.data);
+        setNotiData((old) => [...old, trans]);
+        setNotiValue(trans);
       };
 
       eventSource.onerror = (event) => {
@@ -186,16 +187,16 @@ function NavBar() {
 
       // TODO
       // 연결에 성공하면 전체 알림을 가져와서 데이터 갖고 Noti로 전달하면
-      // Noti에서 받아서 데이터를 매핑
-
+      // Noti에서 받아서 데이터를 매핑 1개의 Noti마다 NotiId를 매핑해서
+      // 각 알림을 누르면 NotiId에 맞게 post요청을 보내게 구성
       setListening(true);
     }
 
     return () => {
-      eventSource.close();
+      eventSource?.close();
       console.log('eventsource closed');
     };
-  }, []);
+  }, [isLogin]);
 
   // navbar가 줄어들었을 때 표시할 내용
   const drawer = (
@@ -314,6 +315,11 @@ function NavBar() {
 
   return (
     <Box sx={{ display: 'flex' }}>
+      <Box>
+        {console.log('노데', notiData)}
+        {console.log('노벨', notiValue)}
+      </Box>
+
       <AppBar component="nav" position="relative">
         <Toolbar
           variant="dense"
