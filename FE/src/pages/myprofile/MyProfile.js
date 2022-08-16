@@ -11,9 +11,9 @@ function MyProfile() {
         <div className="leftside">
           <Profile />
         </div>
-        <div className="rightside">
+        {/* <div className="rightside">
           <Badge />
-        </div>
+        </div> */}
       </div>
       <MyReviewTabs />
     </div>
