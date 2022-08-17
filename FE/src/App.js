@@ -12,6 +12,7 @@ import {
   MyClassHistory,
   ReceiveRequest,
   ClassReview,
+  Chatting,
 } from './pages';
 import MyProfile from './pages/myprofile/MyProfile';
 import WithNav from './components/route/WithNav';
@@ -39,6 +40,9 @@ function App() {
             <Route path="/matching" element={<Matching />}></Route>
             <Route path="/myhistory" element={<MyClassHistory />}></Route>
             <Route path="/classreview" element={<ClassReview />}></Route>
+            <Route path="/chatting" element={<Chatting />}>
+              {' '}
+            </Route>
             <Route
               path="/matching/receiverequest"
               element={<ReceiveRequest />}

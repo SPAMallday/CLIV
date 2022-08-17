@@ -8,3 +8,4 @@ export { default as Matching } from './matching/Matching';
 export { default as MyClassHistory } from './myclasshistory/MyClassHistory';
 export { default as ReceiveRequest } from './matching/ReceiveRequest';
 export { default as ClassReview } from './review/ClassReview';
+export { default as Chatting } from './chat/Chatting';

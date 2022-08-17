@@ -193,7 +193,7 @@ function NavBar() {
             >
               <ListItemText primary="받은 요청" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
+            <ListItemButton component={Link} to={'/chatting'} sx={{ pl: 4 }}>
               <ListItemText primary="채팅" />
             </ListItemButton>
           </List>
@@ -302,7 +302,13 @@ function NavBar() {
                   받은 요청
                 </MenuItem>
 
-                <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
+                <MenuItem
+                  component={Link}
+                  to={'/chatting'}
+                  onClick={handleCloseMatching}
+                >
+                  채팅
+                </MenuItem>
               </Menu>
             </Box>
             <Button
