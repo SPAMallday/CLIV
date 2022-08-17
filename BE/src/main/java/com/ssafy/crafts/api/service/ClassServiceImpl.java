@@ -2,6 +2,7 @@ package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
+import com.ssafy.crafts.api.response.ClassJoinResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
 import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
@@ -111,7 +112,7 @@ public class ClassServiceImpl implements ClassService{
     }
 
     @Override
-    public void joinClassByMemberId(int id, String memberId) {
+    public ClassJoinResponse joinClassByMemberId(int id, String memberId) {
         /**
          * @Method Name : joinClassByMemberId
          * @작성자 : 허성은
@@ -128,9 +129,13 @@ public class ClassServiceImpl implements ClassService{
         // 선생님과 동일한 아이디면 거절
         if(classInfo.getTeacher().getId() == memberId)
             new ResponseStatusException(HttpStatus.FORBIDDEN, "본인이 개설한 수업을 신청할 수 없습니다.");
+        // 중복 수강신청이면 거절
+        if(classInfo.getMembers().contains(member.get()))
+            new ResponseStatusException(HttpStatus.FORBIDDEN, "이미 신청한 수업입니다.");
         log.info("수업 신청");
         classInfo.getMembers().add(member.get());
         classInfoRepository.save(classInfo);
+        return ClassJoinResponse.builder().memberCnt(classInfo.getMembers().size()).build();
     }
 
     @Override

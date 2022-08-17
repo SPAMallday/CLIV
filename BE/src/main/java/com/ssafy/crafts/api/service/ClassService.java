@@ -2,6 +2,7 @@ package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
+import com.ssafy.crafts.api.response.ClassJoinResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
@@ -18,7 +19,7 @@ public interface ClassService {
 
     ClassInfoResponse findClassInfoById(int id);
 
-    void joinClassByMemberId(int id, String memberId);
+    ClassJoinResponse joinClassByMemberId(int id, String memberId);
 
     List<ClassInfoResponse> findClassListByRegdate();
     List<ClassInfoResponse> findExpectedClassListByTeacherId(String authId);
