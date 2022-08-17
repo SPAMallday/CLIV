@@ -21,10 +21,17 @@ import ReserveClass from './components/class/reserve/ReserveClass';
 import CloseClass from './components/class/close/CloseClass';
 import ClassCreate from './components/class/create/ClassCreate';
 import QnaItem from './components/qna/QnaItem';
+import Spinner from './components/spinner/Spinner';
+import { useSelector } from 'react-redux';
 
 function App() {
+  // TODO 로딩 스피너 먹이는 법..?
+  // const loading = useSelector((state) => state.loading);
+
   return (
     <div className="App">
+      {/* {loading && <Spinner />} */}
+
       <Interceptor>
         <Routes>
           <Route element={<WithoutNav />}>

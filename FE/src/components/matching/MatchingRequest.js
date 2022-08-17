@@ -250,17 +250,19 @@ function MatchingRequest() {
                     >
                       <FormControlLabel
                         value="F"
-                        control={<Radio />}
+                        control={<Radio color="secondary" />}
                         label="여자"
                       />
                       <FormControlLabel
                         value="M"
-                        control={<Radio />}
+                        control={<Radio color="secondary" />}
+                        color="secondary"
                         label="남자"
                       />
                       <FormControlLabel
                         value="X"
-                        control={<Radio />}
+                        control={<Radio color="secondary" />}
+                        color="secondary"
                         label="무관"
                       />
                     </RadioGroup>
@@ -286,13 +288,22 @@ function MatchingRequest() {
                         rows={10}
                         color="secondary"
                         onChange={handletextRvChange}
+                        focused
+                        placeholder="요청할 자세한 내용을 입력하세요!"
                       />
                     </div>
                   </Box>
                 </Box>
               )}
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                pt: 2,
+                justifyContent: 'center',
+              }}
+            >
               {activeStep !== 0 && (
                 <Button
                   color="inherit"
@@ -300,18 +311,17 @@ function MatchingRequest() {
                   onClick={handleBack}
                   sx={{ mr: 1 }}
                 >
-                  Back
+                  <Typography fontWeight={700}>이전</Typography>
                 </Button>
               )}
-              <Box sx={{ flex: '1 1 auto' }} />
               {activeStep !== steps.length - 1 && (
                 <Button color="secondary" onClick={handleNext}>
-                  Next
+                  <Typography fontWeight={700}>다음</Typography>
                 </Button>
               )}
               {activeStep === steps.length - 1 && (
                 <Button color="secondary" onClick={validData}>
-                  요청
+                  <Typography fontWeight={700}>요청하기</Typography>
                 </Button>
               )}
             </Box>

@@ -88,9 +88,11 @@ class VideoRoomComponent extends Component {
     // }
 
     if (location.state) {
-      this.state.token = location.state.token;
-      this.state.myUserName = userInfo.user.nickname;
-      this.state.classId = classId;
+      this.setState({
+        token: location.state.token,
+        myUserName: userInfo.user.nickname,
+        classId: classId,
+      });
 
       const openViduLayoutOptions = {
         maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)

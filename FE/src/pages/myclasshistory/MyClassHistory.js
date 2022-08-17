@@ -4,7 +4,6 @@ import { Typography, Divider } from '@mui/material';
 
 import Box from '@mui/material/Box';
 
-import './MyClassHistory.css';
 import { useNavigate } from 'react-router-dom';
 import { useLayoutEffect, useState } from 'react';
 import {

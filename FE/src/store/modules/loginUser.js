@@ -37,11 +37,9 @@ export const userInfoSlice = createSlice({
       token: '', // jwt 토큰
     },
     isLogin: false,
+    loading: false,
   },
   reducers: {
-    increment: (state) => {
-      console.log('inc');
-    },
     // login 성공 시
     loginSuccess: (state) => {
       // state.id = action.payload.id;
@@ -67,6 +65,9 @@ export const userInfoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state, action) => {
+        // 로딩중
+        state.loading = true;
+
         console.log('pending');
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -82,6 +83,7 @@ export const userInfoSlice = createSlice({
 
         state.isLogin = true;
 
+        state.loading = false;
         console.log('fulfilled');
       })
       .addCase(loginUser.rejected, (state, action) => {
