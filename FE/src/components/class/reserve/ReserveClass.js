@@ -3,10 +3,9 @@ import ClassListItem from '../list/ClassListItem';
 
 import { Typography, Divider, CircularProgress, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
-import { useSelector } from 'react-redux';
 import { getExClass, getToken } from '../../../api/classAPI';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 function ReserveClass() {
   const navigate = useNavigate();

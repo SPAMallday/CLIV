@@ -109,6 +109,7 @@ function NavBar() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.userInfo.isLogin);
   const role = useSelector((state) => state.userInfo.user.role);
+  const authId = useSelector((state) => state.userInfo.user.id);
 
   // navbar 열고 닫는 스테이트
   const container = document.getElementById('bodyContainer');
@@ -185,16 +186,10 @@ function NavBar() {
     console.log('listening', listening);
 
     if (!listening && isLogin) {
-      // Server Sent Event 요청시 header 에 Authorization 를 설정하는 부분
-      const eventSourceInitDict = {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-        },
-      };
       // EventSource 로 Server Sent Event 를 호출하는 부분
+      // query Parameter로 authId 전송
       eventSource = new EventSource(
-        process.env.REACT_APP_BASE_URL + '/api/sub',
-        eventSourceInitDict,
+        process.env.REACT_APP_BASE_URL + '/api/sub' + `?authId=${authId}`,
       );
 
       console.log('eventSource', eventSource);
@@ -203,15 +198,16 @@ function NavBar() {
         // 첫 메세지가 오기 전까지 open인지 모름
         console.log('connection opened');
       };
-      // FIXME - 403 입구컷
 
       // lastEventId 사용하려면 event.lastEventId를 저장
-      // notitype 필요
-      // message 간소화 수업 이름만 전달
       eventSource.onmessage = (event) => {
         console.log(event.data);
-        const trans = JSON.parse(event.data);
-        setNotiData((old) => [...old, trans]);
+        if (event.data[0] === 'E') {
+          console.log('temp');
+        } else {
+          const trans = JSON.parse(event.data);
+          setNotiData((old) => [...old, trans]);
+        }
       };
 
       eventSource.onerror = (event) => {
@@ -222,14 +218,17 @@ function NavBar() {
         eventSource.close();
       };
 
-      // TODO
-      // 연결에 성공하면 전체 알림을 가져와서 데이터 갖고 Noti로 전달하면
-      // Noti에서 받아서 데이터를 매핑 1개의 Noti마다 NotiId를 매핑해서
-      // 각 알림을 누르면 NotiId에 맞게 post요청을 보내게 구성
       setListening(true);
 
+      // FIXME eventsource를 보낼때는 authId가 있는데 api를 요청할 때 header에는
+      // 토큰이 null로 들어감
+      // 완전 JWT를 다 지우고 로그아웃 상태에서 시작하면 작동이 안됨
+      // 아마 API index.js에서 헤더에 토큰을 지정할 때 아직 token이 저장이 안된 시기에
+      // 헤더설정이 먼저되는 것 같다는 의심
       getAllNoti().then((res) => {
-        setNotiData(res);
+        if (res.data) {
+          setNotiData(res.data);
+        }
       });
     }
 
@@ -240,14 +239,15 @@ function NavBar() {
     };
   }, [isLogin]);
 
+  // FIXME PLZ 이거 호출했을때 db에서 read로 바뀌는 게 맞는지..?
+  // 그리고 모든 알림 조회했을때는 read가 아닌 것만 불러오게
   useEffect(() => {
     if (targetNotiId !== 0) {
       // 읽음으로 전환 요청
-      // FIXME -- 이거 호출했을때 db에서 read로 바뀌는 게 맞는지..?
-      // 그리고 모든 알림 조회했을때는 read가 아닌 것만 불러오게
       if (setNotiRead(targetNotiId) === '200') {
         // 읽은 알림 제거
-        setNotiData(notiData.filter((noti) => noti.id !== targetNotiId));
+        setNotiData((prev) => prev.filter((noti) => noti.id !== targetNotiId));
+        // setNotiData(notiData.filter((noti) => noti.id !== targetNotiId));
       }
     }
   }, [targetNotiId]);
@@ -257,7 +257,7 @@ function NavBar() {
     <Box sx={{ textAlign: 'center' }}>
       <Box id="mainLogo" onClick={handleDrawerToggle}>
         <Button component={Link} to={'/'} disableRipple>
-          <img src={LogoPath} style={{ width: '100px' }}></img>
+          <img src={LogoPath} alt="CLIV logo" style={{ width: '100px' }}></img>
         </Button>
       </Box>
       <Divider />
@@ -300,7 +300,7 @@ function NavBar() {
               <ListItemButton>
                 <ListItemText primary="알림센터" />
                 <Badge
-                  badgeContent={notiData.length}
+                  badgeContent={notiData?.length}
                   color="error"
                   sx={{
                     right: '20px',
@@ -364,7 +364,11 @@ function NavBar() {
           >
             <Box id="mainLogo">
               <Button component={Link} to={'/'} disableRipple>
-                <img src={LogoPath} style={{ width: '100px' }}></img>
+                <img
+                  src={LogoPath}
+                  alt="CLIV logo"
+                  style={{ width: '100px' }}
+                ></img>
               </Button>
             </Box>
             <Button
@@ -452,7 +456,10 @@ function NavBar() {
                   disableRipple
                   style={{ backgroundColor: 'transparent', color: 'darkgray' }}
                 >
-                  <Badge badgeContent={notiData.length} color="error">
+                  <Badge
+                    badgeContent={notiData ? notiData.length : null}
+                    color="error"
+                  >
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>

@@ -6,12 +6,14 @@ import MyCalendar from '../../components/mycalendar/MyCalendar';
 import Box from '@mui/material/Box';
 import { Grid, Stack, Typography } from '@mui/material';
 import { classDetail } from '../../api/classAPI';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 
 const ClassDetail = () => {
-  const location = useLocation(); // 추가된 부분
-  const classId = location.state?.classId; // 추가된 부분
+  // const location = useLocation(); // 추가된 부분
+  // const classId = location.state?.classId; // 추가된 부분
+  const params = useParams();
+  const classId = params.classId;
 
   const [cDetail, setCDetail] = useState([]);
 
@@ -28,7 +30,7 @@ const ClassDetail = () => {
       <Grid container sx={{ width: '100%' }}>
         <Grid item xs={12} md sx={{ mr: { xs: 0, md: 4 }, mb: 4 }}>
           <Stack spacing={4}>
-            <ClassDetailItem value={cDetail} />
+            <ClassDetailItem value={cDetail} setCDetail={setCDetail} />
             <Box>
               {/* Q&A 뺄거면 ... */}
               <Typography fontWeight={800} fontSize={'1.4rem'}>
@@ -42,7 +44,7 @@ const ClassDetail = () => {
         <Grid item xs={12} md={4}>
           <Stack spacing={6}>
             <ClassDetailInfo value={cDetail} />
-            <MyCalendar type="detail" />
+            <MyCalendar type="detail" dateArr={cDetail.classDatetime} />
           </Stack>
         </Grid>
       </Grid>

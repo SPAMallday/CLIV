@@ -4,7 +4,7 @@ import { apiClient } from '.';
 export const getAllNoti = async () => {
   try {
     const res = await apiClient.get(`/api/noti`);
-    return res.data;
+    return res;
   } catch (err) {
     console.log('Error >>', err);
   }
