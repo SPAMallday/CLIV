@@ -7,8 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import retrofit2.http.PATCH;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,14 +20,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @Slf4j
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
     private final AuthService authService;
     private final UserService userService;
 
-    @PatchMapping("/change/role")
+    @PutMapping("/change/role")
     public ResponseEntity<Object> changeRoleToTeacher(HttpServletRequest request) {
         /**
          * @Method Name : changeRoleToTeacher
@@ -34,7 +34,7 @@ public class UserController {
          * @Method 설명 : 선생님으로 RoleType을 변경한다.
          */
         String token = JwtHeaderUtil.getAccessToken(request);
-        userService.changeRoleType(token);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        userService.changeRoleType(authService.getAuthId(token));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
