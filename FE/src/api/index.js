@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from './config';
 
 export const apiClient = axios.create({
   baseURL: BASE_URL, // 환경변수로 지정한 BASE_URL을 사용
-  headers: {
-    Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-  },
+  // headers: {
+  //   Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+  // },
 });
 
 const Interceptor = ({ children }) => {
@@ -16,13 +16,13 @@ const Interceptor = ({ children }) => {
   const token = useSelector((state) => state.userInfo.user.token);
   console.log('Interceptor');
 
-  useEffect(() => {
+  // useEffect를 쓰면 intial rendering 때도 동작이 되기 때문에
+  // token 값이 업데이트되고 난 이후에 적용하려면 useLayoutEffect를 사용
+  useLayoutEffect(() => {
     const interceptor = apiClient.interceptors.request.use(
       (config) => {
         console.log('Interceptor - useEffect : ' + token);
-        console.log();
         if (!config.headers.Authorization) {
-          // useSelector((state) => state.userInfo.user.token);
           if (token && token.length > 0) {
             config.headers.Authorization = 'Bearer ' + token; // 왜..............안될까 계속 안되면useEffect 안쓰는 방법으로 해야겠음..,.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
           }
@@ -35,7 +35,7 @@ const Interceptor = ({ children }) => {
         return Promise.reject(error);
       },
     );
-  }, []); // ....
+  }, [token]); // ....
 
   return children;
 };

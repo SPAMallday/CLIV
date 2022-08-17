@@ -7,17 +7,11 @@ import Box from '@mui/material/Box';
 import './MyClassHistory.css';
 import { useNavigate } from 'react-router-dom';
 import { useLayoutEffect, useState } from 'react';
-import { getClosedClassHistory, getExClassHistory } from '../../api/classAPI';
-
-const reserveType = {
-  work: () => {},
-  text: '클래스 입장',
-};
-
-const closeType = {
-  work: () => {},
-  text: '리뷰 보기',
-};
+import {
+  getClosedClassHistory,
+  getExClassHistory,
+  getToken,
+} from '../../api/classAPI';
 
 function MyClassHistory() {
   const navigate = useNavigate();
@@ -33,27 +27,36 @@ function MyClassHistory() {
       // api 호출 결과값을 Data로 사용
       const resEx = await getExClassHistory();
       const resCl = await getClosedClassHistory();
+      console.log(resEx);
+      console.log(resCl);
 
-      let tempEx = resEx.classList.slice();
-      setReDateArr(
-        tempEx.map((reserve, i) => {
-          // 달력에 들어갈 날짜만 추려낸 배열을 만들면서 기존 JSON 데이터에 있는
-          // 날짜 문자열을 Date형식으로 변환해서 저장해줌
-          reserve.classDatetime = new Date(reserve.classDatetime);
-          return reserve.classDatetime;
-        }),
-      );
+      if (resEx.classList.length > 0) {
+        let tempEx = resEx.classList.slice();
+        setReDateArr(
+          tempEx.map((reserve, i) => {
+            // 달력에 들어갈 날짜만 추려낸 배열을 만들면서 기존 JSON 데이터에 있는
+            // 날짜 문자열을 Date형식으로 변환해서 저장해줌
+            reserve.classDatetime = new Date(reserve.classDatetime);
+            return reserve.classDatetime;
+          }),
+        );
 
-      let tempCl = resCl.classList.slice();
-      setReDateArr(
-        tempCl.map((close, i) => {
-          close.classDatetime = new Date(close.classDatetime);
-          return close.classDatetime;
-        }),
-      );
-      // Date형식으로 변환된 데이터를 state에 저장
-      setReDateArr(tempEx.slice());
-      setClDateArr(tempCl.slice());
+        // Date형식으로 변환된 데이터를 state에 저장
+        setReserveData(tempEx.slice());
+      }
+
+      if (resCl.classList.length > 0) {
+        let tempCl = resCl.classList.slice();
+        setClDateArr(
+          tempCl.map((close, i) => {
+            close.classDatetime = new Date(close.classDatetime);
+            return close.classDatetime;
+          }),
+        );
+
+        // Date형식으로 변환된 데이터를 state에 저장
+        setCloseData(tempCl.slice());
+      }
     }
     getData();
   }, []);
@@ -74,12 +77,29 @@ function MyClassHistory() {
         }}
       />
       {reserveData.map((reserve, i) => {
+        const fun = async () => {
+          const token = await getToken(reserve.classId);
+          if (!!token) {
+            navigate(`/video/${reserve.classId}`, {
+              state: { token: token },
+            });
+          } else {
+            alert('수업 입장에 실패했습니다.');
+          }
+        };
+
+        const typeHandler = {
+          type: 'reserve',
+          work: fun,
+          text: '클래스 입장',
+        };
+
         return (
           <ClassListItem
             data={reserve}
             key={i}
-            typeHandler={reserveType}
-            rating={3}
+            typeHandler={typeHandler}
+            nowTime={nowTime}
           />
         );
       })}
@@ -95,12 +115,19 @@ function MyClassHistory() {
         }}
       />
       {closeData.map((close, i) => {
+        const typeHandler = {
+          type: 'close',
+          // TODO 학생이니까 버튼 안 뜨게? 리뷰 보기?
+          work: () => {},
+          text: '',
+        };
+
         return (
           <ClassListItem
             data={close}
             key={i}
-            typeHandler={closeType}
-            rating={3}
+            typeHandler={typeHandler}
+            nowTime={nowTime}
           />
         );
       })}

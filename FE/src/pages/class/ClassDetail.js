@@ -30,7 +30,7 @@ const ClassDetail = () => {
       <Grid container sx={{ width: '100%' }}>
         <Grid item xs={12} md sx={{ mr: { xs: 0, md: 4 }, mb: 4 }}>
           <Stack spacing={4}>
-            <ClassDetailItem value={cDetail} setCDetail={setCDetail} />
+            <ClassDetailItem value={cDetail} />
             <Box>
               {/* Q&A 뺄거면 ... */}
               <Typography fontWeight={800} fontSize={'1.4rem'}>
@@ -42,8 +42,11 @@ const ClassDetail = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Stack spacing={6}>
-            <ClassDetailInfo value={cDetail} />
+          <Stack spacing={4}>
+            <ClassDetailInfo value={cDetail} setCDetail={setCDetail} />
+            <Typography fontWeight={700} fontSize={'0.9rem'} textAlign="center">
+              {'<클래스 일정>'}
+            </Typography>
             <MyCalendar type="detail" dateArr={cDetail.classDatetime} />
           </Stack>
         </Grid>

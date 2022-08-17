@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import { Card, CardContent, Typography, Button, Stack } from '@mui/material';
 import StarRating from '../../starrating/StarRating';
-import { classDetail, registClass } from '../../../api/classAPI';
+import { registClass } from '../../../api/classAPI';
 
 import './ClassDetailInfo.css';
 import { useLocation, useParams } from 'react-router-dom';
@@ -14,14 +14,11 @@ function ClassDetailInfo({ value, setCDetail }) {
   const params = useParams();
   const classId = params.classId;
 
-  const [rating, setRating] = useState(3);
-  const [btnClick, setBtnClick] = useState(false);
   const teacherAuth = useSelector((state) => state.userInfo.user.role);
   // useEffect(() => {
   //   setRating(value.level);
   //   console.log('rating  ' + rating);
   // }, []);
-  console.log('aa' + classId);
 
   // 이거 이렇게 쓰면 위에 선언한 teacherAuth로 매핑이 안될텐데 아마도??
   const handleSubmitButton = (teacherAuth) => {
@@ -35,7 +32,8 @@ function ClassDetailInfo({ value, setCDetail }) {
     // else if (teacherAuth === 'MEMBER') {
     // 수강신청
 
-    // FIXME - 수강신청이 중복으로 된다? 신청 이후에 반응이 없음
+    // 다 구현함
+    // 수강신청이 중복으로 된다? 신청 이후에 반응이 없음
     // 수강인원이 갱신되거나 알림이 뜨거나해야할 듯
     // 일단은 수강신청에 성공하면 상세정보를 다시 불러와서 갱신시킴
     // 제일 베스트는 수강인원만 다시 가져오는게 좋음 (백엔드 API를 수정해서)
@@ -43,10 +41,7 @@ function ClassDetailInfo({ value, setCDetail }) {
       if (res.status === 200 || res.status === 201) {
         alert('수강신청에 성공했습니다!');
 
-        classDetail(classId).then((res) => {
-          setCDetail((prev) => ({ ...prev, members: res }));
-          console.log(res);
-        });
+        setCDetail((prev) => ({ ...prev, memberCnt: res.data.memberCnt }));
       } else {
         alert('수강신청에 실패했습니다..');
       }
@@ -81,7 +76,7 @@ function ClassDetailInfo({ value, setCDetail }) {
               justifyContent: 'flex-end',
             }}
           >
-            수강료 : {(value.price || 0).toLocaleString()}
+            수강료 : {(value.price || 0).toLocaleString()} 원
             {/* defaultprops 가 왜 안되는걸까.,,.,.ㅇ,.,.,., */}
           </Typography>
           <Card sx={{ my: 5 }}>
@@ -92,8 +87,7 @@ function ClassDetailInfo({ value, setCDetail }) {
                   <StarRating ratingValue={value.level || 0} />
                 </Box>
                 <Typography>
-                  수강 인원({(value.member || []).length} /{' '}
-                  {value.headcount || 0})
+                  수강 인원({value.memberCnt || 0} / {value.headcount || 0})
                   {/* value.member.length 하면 에러남  */}
                 </Typography>
               </Stack>
@@ -130,8 +124,8 @@ ClassDetailInfo.defaultProps = {
     content: '',
     headcount: 0,
     level: 0,
-    members: [],
-    price: 111,
+    memberCnt: 0,
+    price: 0,
     regdate: '',
     teacherId: '',
   },
