@@ -174,6 +174,7 @@ public class NotificationServiceImpl implements NotificationService{
         Notification checkNotification = notification.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
         // 해당 알림을 읽음 처리 한다.
         checkNotification.read();
+        notificationRepository.save(checkNotification);
         return findAllNotifications(authId);
     }
 }
