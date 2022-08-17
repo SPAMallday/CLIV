@@ -106,7 +106,9 @@ public class MatchingServiceImpl implements MatchingService{
                         .title(mBoardTeacher.getMBoard().getTitle())
                         .wantedDay(mBoardTeacher.getMBoard().getWantedDay())
                         .content(mBoardTeacher.getMBoard().getContent())
-                        .authId(mBoardTeacher.getTeacher().getId())
+                        .nickname(mBoardTeacher.getTeacher().getNickname())
+                        .category(mBoardTeacher.getMBoard().getCategory().getContent())
+                        .regdate(mBoardTeacher.getRegdate())
                         .build());
             }
         }

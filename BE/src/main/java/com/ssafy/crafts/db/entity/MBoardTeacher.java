@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Table(name = "MBOARD_TEACHER")
@@ -42,13 +43,17 @@ public class MBoardTeacher {
     @OneToOne(mappedBy = "mBoardTeacher")
     private PrivateClass privateClass;
 
+    @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp regdate;
+
     @Builder
-    public MBoardTeacher(int id, boolean agreeYn, Member teacher, MBoard mBoard, ChatRoom chatRoom) {
+    public MBoardTeacher(int id, boolean agreeYn, Member teacher, MBoard mBoard, ChatRoom chatRoom, Timestamp regdate) {
         this.id = id;
         this.agreeYn = agreeYn;
         this.teacher = teacher;
         this.mBoard = mBoard;
         this.chatRoom = chatRoom;
+        this.regdate = regdate;
     }
 
 }

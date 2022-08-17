@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+
 /**
  * @FileName : MatchingInfoResponse
  * @작성자 : 김민주
@@ -33,9 +35,11 @@ public class MBoardTeacherResponse {
     private String content;     // 내용
 
     @ApiModelProperty(name = "authId", example = "작성자 아이디")
-    private String authId;      // 작성자 아이디
+    private String nickname;      // 작성자 아이디
 
-//    @ApiModelProperty(name = "category", example = "카테고리")
-//    private int categoryId;     // 카데고리
+    @ApiModelProperty(name = "category", example = "카테고리")
+    private String category;  // 카데고리
+
+    private Timestamp regdate;
 
 }
