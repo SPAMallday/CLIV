@@ -19,9 +19,9 @@ function ClassListItem(props) {
 
   if (
     props.typeHandler.type === 'close' ||
-    (year == props.nowTime.getFullYear() &&
-      month == props.nowTime.getMonth() + 1 &&
-      date == props.nowTime.getDate())
+    (year === props.nowTime.getFullYear() &&
+      month === props.nowTime.getMonth() + 1 &&
+      date === props.nowTime.getDate())
     // 테스트용으로 일부러 < 로 맞춤
     // date < props.nowTime.getDate())
   ) {
@@ -39,7 +39,11 @@ function ClassListItem(props) {
       <Grid container columnSpacing={3} sx={{ px: 1 }}>
         <Grid item sx={{ width: '25%', height: 'inherit' }}>
           <Paper sx={{ borderRadius: '15px', height: '152px' }}>
-            <img src={props.data.classImg} style={imgStyle} />
+            <img
+              src={props.data.classImg}
+              alt="classThumbnail"
+              style={imgStyle}
+            />
           </Paper>
         </Grid>
         <Grid item sx={{ width: '75%' }}>

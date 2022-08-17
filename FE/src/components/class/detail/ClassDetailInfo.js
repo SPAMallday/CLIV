@@ -3,14 +3,16 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import { Card, CardContent, Typography, Button, Stack } from '@mui/material';
 import StarRating from '../../starrating/StarRating';
-import { registClass } from '../../../api/classAPI';
+import { classDetail, registClass } from '../../../api/classAPI';
 
 import './ClassDetailInfo.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
-function ClassDetailInfo({ value }) {
-  const location = useLocation(); // 추가된 부분
-  const classId = location.state?.classId; // 추가된 부분
+function ClassDetailInfo({ value, setCDetail }) {
+  // const location = useLocation(); // 추가된 부분
+  // const classId = location.state?.classId; // 추가된 부분
+  const params = useParams();
+  const classId = params.classId;
 
   const [rating, setRating] = useState(3);
   const [btnClick, setBtnClick] = useState(false);
@@ -21,6 +23,7 @@ function ClassDetailInfo({ value }) {
   // }, []);
   console.log('aa' + classId);
 
+  // 이거 이렇게 쓰면 위에 선언한 teacherAuth로 매핑이 안될텐데 아마도??
   const handleSubmitButton = (teacherAuth) => {
     // 선생님인 경우
     // if (teacherAuth === 'TEACHER') {
@@ -31,7 +34,23 @@ function ClassDetailInfo({ value }) {
     // 학생인 경우
     // else if (teacherAuth === 'MEMBER') {
     // 수강신청
-    registClass(classId);
+
+    // FIXME - 수강신청이 중복으로 된다? 신청 이후에 반응이 없음
+    // 수강인원이 갱신되거나 알림이 뜨거나해야할 듯
+    // 일단은 수강신청에 성공하면 상세정보를 다시 불러와서 갱신시킴
+    // 제일 베스트는 수강인원만 다시 가져오는게 좋음 (백엔드 API를 수정해서)
+    registClass(classId).then((res) => {
+      if (res.status === 200 || res.status === 201) {
+        alert('수강신청에 성공했습니다!');
+
+        classDetail(classId).then((res) => {
+          setCDetail((prev) => ({ ...prev, members: res }));
+          console.log(res);
+        });
+      } else {
+        alert('수강신청에 실패했습니다..');
+      }
+    });
     // }
   };
 

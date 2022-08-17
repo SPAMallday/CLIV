@@ -20,10 +20,12 @@ function MyCalendar(props) {
   let reserveMark = [];
   let closeMark = [];
 
-  if (type === 'reserve' || type === 'detail') {
+  if (type === 'reserve') {
     reserveMark = props.dateArr.map((date, i) => {
       return moment(date).format('YYYY-MM-DD');
     });
+  } else if (type === 'detail') {
+    reserveMark = [moment(props.dateArr).format('YYYY-MM-DD')];
   } else if (type === 'close') {
     closeMark = props.dateArr.map((date, i) => {
       return moment(date).format('YYYY-MM-DD');
@@ -86,13 +88,13 @@ function MyCalendar(props) {
             if (
               reserveMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
             ) {
-              html.push(<div className="circle-dot"></div>);
+              html.push(<div key="re" className="circle-dot"></div>);
             }
           } else if (type === 'close') {
             if (
               closeMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
             ) {
-              html.push(<div className="square-dot"></div>);
+              html.push(<div key="cl" className="square-dot"></div>);
             }
           } else if (type === 'history') {
             // 현재 날짜가 post 작성한 날짜 배열에 있다면, dot div 추가
@@ -100,12 +102,12 @@ function MyCalendar(props) {
             if (
               reserveMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
             ) {
-              html.push(<div className="circle-dot"></div>);
+              html.push(<div key="re" className="circle-dot"></div>);
             }
             if (
               closeMark.find((x) => x === moment(date).format('YYYY-MM-DD'))
             ) {
-              html.push(<div className="square-dot"></div>);
+              html.push(<div key="cl" className="square-dot"></div>);
             }
           }
 

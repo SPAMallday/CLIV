@@ -25,7 +25,7 @@ export const registClass = async (classId) => {
   try {
     const res = await apiClient.post(`/api/class/${classId}`, null);
     console.log('res' + res);
-    return res.data;
+    return res;
   } catch (err) {
     console.log('Error >>', err);
   }
