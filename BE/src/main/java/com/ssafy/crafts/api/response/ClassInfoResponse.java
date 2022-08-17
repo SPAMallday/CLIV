@@ -18,7 +18,7 @@ import java.util.List;
 public class ClassInfoResponse {
     int classId;
     String teacherNickname;
-    List<Member> members;
+    int memberCnt;
     String category;
     String className;
     int price;

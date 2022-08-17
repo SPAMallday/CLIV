@@ -88,7 +88,7 @@ public class MainServiceImpl implements MainService {
                     .classId(classInfo.getId())
                     .category(classInfo.getCategory().getContent())
                     .teacherNickname(classInfo.getTeacher().getNickname())
-                    .members(classInfo.getMembers())
+                    .memberCnt(classInfo.getMembers().size())
                     .className(classInfo.getClassName())
                     .classDatetime(classInfo.getClassDatetime())
                     .headcount(classInfo.getHeadcount())

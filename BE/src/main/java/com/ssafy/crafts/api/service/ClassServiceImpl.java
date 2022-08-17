@@ -97,7 +97,7 @@ public class ClassServiceImpl implements ClassService{
         return ClassInfoResponse.builder()
                 .classId(classInfo.getId())
                 .teacherNickname(classInfo.getTeacher().getNickname())
-                .members(classInfo.getMembers())
+                .memberCnt(classInfo.getMembers().size())
                 .category(classInfo.getCategory().getContent())
                 .className(classInfo.getClassName())
                 .price(classInfo.getPrice())
