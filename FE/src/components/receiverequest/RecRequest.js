@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -8,14 +8,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
+import { recReq } from '../../api/matchingAPI';
+import { useSelector } from 'react-redux';
 
 import RequestModal from '../modal/RequestModal';
 
 import './RecRequest.css';
 
 function RecRequest() {
-  const [openDetail, setOpenDetail] = React.useState(false);
-  const [transItem, setTransItem] = React.useState(null);
+  const [openDetail, setOpenDetail] = useState(false);
+  const [transItem, setTransItem] = useState(null);
+  const userId = useSelector((state) => state.userInfo.user.id);
+  const [mList, setMList] = useState([]);
 
   const handleState = (data) => {
     setOpenDetail(data);
@@ -59,52 +63,63 @@ function RecRequest() {
     },
   ]);
 
+  useEffect(() => {
+    recReq(userId).then((res) => {
+      setMList(res);
+
+      console.log(userId);
+      console.log(res);
+    });
+  }, []);
+
   return (
     <>
-      {data.map((item, i) => {
-        return (
-          <>
-            <Box sx={{ my: 2, minWidth: '600px' }}>
-              <Grid container columnSpacing={3} sx={{ px: 1 }}>
-                <Grid item sx={{ flex: '100%' }}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      borderRadius: '15px',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Box sx={{ flex: '75%' }}>
-                      <Stack spacing={1}>
-                        <Typography fontWeight={700}>
-                          [{item.category}] {item.title}
-                        </Typography>
-                        <Typography>요청자 : {item.requestperson} </Typography>
-                        <Typography>요청일 : {item.requestdate} </Typography>
-                        <Typography>원하는 시간 : {item.time} </Typography>
-                        <Typography>예상 금액 : {item.amount} </Typography>
-                      </Stack>
-                    </Box>
+      {mList.map((item) => (
+        <>
+          <Box sx={{ my: 2, minWidth: '600px' }}>
+            <Grid container columnSpacing={3} sx={{ px: 1 }}>
+              <Grid item key={item.id} sx={{ flex: '100%' }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    borderRadius: '15px',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box sx={{ flex: '75%' }}>
+                    <Stack spacing={1}>
+                      <Typography fontWeight={700}>
+                        [{item.categoryContent}] {item.title}
+                      </Typography>
+                      <Typography>요청자 : {item.requestperson} </Typography>
+                      {/* 아마 back에 수정 요청해야할듯??? 대충 코드보니 id만 보내는 듯함. */}
+                      <Typography>
+                        요청일 : {item.regDate.slice(0, 10)}{' '}
+                      </Typography>
+                      <Typography>원하는 시간 : {item.wantedDay} </Typography>
+                      {/* <Typography>예상 금액 : {item.amount} </Typography> */}
+                      {/* Back단에 해당 내용이 없어서 지웠음 (HJ) */}
+                    </Stack>
+                  </Box>
 
-                    <Box sx={{ flex: '25%', textAlign: 'center' }}>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={(event) => {
-                          clickItem(item);
-                        }}
-                      >
-                        요청 자세히 보기
-                      </Button>
-                    </Box>
-                  </Paper>
-                </Grid>
+                  <Box sx={{ flex: '25%', textAlign: 'center' }}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={(event) => {
+                        clickItem(item);
+                      }}
+                    >
+                      요청 자세히 보기
+                    </Button>
+                  </Box>
+                </Paper>
               </Grid>
-            </Box>
-          </>
-        );
-      })}
+            </Grid>
+          </Box>
+        </>
+      ))}
 
       <RequestModal
         handleState={handleState}

@@ -18,7 +18,7 @@ const ClassDetail = () => {
   useEffect(() => {
     classDetail(classId).then((res) => {
       setCDetail(res);
-      // console.log(res);
+      console.log(res);
     });
   }, []);
   // const dispatch = useDispatch();
@@ -30,6 +30,7 @@ const ClassDetail = () => {
           <Stack spacing={4}>
             <ClassDetailItem value={cDetail} />
             <Box>
+              {/* Q&A 뺄거면 ... */}
               <Typography fontWeight={800} fontSize={'1.4rem'}>
                 Q&A
               </Typography>
@@ -41,7 +42,7 @@ const ClassDetail = () => {
         <Grid item xs={12} md={4}>
           <Stack spacing={6}>
             <ClassDetailInfo value={cDetail} />
-            {/* <MyCalendar type="detail" /> */}
+            <MyCalendar type="detail" />
           </Stack>
         </Grid>
       </Grid>
