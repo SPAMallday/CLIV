@@ -3,6 +3,7 @@ package com.ssafy.crafts.api.controller;
 import com.ssafy.crafts.api.response.MainResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MainServiceImpl;
+import com.ssafy.crafts.common.util.JwtTokenProvider;
 import com.ssafy.crafts.db.entity.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class MainController {
     private final MainServiceImpl mainServiceImpl;
+    private final JwtTokenProvider jwtTokenProvider;
     private final AuthService authService;
 
     @ApiOperation(value = "메인화면 진입 시 수업 리스트 조회", notes = "메인화면 진입 시 수업리스트를 조회한다.")
@@ -47,8 +49,9 @@ public class MainController {
          * @작성자 : 허성은
          * @Method 설명 : 메인화면 수업 리스트를 조회한다.
          */
-        Member member = authService.getMember();
-        MainResponse mainResponse = mainServiceImpl.findAllClassList(member.getId());
+        String token = jwtTokenProvider.convertToken(request);
+        String authId = authService.getAuthId(token);
+        MainResponse mainResponse = mainServiceImpl.findAllClassList(authId);
         if(mainResponse == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else

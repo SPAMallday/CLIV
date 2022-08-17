@@ -1,6 +1,5 @@
 package com.ssafy.crafts.common.auth;
 
-import com.ssafy.crafts.common.util.JwtReturn;
 import com.ssafy.crafts.common.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,31 +22,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
+        log.info("필터 실행");
         String token = jwtTokenProvider.resolveToken(request);
+        log.info("초기 토큰 = " + token);
 
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.replaceAll("Bearer ", "");
 
+           if (token != null && jwtTokenProvider.validateToken(token) != null) {
+                log.info("유효한 토큰 확인");
+                Authentication authentication = jwtTokenProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
 
-        if (token != null && !token.isEmpty()) {
-            token = token.replaceAll("Bearer", "");
+            filterChain.doFilter(request, response);
         }
 
-        if (token != null && jwtTokenProvider.validateToken(token) == JwtReturn.EXPIRED) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//401
-
-            return;
-        }
-        if (token != null && jwtTokenProvider.validateToken(token) == JwtReturn.FAIL) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN); //403
-
-            return;
-        }
-
-        if (token != null && jwtTokenProvider.validateToken(token) == JwtReturn.SUCCESS) {
-            Authentication authentication = jwtTokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        filterChain.doFilter(request, response);
 
     }
 }

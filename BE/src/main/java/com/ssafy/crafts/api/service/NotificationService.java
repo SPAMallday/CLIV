@@ -17,9 +17,9 @@ public interface NotificationService {
     void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data);
     boolean hasLostData(String lastEventId);
     void sendLostData(String lastEventId, String authId, String emitterId, SseEmitter emitter);
-    SseEmitter subscribe(String authId, String lastEventId);
-    void send(String authId, Notification.NotiType notificationType, String message, String url);
-    Notification createNotification(Member receiver, Notification.NotiType notificationType, String content, String url);
+    SseEmitter subscribe(String authId);
+    void send(String authId, Notification.NotiType notificationType, String message);
+    Notification createNotification(Member receiver, Notification.NotiType notificationType, String content);
     List<NotiResponse> findAllNotifications(String authId);
     List<NotiResponse> readNotification(int notificationId, String authId);
 }

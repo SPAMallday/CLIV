@@ -1,9 +1,10 @@
 package com.ssafy.crafts.api.controller;
 
+import com.ssafy.crafts.api.response.ClassRoomResponse;
 import com.ssafy.crafts.api.response.NotiResponse;
 import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.NotificationService;
-import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.common.util.JwtHeaderUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -30,7 +31,7 @@ import java.util.List;
 public class NotificationController {
     private final NotificationService notificationService;
     private final AuthService authService;
-    @GetMapping(value = "/sub", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/sub", produces = "text/event-stream")
     @ApiOperation(value = "알림 구독", notes = "알림을 구독한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -38,7 +39,7 @@ public class NotificationController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<SseEmitter> subscribe(HttpServletRequest request, HttpServletResponse response,
-                                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+                                                @RequestParam String authId) {
         /**
          * @Method Name : subscribe
          * @작성자 : 허성은
@@ -47,8 +48,7 @@ public class NotificationController {
          *               이전에 받지 못한 이벤트가 존재하는 경우 "Last-Event-ID"를 통해 마지막 이벤트 아이디를 받을 수 있으며, 필수 값은 아니다.
          */
         response.setCharacterEncoding("UTF-8");
-        Member member = authService.getMember();
-        return new ResponseEntity<>(notificationService.subscribe(member.getId(), lastEventId), HttpStatus.OK);
+        return new ResponseEntity<>(notificationService.subscribe(authId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/noti")
@@ -64,8 +64,9 @@ public class NotificationController {
          * @작성자 : 허성은
          * @Method 설명 : 알림창을 눌러 전체 알림을 조회한다.
          */
-        Member member = authService.getMember();
-        return notificationService.findAllNotifications(member.getId());
+        String token = JwtHeaderUtil.getAccessToken(request);
+        String authId = authService.getAuthId(token);
+        return notificationService.findAllNotifications(authId);
     }
 
     @PostMapping("/noti/{notificationId}")
@@ -81,7 +82,8 @@ public class NotificationController {
          * @작성자 : 허성은
          * @Method 설명 : 알림 한 개를 선택하면 읽음 처리한다.
          */
-        Member member = authService.getMember();
-        notificationService.readNotification(notificationId, member.getId());
+        String token = JwtHeaderUtil.getAccessToken(request);
+        String authId = authService.getAuthId(token);
+        notificationService.readNotification(notificationId, authId);
     }
 }

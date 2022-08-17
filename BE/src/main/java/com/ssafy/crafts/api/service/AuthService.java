@@ -2,20 +2,23 @@ package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.AuthRequest;
 import com.ssafy.crafts.api.response.AuthResponse;
-import com.ssafy.crafts.common.model.dto.MemberDetailsImpl;
 import com.ssafy.crafts.common.util.JwtTokenProvider;
 import com.ssafy.crafts.db.entity.Auth;
 import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.jpaRepo.AuthRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -73,14 +76,26 @@ public class AuthService {
 
         return jwtTokenProvider.createToken(user);
     }
+    public Member getMember(){
+        return new Member();
+    }
+    public String getAuthId(String token) {
+        /**
+         * @Method Name : getAuthId
+         * @작성자 : 허성은
+         * @Method 설명 : 토큰에서 AuthId를 꺼내서 반환
+         */
+        Claims claims = jwtTokenProvider.getAllClaims(token);
+        if (claims == null) {
+            return null;
+        }
 
-    public Member getMember() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MemberDetailsImpl principal = (MemberDetailsImpl) authentication.getPrincipal();
-        String username = principal.getMember().getNickname();
+        try {
+            Member member =  memberQuerydslRepository.findMemberByAuthId(claims.getSubject()).get();
+            return member.getId();
 
-        return memberQuerydslRepository.findMemberByNickname(username).orElseThrow(
-                () -> new UsernameNotFoundException("존재하지 않는 유저입니다")
-        );
+        } catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");
+        }
     }
 }
