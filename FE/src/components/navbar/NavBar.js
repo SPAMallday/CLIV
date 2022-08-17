@@ -203,7 +203,7 @@ function NavBar() {
       eventSource.onmessage = (event) => {
         console.log(event.data);
         if (event.data[0] === 'E') {
-          console.log('temp');
+          console.log('알림 연결 성공');
         } else {
           const trans = JSON.parse(event.data);
           setNotiData((old) => [...old, trans]);
@@ -220,7 +220,8 @@ function NavBar() {
 
       setListening(true);
 
-      // FIXME eventsource를 보낼때는 authId가 있는데 api를 요청할 때 header에는
+      // 밑에거 인터셉터 사용해서 수정함!
+      //  eventsource를 보낼때는 authId가 있는데 api를 요청할 때 header에는
       // 토큰이 null로 들어감
       // 완전 JWT를 다 지우고 로그아웃 상태에서 시작하면 작동이 안됨
       // 아마 API index.js에서 헤더에 토큰을 지정할 때 아직 token이 저장이 안된 시기에

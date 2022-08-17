@@ -35,7 +35,9 @@ const Interceptor = ({ children }) => {
         return Promise.reject(error);
       },
     );
-  }, [token]); // ....
+  }, [token]);
+  // .... 언제마다 동작할지 지정하지 않고 []로 뒀기 때문에 처음 한 번만 수행하고
+  // 정작 token값이 세팅되고 나서는 동작하지 않음!!
 
   return children;
 };
