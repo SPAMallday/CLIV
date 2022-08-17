@@ -39,7 +39,7 @@ public class NotificationController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<SseEmitter> subscribe(HttpServletRequest request, HttpServletResponse response,
-                                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+                                                @RequestParam String authId) {
         /**
          * @Method Name : subscribe
          * @작성자 : 허성은
@@ -48,9 +48,7 @@ public class NotificationController {
          *               이전에 받지 못한 이벤트가 존재하는 경우 "Last-Event-ID"를 통해 마지막 이벤트 아이디를 받을 수 있으며, 필수 값은 아니다.
          */
         response.setCharacterEncoding("UTF-8");
-        String token = JwtHeaderUtil.getAccessToken(request);
-        String authId = authService.getAuthId(token);
-        return new ResponseEntity<>(notificationService.subscribe(authId, lastEventId), HttpStatus.OK);
+        return new ResponseEntity<>(notificationService.subscribe(authId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/noti")

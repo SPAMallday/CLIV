@@ -32,7 +32,7 @@ public class SessionController {
     private final ClassRoomService classRoomService;
     private final AuthService authService;
 
-    @PostMapping(value="/session/{classId")
+    @PostMapping(value="/session/{classId}")
     @ApiOperation(value = "세션 생성", notes = "수업 세션을 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "생성 성공"),
@@ -55,7 +55,7 @@ public class SessionController {
         }
     }
 
-    @PatchMapping(value="/session/{classId")
+    @PatchMapping(value="/session/{classId}")
     @ApiOperation(value = "세션 종료", notes = "수업 세션을 종료한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "종료 성공"),

@@ -4,10 +4,7 @@ import com.ssafy.crafts.api.request.MatchingRequest;
 import com.ssafy.crafts.api.response.CategoryResponse;
 import com.ssafy.crafts.api.response.MBoardTeacherResponse;
 import com.ssafy.crafts.api.response.MatchingResponse;
-import com.ssafy.crafts.db.entity.Category;
-import com.ssafy.crafts.db.entity.MBoard;
-import com.ssafy.crafts.db.entity.MBoardTeacher;
-import com.ssafy.crafts.db.entity.Member;
+import com.ssafy.crafts.db.entity.*;
 import com.ssafy.crafts.db.repository.jpaRepo.*;
 import com.ssafy.crafts.db.repository.querydslRepo.*;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +36,7 @@ public class MatchingServiceImpl implements MatchingService{
     private final MemberQuerydslRepository memberQuerydslRepository;
     private final CategoryQuerydslRepository categoryQuerydslRepository;
     private final CategoryRepository categoryRepository;
+    private final NotificationService notificationService;
 
     @Override
     public int createMBoard(MatchingRequest matchingRequest) {
@@ -73,7 +71,13 @@ public class MatchingServiceImpl implements MatchingService{
 
         log.info("요청글의 카데고리와 성별이 일치하는 선생님 조회");
         List<Member> teachers = memberQuerydslRepository.findByCategoryAndGender(categoryId, gender);
-
+        //알림 보내기
+        String url = "https://i7a605.ssafy.p.io/api/matching/" + mBoardId;
+        String message = categoryQuerydslRepository.findCategoryContentById(categoryId) + " 에 대한 제안을 받았습니다!";
+        // 요청서 받은 선생님들에게 알림 보내기
+        for (Member teacher : teachers) {
+            notificationService.send(teacher.getId(), Notification.NotiType.ClassStart, message);
+        }
 
 
         for(Member teacher : teachers){
@@ -85,6 +89,7 @@ public class MatchingServiceImpl implements MatchingService{
             mBoardTeacherRepository.save(mBoardTeacher);
         }
     }
+
 
     @Override
     public List<MBoardTeacherResponse> getMBoardTeacherListByTeacherId(String teacherId) {

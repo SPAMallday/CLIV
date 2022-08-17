@@ -80,7 +80,7 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public SseEmitter subscribe(String authId, String lastEventId) {
+    public SseEmitter subscribe(String authId) {
         /**
          * @Method Name : subscribe
          * @작성자 : 허성은
@@ -101,10 +101,6 @@ public class NotificationServiceImpl implements NotificationService{
         String eventId = makeTimeIncludeId(authId);
         sendNotification(emitter, eventId, emitterId, "EventStream Created. [userId=" + authId + "]");
 
-        // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방한다.
-        if (hasLostData(lastEventId)) {
-            sendLostData(lastEventId, authId, emitterId, emitter);
-        }
 
         return emitter;
     }

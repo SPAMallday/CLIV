@@ -2,8 +2,7 @@ package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.AuthRequest;
 import com.ssafy.crafts.api.response.AuthResponse;
-import com.ssafy.crafts.common.util.AuthToken;
-import com.ssafy.crafts.common.util.AuthTokenProvider;
+import com.ssafy.crafts.common.util.JwtTokenProvider;
 import com.ssafy.crafts.db.entity.Auth;
 import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.repository.jpaRepo.AuthRepository;
@@ -11,7 +10,12 @@ import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.MemberRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,14 +28,15 @@ import java.util.Optional;
  * @Class 설명 : 카카오 로그인 관련 비즈니스 로직 처리를 위한 서비스 구현 정의
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthService {
 
     private final ClientKakao clientKakao;
     private final MemberQuerydslRepository memberQuerydslRepository;
-    private final AuthTokenProvider authTokenProvider;
     private final MemberRepository memberRepository;
     private final AuthRepository authRepository;
+    private final JwtTokenProvider jwtTokenProvider;
     @Transactional
     public AuthResponse login(AuthRequest authRequest) {
         /**
@@ -54,35 +59,33 @@ public class AuthService {
             authRepository.save(auth);
 
             Member newbie = Member.builder()
-                            .auth(authRepository.getOne(id))
-                            .gender(kakaoMember.getGender())
-                            .status(Member.Status.ACTIVE)
-                            .roleType(Member.RoleType.MEMBER)
-                            .nickname("회원_"+id)
-                            .build();
+                    .auth(authRepository.getOne(id))
+                    .gender(kakaoMember.getGender())
+                    .status(Member.Status.ACTIVE)
+                    .roleType(Member.RoleType.MEMBER)
+                    .nickname("회원_"+id)
+                    .build();
 
             memberRepository.save(newbie);
 
         }
 
         // 기존 사용자라면 토큰 만료로 인한 재요청이기 때문에 DB와의 커넥션 없이 바로 새로운 토큰만 발급하여 반환
-        String nickname = memberQuerydslRepository.findMemberByAuthId(id).get().getNickname();
-        AuthToken appToken = authTokenProvider.createUserAppToken(id, nickname);
+        Member user = memberQuerydslRepository.findMemberByAuthId(id).get();
+//        AuthToken appToken = authTokenProvider.createUserAppToken(id, nickname);
 
-        return AuthResponse.builder()
-                .appToken(appToken.getToken())
-                .build();
+        return jwtTokenProvider.createToken(user);
     }
-
+    public Member getMember(){
+        return new Member();
+    }
     public String getAuthId(String token) {
         /**
          * @Method Name : getAuthId
          * @작성자 : 허성은
          * @Method 설명 : 토큰에서 AuthId를 꺼내서 반환
          */
-        AuthToken authToken = authTokenProvider.convertAuthToken(token);
-
-        Claims claims = authToken.getTokenClaims();
+        Claims claims = jwtTokenProvider.getAllClaims(token);
         if (claims == null) {
             return null;
         }
