@@ -93,7 +93,7 @@ function MatchingRequest() {
   // 등록
   const validData = () => {
     sendCreate();
-    // window.location.reload();
+    window.location.reload();
   };
 
   const userId = useSelector((state) => state.userInfo.user.id);
@@ -124,7 +124,7 @@ function MatchingRequest() {
     //   console.log('erre');
     // }
   };
-  console.log('gender' + gender);
+  // console.log('gender' + gender);
   const handleOpenSuccess = () => {
     setSuccess(true);
   };
