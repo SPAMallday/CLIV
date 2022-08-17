@@ -50,9 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable() // csrf 보안 설정을 비활성화
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
-//            .and()
-//            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
+                .and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         // UsernamePasswordAuthenticationFilter :
         // - (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
         // - AuthenticationManager를 통한 인증 실행
