@@ -31,7 +31,7 @@ import java.util.List;
 public class NotificationController {
     private final NotificationService notificationService;
     private final AuthService authService;
-    @GetMapping(value = "/sub", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/sub", produces = "text/event-stream")
     @ApiOperation(value = "알림 구독", notes = "알림을 구독한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
