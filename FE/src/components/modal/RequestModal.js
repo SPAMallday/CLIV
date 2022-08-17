@@ -19,6 +19,8 @@ const style = {
 };
 
 function RequestModal(props) {
+  const type = props.type;
+
   const [open, setOpen] = React.useState(false);
   const [item, setItem] = React.useState(null);
 
@@ -36,25 +38,40 @@ function RequestModal(props) {
     <>
       {item === null ? null : (
         <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
-            <Stack spacing={1}>
-              <Typography fontWeight={700}>
-                [{item.categoryContent}] {item.title}
-              </Typography>
-              <Typography>요청자 : {item.requestperson} </Typography>
-              <Typography>요청일 : {item.regDate.slice(0, 10)} </Typography>
-              <Typography>원하는 시간 : {item.wantedDay} </Typography>
-              {/* <Typography>예상 금액 : {item.amount} </Typography> */}
-              {/* Back단에 해당 내용이 없어서 지웠음 (HJ) */}
-              <Typography fontWeight={700}>요청 내용</Typography>
-              <Typography>{item.content}</Typography>
-            </Stack>
-            <Box sx={{ mt: 10, textAlign: 'center' }}>
-              <Button variant="contained" color="secondary">
-                채팅으로 연결
-              </Button>
+          {type === 'receive' ? (
+            <Box sx={style}>
+              <Stack spacing={1}>
+                <Typography fontWeight={700}>
+                  [{item.category}] {item.title}
+                </Typography>
+                <Typography>요청자 : {item.nickname} </Typography>
+                <Typography>요청일 : {item.regdate.slice(0, 10)} </Typography>
+                <Typography>원하는 시간 : {item.wantedDay} </Typography>
+                <br />
+                <Typography fontWeight={700}>요청 내용</Typography>
+                <Typography>{item.content}</Typography>
+              </Stack>
+              <Box sx={{ mt: 10, textAlign: 'center' }}>
+                <Button variant="contained" color="secondary">
+                  수락 (클래스 개설)
+                </Button>
+              </Box>
             </Box>
-          </Box>
+          ) : (
+            <Box sx={style}>
+              <Stack spacing={1}>
+                <Typography fontWeight={700}>
+                  [{item.categoryContent}] {item.title}
+                </Typography>
+                <Typography>요청자 : {item.requestperson} </Typography>
+                <Typography>요청일 : {item.regDate.slice(0, 10)} </Typography>
+                <Typography>원하는 시간 : {item.wantedDay} </Typography>
+                <br />
+                <Typography fontWeight={700}>요청 내용</Typography>
+                <Typography>{item.content}</Typography>
+              </Stack>
+            </Box>
+          )}
         </Modal>
       )}
     </>
