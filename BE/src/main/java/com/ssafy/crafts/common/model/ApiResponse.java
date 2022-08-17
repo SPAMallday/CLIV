@@ -1,4 +1,4 @@
-package com.ssafy.crafts.common.model.dto;
+package com.ssafy.crafts.common.model;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

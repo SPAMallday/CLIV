@@ -1,9 +1,7 @@
 package com.ssafy.crafts.common.util;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.crafts.common.exception.TokenValidFailedException;
 import com.ssafy.crafts.db.entity.Member;
-import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;

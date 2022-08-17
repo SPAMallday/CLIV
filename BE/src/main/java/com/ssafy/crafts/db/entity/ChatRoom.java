@@ -23,9 +23,6 @@ public class ChatRoom {
     @Column(name = "croom_id")
     private int croomId;     // PK
 
-//    @Column(name = "roomId")
-//    private String roomId;  // 채팅방 id
-
     @Column(name = "roomName")
     private String roomName;    // 채팅방 이름
 
