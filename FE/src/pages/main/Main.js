@@ -6,6 +6,18 @@ import Container from '@mui/material/Container';
 import ClassThumbnailList from '../../components/main/ClassThumbnailList';
 
 import { mainList } from '../../api/mainAPI';
+import { styled } from '@mui/material';
+
+import 'swiper/css';
+import ListCarousel from '../../components/main/ListCarousel';
+
+const MainListTitle = styled(Typography)({
+  align: 'left',
+  color: 'text.primary',
+  gutterBottom: true,
+  fontSize: '1.7rem',
+  fontWeight: '700',
+});
 
 function Main() {
   // const [class, setClass] = useState(null);
@@ -28,40 +40,17 @@ function Main() {
       {/* Hero unit */}
       <Box sx={{ pt: 4 }}>
         <Container maxWidth="lg">
-          <Box sx={{ py: 4 }}>
-            <Typography
-              component="h4"
-              variant="h4"
-              align="left"
-              color="text.primary"
-              gutterBottom
-            >
-              마감 임박 클래스
-            </Typography>
-            <ClassThumbnailList value={hcList} />
+          <Box sx={{ py: 2 }}>
+            <MainListTitle>마감 임박 클래스💥</MainListTitle>
+            <ListCarousel value={hcList} type="deadline" />
           </Box>
-          <Box sx={{ py: 4 }}>
-            <Typography
-              component="h4"
-              variant="h4"
-              align="left"
-              color="text.primary"
-              gutterBottom
-            >
-              곧 시작하는 클래스
-            </Typography>
+          <Box sx={{ py: 2 }}>
+            <MainListTitle>곧 시작하는 클래스</MainListTitle>
             <ClassThumbnailList value={ctList} />
           </Box>
-          <Box sx={{ py: 4 }}>
-            <Typography
-              component="h4"
-              variant="h4"
-              align="left"
-              color="text.primary"
-              gutterBottom
-            >
-              추천 클래스
-            </Typography>
+          <Box sx={{ py: 2 }}>
+            <MainListTitle>추천 클래스</MainListTitle>
+            {/* <ListCarousel value={allList} /> */}
             <ClassThumbnailList value={allList} />
           </Box>
         </Container>

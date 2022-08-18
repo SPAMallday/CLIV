@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8]; // 현재 8개 보여줌
 
@@ -23,11 +24,13 @@ const ClassThumbnailList = ({ value }) => {
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
+                  textDecoration: 'none',
                 }}
                 component={Link}
                 to={`/class/detail/${cl.classId}`}
               >
                 <CardMedia
+                  alt="classThumbnail"
                   component="img"
                   sx={
                     {
@@ -36,15 +39,25 @@ const ClassThumbnailList = ({ value }) => {
                   }
                   image={cl.classImg}
                 />
-                {/* <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      뜨개질입니다.
-                    </Typography>
-                  </CardContent> */}
                 <CardActions>
-                  <Typography gutterBottom variant="subtitle2" component="div">
-                    {cl.className}
-                  </Typography>
+                  <Stack sx={{ width: '100%' }}>
+                    <Typography
+                      fontSize={'0.7rem'}
+                      fontWeight={700}
+                      color="gray"
+                      noWrap
+                    >
+                      [{cl.category}] {cl.teacherNickname}
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      variant="subtitle2"
+                      component="div"
+                      noWrap
+                    >
+                      {cl.className}
+                    </Typography>
+                  </Stack>
                 </CardActions>
               </Card>
             </Grid>

@@ -18,7 +18,7 @@ function ClassListItem(props) {
   const min = props.data.classDatetime.getMinutes();
 
   if (
-    props.typeHandler.type === 'close' ||
+    props.typeHandler.type === 'reserve' ||
     (year === props.nowTime.getFullYear() &&
       month === props.nowTime.getMonth() + 1 &&
       date === props.nowTime.getDate())
@@ -63,7 +63,7 @@ function ClassListItem(props) {
                 <Typography>
                   일정 : {`${year}.${month}.${date} ${hour}시 ${min}분`}
                 </Typography>
-                <Typography>강의자</Typography>
+                <Typography>강의자 : {props.data.teacherNickname}</Typography>
                 <Box sx={{ display: 'flex' }}>
                   <Typography>난이도 : </Typography>
                   <StarRating ratingValue={props.data.level} />

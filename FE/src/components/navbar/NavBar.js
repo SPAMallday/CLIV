@@ -12,14 +12,13 @@ import IconButton from '@mui/material/IconButton';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import Badge from '@mui/material/Badge';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import { KAKAO_AUTH_URL } from '../login/KaKaoLoginInfo';
 
-import LogoPath from '../../assets/Logo2.png';
+import LogoPath from '../../assets/Logo.png';
 
 import './NavBar.css';
 import NotiCenter from '../notification/notiCenter';
@@ -35,48 +34,9 @@ import {
   Toolbar,
 } from '@mui/material';
 import { getAllNoti, setNotiRead } from '../../api/notiAPI';
+import Spinner from '../spinner/Spinner';
 
 // 스타일 적용
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: '20px',
-  backgroundColor: 'rgba(223, 120, 97, 0.8)',
-  '&:hover': {
-    backgroundColor: 'rgba(223, 120, 97, 1.0)',
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    width: 'auto',
-  },
-  marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    maxWidth: '15ch',
-    color: 'white',
-  },
-}));
-
 const paperpropsset = {
   elevation: 0,
   sx: {
@@ -110,6 +70,9 @@ function NavBar() {
   const isLogin = useSelector((state) => state.userInfo.isLogin);
   const role = useSelector((state) => state.userInfo.user.role);
   const authId = useSelector((state) => state.userInfo.user.id);
+
+  // TODO 로딩 스피너 먹이는 법..?
+  const loading = useSelector((state) => state.loading);
 
   // navbar 열고 닫는 스테이트
   const container = document.getElementById('bodyContainer');
@@ -189,7 +152,7 @@ function NavBar() {
       // EventSource 로 Server Sent Event 를 호출하는 부분
       // query Parameter로 authId 전송
       eventSource = new EventSource(
-        process.env.REACT_APP_BASE_URL + '/api/sub' + `?authId=${authId}`,
+        process.env.REACT_APP_BASE_URL + '/api/sub' + `/${authId}`,
       );
 
       console.log('eventSource', eventSource);
@@ -240,16 +203,17 @@ function NavBar() {
     };
   }, [isLogin]);
 
-  // FIXME PLZ 이거 호출했을때 db에서 read로 바뀌는 게 맞는지..?
-  // 그리고 모든 알림 조회했을때는 read가 아닌 것만 불러오게
+  // FIXME
   useEffect(() => {
     if (targetNotiId !== 0) {
       // 읽음으로 전환 요청
-      if (setNotiRead(targetNotiId) === '200') {
-        // 읽은 알림 제거
-        setNotiData((prev) => prev.filter((noti) => noti.id !== targetNotiId));
-        // setNotiData(notiData.filter((noti) => noti.id !== targetNotiId));
-      }
+      setNotiRead(targetNotiId).then((code) => {
+        if (code === 200) {
+          // 읽은 알림 제거
+          // setNotiData((prev) => prev.filter((noti) => noti.id !== targetNotiId));
+          setNotiData(notiData.filter((noti, i) => noti.id !== targetNotiId));
+        }
+      });
     }
   }, [targetNotiId]);
 
@@ -347,99 +311,101 @@ function NavBar() {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav" position="relative">
-        <Toolbar
-          variant="dense"
-          sx={{
-            display: 'flex',
-            justifyContent: { xs: 'flex-end', nav: 'space-between' },
-          }}
-        >
-          <Box
+    <>
+      {loading && <Spinner />}
+      <Box sx={{ display: 'flex' }}>
+        <AppBar component="nav" position="relative">
+          <Toolbar
+            variant="dense"
             sx={{
-              flexGrow: 1,
-              display: { xs: 'none', nav: 'flex' },
-              justifyContent: 'flex-start',
+              display: 'flex',
+              justifyContent: { xs: 'flex-end', nav: 'space-between' },
             }}
           >
-            <Box id="mainLogo">
-              <Button component={Link} to={'/'} disableRipple>
-                <img
-                  src={LogoPath}
-                  alt="CLIV logo"
-                  style={{ width: '100px' }}
-                ></img>
-              </Button>
-            </Box>
-            <Button
-              component={Link}
-              to={'/class/list'}
-              variant="text"
-              disableRipple
-              sx={{ color: 'black' }}
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', nav: 'flex' },
+                justifyContent: 'flex-start',
+              }}
             >
-              클래스
-            </Button>
-            {isLogin && (
-              <Box sx={{ display: 'flex' }}>
-                <Button
-                  onClick={handleClickMatching}
-                  disableRipple
-                  sx={{ color: 'black' }}
-                >
-                  매칭
+              <Box id="mainLogo">
+                <Button component={Link} to={'/'} disableRipple>
+                  <img
+                    src={LogoPath}
+                    alt="CLIV logo"
+                    style={{ width: '100px' }}
+                  ></img>
                 </Button>
-                <Menu
-                  anchorEl={anchorElMatching}
-                  open={openMatching}
-                  onClose={handleCloseMatching}
-                >
-                  <MenuItem
-                    component={Link}
-                    to={'/matching'}
-                    onClick={handleCloseMatching}
-                  >
-                    요청 보내기
-                  </MenuItem>
-
-                  {role === 'TEACHER' && (
-                    <MenuItem
-                      component={Link}
-                      to={'/matching/receiverequest'}
-                      onClick={handleCloseMatching}
-                    >
-                      받은 요청
-                    </MenuItem>
-                  )}
-
-                  <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
-                </Menu>
               </Box>
-            )}
-            {isLogin && role === 'TEACHER' && (
               <Button
                 component={Link}
-                to={'/classmanage'}
+                to={'/class/list'}
                 variant="text"
                 disableRipple
-                sx={{ color: 'black', width: '6rem' }}
+                sx={{ color: 'black' }}
               >
-                클래스 관리
+                클래스
               </Button>
-            )}
-          </Box>
+              {isLogin && (
+                <Box sx={{ display: 'flex' }}>
+                  <Button
+                    onClick={handleClickMatching}
+                    disableRipple
+                    sx={{ color: 'black' }}
+                  >
+                    매칭
+                  </Button>
+                  <Menu
+                    anchorEl={anchorElMatching}
+                    open={openMatching}
+                    onClose={handleCloseMatching}
+                  >
+                    <MenuItem
+                      component={Link}
+                      to={'/matching'}
+                      onClick={handleCloseMatching}
+                    >
+                      요청 보내기
+                    </MenuItem>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'none', nav: 'flex' },
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              pr: 6,
-            }}
-          >
-            {/* 
+                    {role === 'TEACHER' && (
+                      <MenuItem
+                        component={Link}
+                        to={'/matching/receiverequest'}
+                        onClick={handleCloseMatching}
+                      >
+                        받은 요청
+                      </MenuItem>
+                    )}
+
+                    <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
+                  </Menu>
+                </Box>
+              )}
+              {isLogin && role === 'TEACHER' && (
+                <Button
+                  component={Link}
+                  to={'/classmanage'}
+                  variant="text"
+                  disableRipple
+                  sx={{ color: 'black', width: '6rem' }}
+                >
+                  클래스 관리
+                </Button>
+              )}
+            </Box>
+
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', nav: 'flex' },
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                pr: 6,
+              }}
+            >
+              {/* 
             // 검색바..
             <Search id="search">
               <SearchIconWrapper>
@@ -448,128 +414,132 @@ function NavBar() {
               <StyledInputBase inputProps={{ 'aria-label': 'search' }} />
             </Search> */}
 
-            {isLogin === true ? (
-              <>
-                <IconButton
-                  onClick={handleClickNoti}
-                  id="noti"
-                  size="large"
-                  disableRipple
-                  style={{ backgroundColor: 'transparent', color: 'darkgray' }}
-                >
-                  <Badge
-                    badgeContent={notiData ? notiData.length : null}
-                    color="error"
-                  >
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-                <Menu
-                  anchorEl={anchorElNoti}
-                  open={openNoti}
-                  onClose={handleCloseNoti}
-                  // onClick={handleCloseUser}
-                  PaperProps={{
-                    ...paperpropsset,
-                  }}
-                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                >
-                  <NotiCenter
-                    handleChangeNotiTab={handleChangeNotiTab}
-                    notiTabValue={notiTabValue}
-                    notiData={notiData}
-                    setTargetNotiId={setTargetNotiId}
-                    nowTime={new Date()}
-                  ></NotiCenter>
-                </Menu>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}
-                >
+              {isLogin === true ? (
+                <>
                   <IconButton
-                    onClick={handleClickUser}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={openUser ? 'account-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openUser ? 'true' : undefined}
+                    onClick={handleClickNoti}
+                    id="noti"
+                    size="large"
                     disableRipple
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: 'darkgray',
+                    }}
                   >
-                    <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                    <Badge
+                      badgeContent={notiData ? notiData.length : null}
+                      color="error"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
                   </IconButton>
-                </Box>
-                <Menu
-                  anchorEl={anchorElUser}
-                  id="account-menu"
-                  open={openUser}
-                  onClose={handleCloseUser}
-                  // onClick={handleCloseUser}
-                  PaperProps={{
-                    ...paperpropsset,
-                  }}
-                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                  <Menu
+                    anchorEl={anchorElNoti}
+                    open={openNoti}
+                    onClose={handleCloseNoti}
+                    // onClick={handleCloseUser}
+                    PaperProps={{
+                      ...paperpropsset,
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                  >
+                    <NotiCenter
+                      handleChangeNotiTab={handleChangeNotiTab}
+                      notiTabValue={notiTabValue}
+                      notiData={notiData}
+                      setTargetNotiId={setTargetNotiId}
+                      nowTime={new Date()}
+                    ></NotiCenter>
+                  </Menu>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <IconButton
+                      onClick={handleClickUser}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={openUser ? 'account-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openUser ? 'true' : undefined}
+                      disableRipple
+                    >
+                      <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                    </IconButton>
+                  </Box>
+                  <Menu
+                    anchorEl={anchorElUser}
+                    id="account-menu"
+                    open={openUser}
+                    onClose={handleCloseUser}
+                    // onClick={handleCloseUser}
+                    PaperProps={{
+                      ...paperpropsset,
+                    }}
+                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                  >
+                    <MenuItem component={Link} to={'/myprofile'}>
+                      마이프로필
+                    </MenuItem>
+                    <MenuItem component={Link} to={'/myhistory'}>
+                      나의수강내역
+                    </MenuItem>
+                    <MenuItem onClick={logoutBtn}>로그아웃</MenuItem>{' '}
+                    {/* 수정필요 */}
+                  </Menu>
+                </>
+              ) : (
+                <Button
+                  variant="text"
+                  disableRipple
+                  sx={{ color: 'black', width: '6rem' }}
                 >
-                  <MenuItem component={Link} to={'/myprofile'}>
-                    마이프로필
-                  </MenuItem>
-                  <MenuItem component={Link} to={'/myhistory'}>
-                    나의수강내역
-                  </MenuItem>
-                  <MenuItem onClick={logoutBtn}>로그아웃</MenuItem>{' '}
-                  {/* 수정필요 */}
-                </Menu>
-              </>
-            ) : (
-              <Button
-                variant="text"
-                disableRipple
-                sx={{ color: 'black', width: '6rem' }}
-              >
-                <a className="loginButton" href={KAKAO_AUTH_URL}>
-                  로그인
-                </a>
-              </Button>
-            )}
-          </Box>
-          <IconButton
-            color="secondary"
-            aria-label="open drawer"
-            edge="start"
-            size="large"
-            onClick={handleDrawerToggle}
-            sx={{ display: { nav: 'none' } }}
+                  <a className="loginButton" href={KAKAO_AUTH_URL}>
+                    로그인
+                  </a>
+                </Button>
+              )}
+            </Box>
+            <IconButton
+              color="secondary"
+              aria-label="open drawer"
+              edge="start"
+              size="large"
+              onClick={handleDrawerToggle}
+              sx={{ display: { nav: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Box component="nav">
+          <Drawer
+            container={container}
+            anchor={'right'}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', nav: 'none' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: 240,
+              },
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Box component="nav">
-        <Drawer
-          container={container}
-          anchor={'right'}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', nav: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: 240,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
+            {drawer}
+          </Drawer>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 export default NavBar;
