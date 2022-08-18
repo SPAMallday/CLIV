@@ -14,5 +14,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface PrivateClassService {
 
-    PrivateClass createPrivateClass(MatchingTeacherRequest matchingTeacherRequest);
+    PrivateClass createPrivateClass(PrivateClassRequest privateClassRequest);
 }

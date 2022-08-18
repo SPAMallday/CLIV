@@ -36,7 +36,7 @@ public class PrivateClassServiceImpl implements PrivateClassService{
     private final NotificationService notificationService;
 
     @Override
-    public PrivateClass createPrivateClass(MatchingTeacherRequest matchingTeacherRequest) {
+    public PrivateClass createPrivateClass(PrivateClassRequest privateClassRequest) {
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
@@ -44,19 +44,19 @@ public class PrivateClassServiceImpl implements PrivateClassService{
          * */
 
         PrivateClass privateClass = PrivateClass.builder()
-                        .className(matchingTeacherRequest.getTitle())
-                        .classDatetime(matchingTeacherRequest.getWantedDay())
-                        .tuitionFee(matchingTeacherRequest.getPrice())
-                        .mBoardTeacher(mBoardTeacherRepository.findById(matchingTeacherRequest.getMtId()).get())
+                        .className(privateClassRequest.getClassName())
+                        .classDatetime(privateClassRequest.getClassDatetime())
+                        .tuitionFee(privateClassRequest.getTuitionFee())
+                        .mBoardTeacher(mBoardTeacherRepository.getOne(privateClassRequest.getMtId()))
                         .build();
-        MBoardTeacher mBoardTeacher = mBoardTeacherRepository.findById(matchingTeacherRequest.getMtId()).get();
+        MBoardTeacher mBoardTeacher = mBoardTeacherRepository.findById(privateClassRequest.getMtId()).get();
         mBoardTeacher.setAgreeYn(true);
         mBoardTeacherRepository.save(mBoardTeacher);
 //        privateClassRepository.save(privateClassRequest.toEntity());
         privateClassRepository.save(privateClass);
         // 매칭 성공 알림 학생에게 전송
-        String authId = mBoardTeacherRepository.findById(matchingTeacherRequest.getMtId()).get().getMBoard().getMember().getId();
-        String message = matchingTeacherRequest.getTitle();
+        String authId = mBoardTeacherRepository.findById(privateClassRequest.getMtId()).get().getMBoard().getMember().getId();
+        String message = privateClass.getClassName();
         notificationService.send(authId, Notification.NotiType.MatchingResponse, message);
         return privateClass;
     }

@@ -21,10 +21,10 @@ import java.sql.Timestamp;
 @Builder
 public class PrivateClassRequest {
 
-//    @ApiModelProperty(name = "teacherId", hidden = true)
-//    String teacherId;       // 매칭강사 id
-//    @ApiModelProperty(name = "mtId")
-//    int mtId;       // 선생님_매칭보드 id
+    @ApiModelProperty(name = "teacherId", hidden = true)
+    String teacherId;       // 매칭강사 id
+    @ApiModelProperty(name = "mtId")
+    int mtId;       // 선생님_매칭보드 id
     @ApiModelProperty(name = "className", example = "수업 제목")
     String className;       // 수업명
     @ApiModelProperty(name = "classDatetime", example = "수업 날짜")

@@ -46,8 +46,7 @@ public class PrivateClassController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<Object> createPrivateClass(HttpServletRequest request,
-//                                                 @RequestBody PrivateClassRequest privateClassRequest,
-                                                     @RequestBody MatchingTeacherRequest matchingTeacherRequest){
+                                                 @RequestBody PrivateClassRequest privateClassRequest){
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
@@ -61,16 +60,11 @@ public class PrivateClassController {
 //            return new ResponseEntity<>("매칭이 완료된 글입니다.", HttpStatus.CONFLICT);
 //        }
 
-//        log.info("1:1 수업 정보 등록");
-//        privateClassService.createPrivateClass(privateClassRequest, mtId);
-//        log.info("매칭글의 매칭 여부 업데이트");
-//        matchingService.updateMatStatus(mtId);
-        log.info("일대일 수업 개설");
-        // 채팅 사라져서 확인 누르면 바로 1대1 수업 생성으로 연결
-        log.info(matchingTeacherRequest.getTitle());
-        PrivateClass privateClass = privateClassService.createPrivateClass(matchingTeacherRequest);
+        log.info("1:1 수업 정보 등록");
+        privateClassService.createPrivateClass(privateClassRequest);
         log.info("매칭글의 매칭 여부 업데이트");
-        matchingService.updateMatStatus(privateClass.getMBoardTeacher().getId());
+        int mtId = privateClassRequest.getMtId();
+        matchingService.updateMatStatus(mtId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
