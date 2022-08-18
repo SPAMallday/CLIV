@@ -13,8 +13,11 @@ import { Navigate } from 'react-router-dom';
 import withRouter from '../route/WithRouter';
 import { Box, Button, Dialog, Typography } from '@mui/material';
 
+import Swal from 'sweetalert2';
+
 import PencilPath from '../../assets/pencil.png';
 import { exitClass } from '../../api/classAPI';
+import axios from 'axios';
 
 var localUser = new UserModel();
 
@@ -23,7 +26,7 @@ class VideoRoomComponent extends Component {
     super(props);
 
     this.OPENVIDU_SERVER_URL =
-      process.env.REACT_APP_BASE_URL + ':' + process.env.REACT_APP_OPENVIDU_PORT
+      process.env.NODE_ENV === 'production'
         ? process.env.REACT_APP_BASE_URL +
           ':' +
           process.env.REACT_APP_OPENVIDU_PORT
@@ -33,12 +36,14 @@ class VideoRoomComponent extends Component {
       : 'MY_SECRET';
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
+    // TODO 테스트 끝나면 주석처리 sessionName
     // let sessionName = this.props.sessionName
     //   ? this.props.sessionName
     //   : 'SessionA';
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
+      // TODO 테스트 끝나면 주석처리 mySId
       // mySessionId: sessionName,
       myUserName: '',
       session: undefined,
@@ -70,6 +75,8 @@ class VideoRoomComponent extends Component {
     this.changeTargetVideo = this.changeTargetVideo.bind(this);
     this.validateAccess = this.validateAccess.bind(this);
     this.handleDialogClose = this.handleDialogClose.bind(this);
+    // TODO 테스트 끝나면 주석처리
+    // this.getToken = this.getToken.bind(this);
   }
 
   componentDidMount() {
@@ -88,9 +95,11 @@ class VideoRoomComponent extends Component {
     // }
 
     if (location.state) {
-      this.state.token = location.state.token;
-      this.state.myUserName = userInfo.user.nickname;
-      this.state.classId = classId;
+      this.setState({
+        token: location.state.token,
+        myUserName: userInfo.user.nickname,
+        classId: classId,
+      });
 
       const openViduLayoutOptions = {
         maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
@@ -142,12 +151,19 @@ class VideoRoomComponent extends Component {
   }
 
   connectToSession() {
+    // TODO 테스트 끝나면 돌리기
+    // this.getToken();
     if (this.state.token !== undefined) {
       this.connect(this.state.token);
     } else {
       // 토큰이 없는 경우 메인페이지로 이동
-      alert('클래스에 참여할 권한이 없습니다.');
-      this.props.navigate('/', { replace: true });
+      Swal.fire({
+        title: '클래스에 참여할 권한이 없습니다',
+        text: '메인페이지로 이동합니다',
+        icon: 'error',
+      }).then(() => {
+        this.props.navigate('/', { replace: true });
+      });
     }
   }
 
@@ -497,11 +513,20 @@ class VideoRoomComponent extends Component {
         if (error && error.name === 'SCREEN_EXTENSION_NOT_INSTALLED') {
           this.setState({ showExtensionDialog: true });
         } else if (error && error.name === 'SCREEN_SHARING_NOT_SUPPORTED') {
-          alert('Your browser does not support screen sharing');
+          Swal.fire({
+            title: 'Your browser does not support screen sharing',
+            icon: 'info',
+          });
         } else if (error && error.name === 'SCREEN_EXTENSION_DISABLED') {
-          alert('You need to enable screen sharing extension');
+          Swal.fire({
+            title: 'You need to enable screen sharing extension',
+            icon: 'info',
+          });
         } else if (error && error.name === 'SCREEN_CAPTURE_DENIED') {
-          alert('You need to choose a window or application to share');
+          Swal.fire({
+            title: 'You need to choose a window or application to share',
+            icon: 'question',
+          });
         }
       },
     );
@@ -645,6 +670,7 @@ class VideoRoomComponent extends Component {
 
     return (
       <>
+        {/* // TODO 테스트 끝나면 해제 */}
         {/* 접근 에러가 있다면 바로 메인페이지로 이동 */}
         {!this.validateAccess() && <Navigate to="/" replace="true" />}
 
@@ -807,83 +833,82 @@ class VideoRoomComponent extends Component {
 
   // 별도의 서버없이 로컬에서 Openvidu 서버만으로 테스트하는 경우 사용하는 코드
   // 세션 관리 불가
-  /*
-  getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId),
-    );
-  }
+  // TODO 테스트 끝나면 아래 전부 주석처리 하기
+  // getToken() {
+  //   return this.createSession(this.state.mySessionId).then((sessionId) =>
+  //     this.createToken(sessionId),
+  //   );
+  // }
 
-  createSession(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(this.OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
-          headers: {
-            Authorization:
-              'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          console.log('CREATE SESION', response);
-          resolve(response.data.id);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error.response && error.response.status === 409) {
-            resolve(sessionId);
-          } else {
-            console.log(error);
-            console.warn(
-              'No connection to OpenVidu Server. This may be a certificate error at ' +
-                this.OPENVIDU_SERVER_URL,
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  this.OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  this.OPENVIDU_SERVER_URL +
-                  '"',
-              )
-            ) {
-              window.location.assign(
-                this.OPENVIDU_SERVER_URL + '/accept-certificate',
-              );
-            }
-          }
-        });
-    });
-  }
+  // createSession(sessionId) {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({ customSessionId: sessionId });
+  //     axios
+  //       .post(this.OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+  //         headers: {
+  //           Authorization:
+  //             'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
+  //           'Content-Type': 'application/json',
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log('CREATE SESION', response);
+  //         resolve(response.data.id);
+  //       })
+  //       .catch((response) => {
+  //         var error = Object.assign({}, response);
+  //         if (error.response && error.response.status === 409) {
+  //           resolve(sessionId);
+  //         } else {
+  //           console.log(error);
+  //           console.warn(
+  //             'No connection to OpenVidu Server. This may be a certificate error at ' +
+  //               this.OPENVIDU_SERVER_URL,
+  //           );
+  //           if (
+  //             window.confirm(
+  //               'No connection to OpenVidu Server. This may be a certificate error at "' +
+  //                 this.OPENVIDU_SERVER_URL +
+  //                 '"\n\nClick OK to navigate and accept it. ' +
+  //                 'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+  //                 this.OPENVIDU_SERVER_URL +
+  //                 '"',
+  //             )
+  //           ) {
+  //             window.location.assign(
+  //               this.OPENVIDU_SERVER_URL + '/accept-certificate',
+  //             );
+  //           }
+  //         }
+  //       });
+  //   });
+  // }
 
-  createToken(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({});
-      axios
-        .post(
-          this.OPENVIDU_SERVER_URL +
-            '/openvidu/api/sessions/' +
-            sessionId +
-            '/connection',
-          data,
-          {
-            headers: {
-              Authorization:
-                'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
-              'Content-Type': 'application/json',
-            },
-          },
-        )
-        .then((response) => {
-          console.log('TOKEN', response);
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
-    });
-  }
-  */
+  // createToken(sessionId) {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({});
+  //     axios
+  //       .post(
+  //         this.OPENVIDU_SERVER_URL +
+  //           '/openvidu/api/sessions/' +
+  //           sessionId +
+  //           '/connection',
+  //         data,
+  //         {
+  //           headers: {
+  //             Authorization:
+  //               'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
+  //             'Content-Type': 'application/json',
+  //           },
+  //         },
+  //       )
+  //       .then((response) => {
+  //         console.log('TOKEN', response);
+  //         resolve(response.data.token);
+  //       })
+  //       .catch((error) => reject(error));
+  //   });
+  // }
 }
 
 const mapStateToProps = (state) => ({

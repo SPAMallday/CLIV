@@ -6,9 +6,6 @@ import { BASE_URL } from './config';
 
 export const apiClient = axios.create({
   baseURL: BASE_URL, // 환경변수로 지정한 BASE_URL을 사용
-  // headers: {
-  //   Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
-  // },
 });
 
 const Interceptor = ({ children }) => {
@@ -24,7 +21,7 @@ const Interceptor = ({ children }) => {
         console.log('Interceptor - useEffect : ' + token);
         if (!config.headers.Authorization) {
           if (token && token.length > 0) {
-            config.headers.Authorization = 'Bearer ' + token; // 왜..............안될까 계속 안되면useEffect 안쓰는 방법으로 해야겠음..,.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+            config.headers.Authorization = 'Bearer ' + token;
           }
         }
         return config;

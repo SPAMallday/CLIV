@@ -39,27 +39,7 @@ function RecRequest() {
       time: '2022.08.23 오후 1시 ~',
       amount: '50000원',
       content:
-        '아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ',
-    },
-    {
-      category: '가죽 공예2',
-      title: '가죽으로 DB를 만들고 싶어요 ㅠㅠㅠ',
-      requestperson: '블루레몬민주',
-      requestdate: '2022.07.23',
-      time: '2022.08.23 오후 1시 ~',
-      amount: '50000원',
-      content:
-        '아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ',
-    },
-    {
-      category: '가죽 공예3',
-      title: '가죽으로 DB를 만들고 싶어요 ㅠㅠㅠ',
-      requestperson: '블루레몬민주',
-      requestdate: '2022.07.23',
-      time: '2022.08.23 오후 1시 ~',
-      amount: '50000원',
-      content:
-        '아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ',
+        '아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ',
     },
   ]);
 
@@ -67,8 +47,8 @@ function RecRequest() {
     recReq(userId).then((res) => {
       setMList(res);
 
-      console.log(userId);
-      console.log(res);
+      // console.log(userId);
+      // console.log(res);
     });
   }, []);
 
@@ -90,16 +70,13 @@ function RecRequest() {
                   <Box sx={{ flex: '75%' }}>
                     <Stack spacing={1}>
                       <Typography fontWeight={700}>
-                        [{item.categoryContent}] {item.title}
+                        [{item.category}] {item.title}
                       </Typography>
-                      <Typography>요청자 : {item.requestperson} </Typography>
-                      {/* 아마 back에 수정 요청해야할듯??? 대충 코드보니 id만 보내는 듯함. */}
+                      <Typography>요청자 : {item.nickname} </Typography>
                       <Typography>
-                        요청일 : {item.regDate.slice(0, 10)}{' '}
+                        요청일 : {item.regdate.slice(0, 10)}
                       </Typography>
                       <Typography>원하는 시간 : {item.wantedDay} </Typography>
-                      {/* <Typography>예상 금액 : {item.amount} </Typography> */}
-                      {/* Back단에 해당 내용이 없어서 지웠음 (HJ) */}
                     </Stack>
                   </Box>
 
@@ -122,6 +99,7 @@ function RecRequest() {
       ))}
 
       <RequestModal
+        type="receive"
         handleState={handleState}
         openDetail={openDetail}
         transItem={transItem}

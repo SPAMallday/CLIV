@@ -8,6 +8,7 @@ export const loginUser = createAsyncThunk(
   // payloadCreator callback: 비동기 로직의 결과를 포함하고 있는 프로미스를 반환하는 비동기 함수
   async (access_token, thunkAPI) => {
     try {
+      console.log('액토', access_token);
       const res = await apiClient.post('/api/kakao/login', {
         accessToken: `${access_token}`,
       });
@@ -37,11 +38,9 @@ export const userInfoSlice = createSlice({
       token: '', // jwt 토큰
     },
     isLogin: false,
+    loading: false,
   },
   reducers: {
-    increment: (state) => {
-      console.log('inc');
-    },
     // login 성공 시
     loginSuccess: (state) => {
       // state.id = action.payload.id;
@@ -67,6 +66,9 @@ export const userInfoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state, action) => {
+        // 로딩중
+        state.loading = true;
+
         console.log('pending');
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -82,6 +84,7 @@ export const userInfoSlice = createSlice({
 
         state.isLogin = true;
 
+        state.loading = false;
         console.log('fulfilled');
       })
       .addCase(loginUser.rejected, (state, action) => {

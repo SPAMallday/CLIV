@@ -33,8 +33,8 @@ export default function NotiItem(props) {
     appText = '수업이 시작되었습니다!';
     toPath = '/myhistory';
   } else {
-    appText = '에 대한 제안을 받았습니다!';
-    toPath = '/chat';
+    appText = '요청의 1대1 수업이 개설되었습니다!';
+    toPath = '/myhistory';
   }
   // FIXME - regtime 전송좀!!
   if (props.noti.regDate != null) {
