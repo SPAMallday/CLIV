@@ -40,7 +40,7 @@ public class NotificationController {
             @ApiResponse(code = 401, message = "접근 권한 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<SseEmitter> subscribe(HttpServletResponse response, @RequestParam String authId) {
+    public ResponseEntity<SseEmitter> subscribe(HttpServletResponse response, @PathVariable String authId) {
         /**
          * @Method Name : subscribe
          * @작성자 : 허성은
@@ -50,7 +50,7 @@ public class NotificationController {
          */
         log.info("구독 신청");
         response.setContentType("text/event-stream");	// Header에 Content Type을 Event Stream으로 설정
-        response.setCharacterEncoding("UTF-8");		// Header에 encoding을 UTF-8로 설정
+        response.setCharacterEncoding("UTF-8");// Header에 encoding을 UTF-8로 설정
 
         return new ResponseEntity<>(notificationService.subscribe(authId), HttpStatus.OK);
     }
