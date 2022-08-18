@@ -26,7 +26,8 @@ public class NotificationQuerydslRepository {
         return jpaQueryFactory
                 .select(qNotification)
                 .from(qNotification)
-                .where(qNotification.receiver.id.eq(authId))
+                .where(qNotification.receiver.id.eq(authId).and(qNotification.isRead.isFalse()))
+                .orderBy(qNotification.regdate.desc())
                 .fetch();
     }
 }

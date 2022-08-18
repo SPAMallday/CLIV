@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.List;
  * @Class 설명 : SSE 기반 알림 요청을 수행하는 Controller
  */
 @RestController
+@Slf4j
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -46,6 +48,7 @@ public class NotificationController {
          *               로그인한 회원은 이벤트가 발생했을때 실시간 알림을 받을 수 있다.
          *               이전에 받지 못한 이벤트가 존재하는 경우 "Last-Event-ID"를 통해 마지막 이벤트 아이디를 받을 수 있으며, 필수 값은 아니다.
          */
+        log.info("구독 신청");
         response.setContentType("text/event-stream");	// Header에 Content Type을 Event Stream으로 설정
         response.setCharacterEncoding("UTF-8");		// Header에 encoding을 UTF-8로 설정
 

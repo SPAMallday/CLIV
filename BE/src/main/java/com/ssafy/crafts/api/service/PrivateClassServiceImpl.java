@@ -6,6 +6,7 @@ import com.ssafy.crafts.api.request.MatchingTeacherRequest;
 import com.ssafy.crafts.api.request.PrivateClassRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
+import com.ssafy.crafts.db.entity.MBoardTeacher;
 import com.ssafy.crafts.db.entity.Member;
 import com.ssafy.crafts.db.entity.PrivateClass;
 import com.ssafy.crafts.db.repository.jpaRepo.ClassInfoRepository;
@@ -50,7 +51,11 @@ public class PrivateClassServiceImpl implements PrivateClassService{
                         .tuitionFee(matchingTeacherRequest.getPrice())
                         .mBoardTeacher(mBoardTeacherRepository.findById(mtId).get())
                         .build();
+        MBoardTeacher mBoardTeacher = mBoardTeacherRepository.findById(mtId).get();
+        mBoardTeacher.setAgreeYn(true);
+        mBoardTeacherRepository.save(mBoardTeacher);
 //        privateClassRepository.save(privateClassRequest.toEntity());
         privateClassRepository.save(privateClass);
+
     }
 }

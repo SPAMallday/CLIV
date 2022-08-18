@@ -5,10 +5,7 @@ import com.ssafy.crafts.db.repository.querydslRepo.CategoryQuerydslRepository;
 import com.ssafy.crafts.db.repository.querydslRepo.MemberQuerydslRepository;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 /**
  * @FileName : MatchingTeacherRequest
@@ -18,11 +15,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ApiModel("MatchingTeacherRequest")
 @Builder
 public class MatchingTeacherRequest {
-    private final CategoryQuerydslRepository categoryQuerydslRepository;
-    private final MemberQuerydslRepository memberQuerydslRepository;
 
     @ApiModelProperty(name = "authId", hidden = true)
     private String authId;
