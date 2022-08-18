@@ -6,6 +6,7 @@ import com.ssafy.crafts.api.service.AuthService;
 import com.ssafy.crafts.api.service.MatchingService;
 import com.ssafy.crafts.api.service.PrivateClassService;
 import com.ssafy.crafts.common.util.JwtHeaderUtil;
+import com.ssafy.crafts.db.entity.PrivateClass;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,8 +47,7 @@ public class PrivateClassController {
     })
     public ResponseEntity<Object> createPrivateClass(HttpServletRequest request,
 //                                                 @RequestBody PrivateClassRequest privateClassRequest,
-                                                     @RequestBody MatchingTeacherRequest matchingTeacherRequest,
-                                                     @PathVariable int mtId){
+                                                     @RequestBody MatchingTeacherRequest matchingTeacherRequest){
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
@@ -67,9 +67,9 @@ public class PrivateClassController {
 //        matchingService.updateMatStatus(mtId);
 
         // 채팅 사라져서 확인 누르면 바로 1대1 수업 생성으로 연결
-        privateClassService.createPrivateClass(matchingTeacherRequest, mtId);
+        PrivateClass privateClass = privateClassService.createPrivateClass(matchingTeacherRequest);
         log.info("매칭글의 매칭 여부 업데이트");
-        matchingService.updateMatStatus(mtId);
+        matchingService.updateMatStatus(privateClass.getMBoardTeacher().getId());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

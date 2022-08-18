@@ -38,7 +38,7 @@ public class PrivateClassServiceImpl implements PrivateClassService{
     private final MBoardTeacherRepository mBoardTeacherRepository;
 
     @Override
-    public void createPrivateClass(MatchingTeacherRequest matchingTeacherRequest, int mtId) {
+    public PrivateClass createPrivateClass(MatchingTeacherRequest matchingTeacherRequest) {
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
@@ -49,13 +49,13 @@ public class PrivateClassServiceImpl implements PrivateClassService{
                         .className(matchingTeacherRequest.getTitle())
                         .classDatetime(matchingTeacherRequest.getWantedDay())
                         .tuitionFee(matchingTeacherRequest.getPrice())
-                        .mBoardTeacher(mBoardTeacherRepository.findById(mtId).get())
+                        .mBoardTeacher(mBoardTeacherRepository.findById(matchingTeacherRequest.getMtId()).get())
                         .build();
-        MBoardTeacher mBoardTeacher = mBoardTeacherRepository.findById(mtId).get();
+        MBoardTeacher mBoardTeacher = mBoardTeacherRepository.findById(matchingTeacherRequest.getMtId()).get();
         mBoardTeacher.setAgreeYn(true);
         mBoardTeacherRepository.save(mBoardTeacher);
 //        privateClassRepository.save(privateClassRequest.toEntity());
         privateClassRepository.save(privateClass);
-
+        return privateClass;
     }
 }

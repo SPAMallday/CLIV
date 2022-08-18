@@ -21,7 +21,7 @@ public class MatchingTeacherRequest {
 
     @ApiModelProperty(name = "authId", hidden = true)
     private String authId;
-
+    private int mtId;
     private String title;       // 제목
     private String wantedDay;   // 원하는 수업 날짜
     private String teacherGender;   // 강사 성별

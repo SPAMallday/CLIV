@@ -22,13 +22,13 @@ public class PrivateClass {
     @Column(name = "pc_id")
     private int id;     // id
 
-    @Column(name = "class_name")
+    @Column(name = "class_name", nullable = false)
     private String className;   // 수업명
 
-    @Column(name = "class_datetime")
+    @Column(name = "class_datetime", nullable = false)
     private String classDatetime;   // 수업일
 
-    @Column(name = "tuition_fee")
+    @Column(name = "tuition_fee", nullable = false)
     private int tuitionFee;      // 수강료
 
 //    @Column(name = "mt_id")
