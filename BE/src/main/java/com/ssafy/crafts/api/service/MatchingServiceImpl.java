@@ -114,6 +114,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .content(mBoardTeacher.getMBoard().getContent())
                         .nickname(mBoardTeacher.getTeacher().getNickname())
                         .category(mBoardTeacher.getMBoard().getCategory().getContent())
+                        .price(mBoardTeacher.getMBoard().getPrice())
                         .regdate(mBoardTeacher.getRegdate())
                         .build());
             }

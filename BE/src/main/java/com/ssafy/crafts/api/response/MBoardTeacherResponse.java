@@ -39,7 +39,7 @@ public class MBoardTeacherResponse {
 
     @ApiModelProperty(name = "category", example = "카테고리")
     private String category;  // 카데고리
-
+    private int price;
     private Timestamp regdate;
 
 }
