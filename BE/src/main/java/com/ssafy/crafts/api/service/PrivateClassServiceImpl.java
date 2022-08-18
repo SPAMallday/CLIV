@@ -47,7 +47,7 @@ public class PrivateClassServiceImpl implements PrivateClassService{
                         .className(privateClassRequest.getClassName())
                         .classDatetime(privateClassRequest.getClassDatetime())
                         .tuitionFee(privateClassRequest.getTuitionFee())
-                        .mBoardTeacher(mBoardTeacherRepository.getOne(privateClassRequest.getMtId()))
+                        .mBoardTeacher(mBoardTeacherRepository.findById(privateClassRequest.getMtId()).get())
                         .build();
         MBoardTeacher mBoardTeacher = mBoardTeacherRepository.findById(privateClassRequest.getMtId()).get();
         mBoardTeacher.setAgreeYn(true);
