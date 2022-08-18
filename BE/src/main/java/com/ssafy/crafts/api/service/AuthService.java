@@ -61,6 +61,7 @@ public class AuthService {
             Member newbie = Member.builder()
                     .auth(authRepository.getOne(id))
                     .gender(kakaoMember.getGender())
+                    .profileImage(kakaoMember.getProfileImage())
                     .status(Member.Status.ACTIVE)
                     .roleType(Member.RoleType.MEMBER)
                     .nickname("회원_"+id)

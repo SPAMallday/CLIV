@@ -61,7 +61,7 @@ public class ClassInfo {
     @Column(nullable = false)
     private int price;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 3000)
     private String content;
 
     @Column(length = 200)

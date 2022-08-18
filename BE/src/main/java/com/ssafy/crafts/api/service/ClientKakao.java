@@ -36,6 +36,7 @@ public class ClientKakao {
                         .email(kakaoUserResponse.getKakaoAccount().getEmail())
                         .build())
                 .gender(kakaoUserResponse.getKakaoAccount().getGender())
+                .profileImage(kakaoUserResponse.getProperties().getProfileImage())
                 .build();
     }
 }

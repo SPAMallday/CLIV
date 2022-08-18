@@ -13,4 +13,5 @@ public class UserInfoResponse {
 
     private String gender;
     private String email;
+    private String profileImageURL;
 }
