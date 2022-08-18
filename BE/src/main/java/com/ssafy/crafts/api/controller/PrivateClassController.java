@@ -38,7 +38,7 @@ public class PrivateClassController {
     private final AuthService authService;
     private final PrivateClassService privateClassService;
 
-    @PostMapping("{mtId}")
+    @PostMapping
     @ApiOperation(value = "새로운 1:1 수업정보를 등록한다.", response = String.class)
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
