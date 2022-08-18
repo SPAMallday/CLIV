@@ -27,7 +27,7 @@ TabPanel.propTypes = {
 function NotiCenter(props) {
   const notiData = props.notiData;
   let classNotiArr = [],
-    chatNotiArr = [];
+    matchNotiArr = [];
 
   if (notiData.length > 0) {
     for (const noti of notiData) {
@@ -39,7 +39,7 @@ function NotiCenter(props) {
       }
       // 수업 관련 메세지가 아니라면
       else {
-        chatNotiArr.push({
+        matchNotiArr.push({
           id: noti.id,
           msg: noti.message,
         });
@@ -61,7 +61,7 @@ function NotiCenter(props) {
         }}
       >
         <Tab value="normal" label="수업" />
-        <Tab value="chat" label="채팅" />
+        <Tab value="matching" label="매칭" />
       </Tabs>
       <TabPanel value={props.notiTabValue} index="normal">
         {classNotiArr.length > 0 ? (
@@ -91,14 +91,14 @@ function NotiCenter(props) {
           </Typography>
         )}
       </TabPanel>
-      <TabPanel value={props.notiTabValue} index="chat">
-        {chatNotiArr.length > 0 ? (
+      <TabPanel value={props.notiTabValue} index="matching">
+        {matchNotiArr.length > 0 ? (
           <Stack sx={{ width: '100%' }}>
             <MenuList sx={{ width: '100%' }}>
-              {chatNotiArr.map((noti, i) => {
+              {matchNotiArr.map((noti, i) => {
                 return (
                   <NotiItem
-                    type="chat"
+                    type="matching"
                     noti={noti}
                     nowTime={props.nowTime}
                     setTargetNotiId={props.setTargetNotiId}

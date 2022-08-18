@@ -31,14 +31,14 @@ const ClassDetail = () => {
         <Grid item xs={12} md sx={{ mr: { xs: 0, md: 4 }, mb: 4 }}>
           <Stack spacing={4}>
             <ClassDetailItem value={cDetail} />
-            <Box>
-              {/* Q&A 뺄거면 ... */}
+            {/* <Box>
+              // Q&A 뺄거면 ...
               <Typography fontWeight={800} fontSize={'1.4rem'}>
                 Q&A
               </Typography>
               <br />
               <QnaItem />
-            </Box>
+            </Box> */}
           </Stack>
         </Grid>
         <Grid item xs={12} md={4}>

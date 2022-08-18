@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { getExClass, getToken } from '../../../api/classAPI';
 import { useNavigate } from 'react-router-dom';
 import { useLayoutEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 function ReserveClass() {
   const navigate = useNavigate();
@@ -56,7 +57,11 @@ function ReserveClass() {
                 state: { token: token },
               });
             } else {
-              alert('수업 입장에 실패했습니다.');
+              Swal.fire({
+                title: '수업 입장에 실패했습니다',
+                text: '서버에 문제가 발생했어요! 나중에 다시 시도해주세요',
+                icon: 'error',
+              });
             }
           };
 

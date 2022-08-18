@@ -55,7 +55,7 @@ const ClassThumbnailList = ({ value }) => {
                       component="div"
                       noWrap
                     >
-                      {cl.className}ddddddddddddddddddddddddddddddddddd
+                      {cl.className}
                     </Typography>
                   </Stack>
                 </CardActions>

@@ -21,9 +21,9 @@ function ClassManage() {
     case '/classmanage/create':
       nowValue = 2;
       break;
-    case '/classmanage/qna':
-      nowValue = 3;
-      break;
+    // case '/classmanage/qna':
+    //   nowValue = 3;
+    //   break;
     default:
       break;
   }
@@ -42,16 +42,16 @@ function ClassManage() {
         </>
       );
       break;
-    case 3:
-      customOutlet = (
-        <>
-          <p className="classManageTitle">Q & A 관리</p>
-          <Box sx={{ px: 8, pt: 4 }}>
-            <Outlet />
-          </Box>
-        </>
-      );
-      break;
+    // case 3:
+    //   customOutlet = (
+    //     <>
+    //       <p className="classManageTitle">Q & A 관리</p>
+    //       <Box sx={{ px: 8, pt: 4 }}>
+    //         <Outlet />
+    //       </Box>
+    //     </>
+    //   );
+    //   break;
 
     default:
       break;
@@ -97,7 +97,7 @@ function ClassManage() {
         <Tab label="예정 클래스" component={Link} to="reserve" />
         <Tab label="지난 클래스" component={Link} to="close" />
         <Tab label="클래스 생성" component={Link} to="create" />
-        <Tab label="Q & A 관리" component={Link} to="qna" />
+        {/* <Tab label="Q & A 관리" component={Link} to="qna" /> */}
       </Tabs>
       <Box sx={{ p: 3, width: '100%' }}>{customOutlet}</Box>
     </Box>

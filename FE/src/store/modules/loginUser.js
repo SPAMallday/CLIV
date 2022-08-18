@@ -8,6 +8,7 @@ export const loginUser = createAsyncThunk(
   // payloadCreator callback: 비동기 로직의 결과를 포함하고 있는 프로미스를 반환하는 비동기 함수
   async (access_token, thunkAPI) => {
     try {
+      console.log('액토', access_token);
       const res = await apiClient.post('/api/kakao/login', {
         accessToken: `${access_token}`,
       });

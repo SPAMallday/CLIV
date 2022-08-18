@@ -11,6 +11,7 @@ import {
   getExClassHistory,
   getToken,
 } from '../../api/classAPI';
+import Swal from 'sweetalert2';
 
 function MyClassHistory() {
   const navigate = useNavigate();
@@ -83,7 +84,11 @@ function MyClassHistory() {
               state: { token: token },
             });
           } else {
-            alert('수업 입장에 실패했습니다.');
+            Swal.fire({
+              title: '수업 입장에 실패했습니다',
+              text: '선생님이 아직 수업을 시작하지 않은 것 같아요!\n\n수업시작 알림이 오면 다시 시도해주세요',
+              icon: 'error',
+            });
           }
         };
 

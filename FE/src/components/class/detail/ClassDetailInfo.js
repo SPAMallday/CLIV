@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { Card, CardContent, Typography, Button, Stack } from '@mui/material';
 import StarRating from '../../starrating/StarRating';
 import { registClass } from '../../../api/classAPI';
+import Swal from 'sweetalert2';
 
 import './ClassDetailInfo.css';
 import { useLocation, useParams } from 'react-router-dom';
@@ -39,11 +40,19 @@ function ClassDetailInfo({ value, setCDetail }) {
     // 제일 베스트는 수강인원만 다시 가져오는게 좋음 (백엔드 API를 수정해서)
     registClass(classId).then((res) => {
       if (res.status === 200 || res.status === 201) {
-        alert('수강신청에 성공했습니다!');
+        Swal.fire({
+          icon: 'success',
+          title: '수강신청 성공!',
+          text: '수업 시작 알림이 오면 나의 수강이력에서 입장해주세요',
+        });
 
         setCDetail((prev) => ({ ...prev, memberCnt: res.data.memberCnt }));
       } else {
-        alert('수강신청에 실패했습니다..');
+        Swal.fire({
+          icon: 'success',
+          title: '수강신청 실패...',
+          text: '수강인원이 다 찼거나 서버와 연결이 원활하지 않을 수 있어요',
+        });
       }
     });
     // }

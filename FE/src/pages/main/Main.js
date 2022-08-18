@@ -8,6 +8,9 @@ import ClassThumbnailList from '../../components/main/ClassThumbnailList';
 import { mainList } from '../../api/mainAPI';
 import { styled } from '@mui/material';
 
+import 'swiper/css';
+import ListCarousel from '../../components/main/ListCarousel';
+
 const MainListTitle = styled(Typography)({
   align: 'left',
   color: 'text.primary',
@@ -38,8 +41,8 @@ function Main() {
       <Box sx={{ pt: 4 }}>
         <Container maxWidth="lg">
           <Box sx={{ py: 2 }}>
-            <MainListTitle>마감 임박 클래스</MainListTitle>
-            <ClassThumbnailList value={hcList} />
+            <MainListTitle>마감 임박 클래스💥</MainListTitle>
+            <ListCarousel value={hcList} type="deadline" />
           </Box>
           <Box sx={{ py: 2 }}>
             <MainListTitle>곧 시작하는 클래스</MainListTitle>
@@ -47,6 +50,7 @@ function Main() {
           </Box>
           <Box sx={{ py: 2 }}>
             <MainListTitle>추천 클래스</MainListTitle>
+            {/* <ListCarousel value={allList} /> */}
             <ClassThumbnailList value={allList} />
           </Box>
         </Container>

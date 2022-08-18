@@ -22,6 +22,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+import Swal from 'sweetalert2';
 
 import { apiClient } from '../../../api';
 
@@ -178,7 +179,11 @@ function ClassCreate() {
     if (title !== '' && dateTime !== timeNow && content !== '') {
       sendCreate();
     } else {
-      alert('모든 내용을 작성해주세요!');
+      Swal.fire({
+        title: '잠깐!', // Alert 제목
+        text: '모든 내용을 작성해주세요', // Alert 내용
+        icon: 'error', // Alert 타입
+      });
     }
   };
 
@@ -190,7 +195,11 @@ function ClassCreate() {
     const maxSize = 5 * 1024 * 1024; //5MB
 
     if (imgSize > maxSize) {
-      alert('클래스 대표 사진은 5MB 이하로 사용해주세요!');
+      Swal.fire({
+        title: '클래스 대표 사진은 5MB 이하로 사용해주세요!', // Alert 제목
+        text: '모든 내용을 작성해주세요', // Alert 내용
+        icon: 'info', // Alert 타입
+      });
       return;
     } else {
       setUploadImage(event.target.files[0]);
