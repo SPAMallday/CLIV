@@ -55,8 +55,10 @@ public class MBoard {
     @JoinColumn(name = "auth_id")
     private Member member;
 
+    @Column
+    private int price;
     @Builder
-    public MBoard(int id, String title, String wantedDay, String teacherGender, String content, Timestamp regDate, boolean matStatus, List<MBoardTeacher> mBoardTeacher, Category category, Member member) {
+    public MBoard(int id, String title, String wantedDay, String teacherGender, String content, Timestamp regDate, boolean matStatus, List<MBoardTeacher> mBoardTeacher, Category category, Member member, int price) {
         this.id = id;
         this.title = title;
         this.wantedDay = wantedDay;
@@ -67,6 +69,7 @@ public class MBoard {
         this.mBoardTeacher = mBoardTeacher;
         this.category = category;
         this.member = member;
+        this.price = price;
     }
 
     public void updateMBoard(String title, String content, String wantedDay){

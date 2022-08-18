@@ -24,5 +24,6 @@ public class MatchingResponse {
     private String authId;      // 작성자 아이디
     private String categoryContent;     // 카데고리명
     private boolean matStatus;     // 매칭 완료 여부
+    private int price; // 가격
     private Timestamp regDate;      // 작성시간
 }

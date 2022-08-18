@@ -31,15 +31,14 @@ import java.util.List;
 public class NotificationController {
     private final NotificationService notificationService;
     private final AuthService authService;
-    @GetMapping(value = "/sub", produces = "text/event-stream")
+    @GetMapping(value = "/sub", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @ApiOperation(value = "알림 구독", notes = "알림을 구독한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "접근 권한 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<SseEmitter> subscribe(HttpServletRequest request, HttpServletResponse response,
-                                                @RequestParam String authId) {
+    public ResponseEntity<SseEmitter> subscribe(HttpServletResponse response, @RequestParam String authId) {
         /**
          * @Method Name : subscribe
          * @작성자 : 허성은
@@ -47,7 +46,8 @@ public class NotificationController {
          *               로그인한 회원은 이벤트가 발생했을때 실시간 알림을 받을 수 있다.
          *               이전에 받지 못한 이벤트가 존재하는 경우 "Last-Event-ID"를 통해 마지막 이벤트 아이디를 받을 수 있으며, 필수 값은 아니다.
          */
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/event-stream");	// Header에 Content Type을 Event Stream으로 설정
+        response.setCharacterEncoding("UTF-8");		// Header에 encoding을 UTF-8로 설정
         return new ResponseEntity<>(notificationService.subscribe(authId), HttpStatus.OK);
     }
 

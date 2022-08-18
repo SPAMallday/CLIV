@@ -55,6 +55,7 @@ public class MatchingServiceImpl implements MatchingService{
                 .matStatus(matchingRequest.isMatStatus())
                 .category(categoryQuerydslRepository.findCategoryById(matchingRequest.getCategoryId()))
                 .member(memberQuerydslRepository.findMemberByAuthId(matchingRequest.getAuthId()).get())
+                .price(matchingRequest.getPrice())
                 .build();
 
         matchingRepository.save(mBoard);
@@ -138,6 +139,7 @@ public class MatchingServiceImpl implements MatchingService{
                 .authId(mBoard.getMember().getId())
                 .categoryContent(mBoard.getCategory().getContent())
                 .matStatus(mBoard.isMatStatus())
+                .price(mBoard.getPrice())
                 .regDate(mBoard.getRegDate())
                 .build();
     }
@@ -162,6 +164,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .authId(mBoard.getMember().getId())
                         .categoryContent(mBoard.getCategory().getContent())
                         .matStatus(mBoard.isMatStatus())
+                        .price(mBoard.getPrice())
                         .regDate(mBoard.getRegDate())
                         .build());
         }

@@ -43,6 +43,8 @@ public class MatchingRequest {
     @ApiModelProperty(name = "categoryId", example = "카테고리 id")
     private int categoryId;     // 카테고리 아이디
 
+    private int price; // 가격
+
     public void setAuthId(String authId){
         this.authId = authId;
     }
