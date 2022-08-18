@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@mui/material';
 import { Stack } from '@mui/material';
 import DomPurify from 'dompurify';
+import ReactHtmlParser from 'react-html-parser';
 
 import './ClassDetailItem.css';
 
@@ -35,7 +36,8 @@ function ClassDetailItem({ value }) {
       </Card>
 
       <Card>
-        <CardContent>{DomPurify.sanitize(content)}</CardContent>
+        {/* <CardContent>{DomPurify.sanitize(content)}</CardContent> */}
+        <CardContent>{ReactHtmlParser(content)}</CardContent>
       </Card>
     </Stack>
   );

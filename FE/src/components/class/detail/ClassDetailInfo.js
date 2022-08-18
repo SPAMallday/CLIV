@@ -51,7 +51,7 @@ function ClassDetailInfo({ value, setCDetail }) {
         Swal.fire({
           icon: 'success',
           title: '수강신청 실패...',
-          text: '수강인원이 다 찼거나 서버와 연결이 원활하지 않을 수 있어요',
+          text: '수강인원이 다 찼거나 서버와 연결이 원활하지 않을 수 있어요 \n 아니면 혹시 본인의 수업이 아닌가요?!',
         });
       }
     });
@@ -112,7 +112,8 @@ function ClassDetailInfo({ value, setCDetail }) {
               sx={{ width: '50%', height: '3rem', borderRadius: '1.5rem' }}
             >
               <Typography fontWeight={700}>
-                {teacherAuth === 'TEACHER' ? '클래스 정보 수정' : '수강신청'}
+                {/* {teacherAuth === 'TEACHER' ? '클래스 정보 수정' : '수강신청'} */}
+                수강신청
               </Typography>
             </Button>
           </Box>

@@ -18,10 +18,10 @@ function ClassListItem(props) {
   const min = props.data.classDatetime.getMinutes();
 
   if (
-    props.typeHandler.type === 'reserve' ||
-    (year === props.nowTime.getFullYear() &&
-      month === props.nowTime.getMonth() + 1 &&
-      date === props.nowTime.getDate())
+    props.typeHandler.type === 'reserve' &&
+    year === props.nowTime.getFullYear() &&
+    month === props.nowTime.getMonth() + 1 &&
+    date === props.nowTime.getDate()
     // 테스트용으로 일부러 < 로 맞춤
     // date < props.nowTime.getDate())
   ) {

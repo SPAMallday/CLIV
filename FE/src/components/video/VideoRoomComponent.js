@@ -25,15 +25,23 @@ class VideoRoomComponent extends Component {
   constructor(props) {
     super(props);
 
+    // FIXME 백엔드 배포 연결 테스트용
     this.OPENVIDU_SERVER_URL =
+      // 'https://i7a605.p.ssafy.io:8443';
+
       process.env.NODE_ENV === 'production'
         ? process.env.REACT_APP_BASE_URL +
           ':' +
           process.env.REACT_APP_OPENVIDU_PORT
         : 'https://' + window.location.hostname + ':4443';
-    this.OPENVIDU_SERVER_SECRET = process.env.REACT_APP_OPENVIDU_SECRET
-      ? process.env.REACT_APP_OPENVIDU_SECRET
-      : 'MY_SECRET';
+
+    // FIXME 백엔드 배포 연결 테스트용
+    this.OPENVIDU_SERVER_SECRET =
+      // 'CLIV';
+
+      process.env.REACT_APP_OPENVIDU_SECRET
+        ? process.env.REACT_APP_OPENVIDU_SECRET
+        : 'MY_SECRET';
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
     // TODO 테스트 끝나면 주석처리 sessionName
@@ -672,7 +680,7 @@ class VideoRoomComponent extends Component {
       <>
         {/* // TODO 테스트 끝나면 해제 */}
         {/* 접근 에러가 있다면 바로 메인페이지로 이동 */}
-        {!this.validateAccess() && <Navigate to="/" replace="true" />}
+        {/* {!this.validateAccess() && <Navigate to="/" replace="true" />} */}
 
         <div className="container" id="container">
           <ToolbarComponent

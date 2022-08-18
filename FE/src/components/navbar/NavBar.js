@@ -251,9 +251,9 @@ function NavBar() {
             >
               <ListItemText primary="받은 요청" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
+            {/* <ListItemButton sx={{ pl: 4 }}>
               <ListItemText primary="채팅" />
-            </ListItemButton>
+            </ListItemButton> */}
           </List>
         </Collapse>
         <ListItem disablePadding onClick={handleDrawerToggle}>
@@ -382,7 +382,7 @@ function NavBar() {
                       </MenuItem>
                     )}
 
-                    <MenuItem onClick={handleCloseMatching}>채팅</MenuItem>
+                    {/* <MenuItem onClick={handleCloseMatching}>채팅</MenuItem> */}
                   </Menu>
                 </Box>
               )}
