@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "1:1수업 관련 API", tags = {"MatchingController"}, description = "매칭 관련 컨트롤러")
 @RestController
 @Slf4j
-@RequestMapping("/api/privateclass/")
+@RequestMapping("/api/privateclass")
 @RequiredArgsConstructor
 public class PrivateClassController {
     private static final String SUCCESS = "success";
@@ -65,8 +65,9 @@ public class PrivateClassController {
 //        privateClassService.createPrivateClass(privateClassRequest, mtId);
 //        log.info("매칭글의 매칭 여부 업데이트");
 //        matchingService.updateMatStatus(mtId);
-
+        log.info("일대일 수업 개설");
         // 채팅 사라져서 확인 누르면 바로 1대1 수업 생성으로 연결
+        log.info(matchingTeacherRequest.getTitle());
         PrivateClass privateClass = privateClassService.createPrivateClass(matchingTeacherRequest);
         log.info("매칭글의 매칭 여부 업데이트");
         matchingService.updateMatStatus(privateClass.getMBoardTeacher().getId());

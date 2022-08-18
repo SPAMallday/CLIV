@@ -40,7 +40,7 @@ public class NotificationController {
             @ApiResponse(code = 401, message = "접근 권한 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<SseEmitter> subscribe(HttpServletResponse response, @PathVariable String authId) {
+    public ResponseEntity<SseEmitter> subscribe(HttpServletResponse response, @RequestParam String authId) {
         /**
          * @Method Name : subscribe
          * @작성자 : 허성은

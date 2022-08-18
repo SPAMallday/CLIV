@@ -5,10 +5,7 @@ import com.ssafy.crafts.api.request.HashtagRequest;
 import com.ssafy.crafts.api.request.MatchingTeacherRequest;
 import com.ssafy.crafts.api.request.PrivateClassRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
-import com.ssafy.crafts.db.entity.ClassInfo;
-import com.ssafy.crafts.db.entity.MBoardTeacher;
-import com.ssafy.crafts.db.entity.Member;
-import com.ssafy.crafts.db.entity.PrivateClass;
+import com.ssafy.crafts.db.entity.*;
 import com.ssafy.crafts.db.repository.jpaRepo.ClassInfoRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.MBoardTeacherRepository;
 import com.ssafy.crafts.db.repository.jpaRepo.PrivateClassRepository;
@@ -36,6 +33,7 @@ public class PrivateClassServiceImpl implements PrivateClassService{
 
     private final PrivateClassRepository privateClassRepository;
     private final MBoardTeacherRepository mBoardTeacherRepository;
+    private final NotificationService notificationService;
 
     @Override
     public PrivateClass createPrivateClass(MatchingTeacherRequest matchingTeacherRequest) {
@@ -56,6 +54,10 @@ public class PrivateClassServiceImpl implements PrivateClassService{
         mBoardTeacherRepository.save(mBoardTeacher);
 //        privateClassRepository.save(privateClassRequest.toEntity());
         privateClassRepository.save(privateClass);
+        // 매칭 성공 알림 학생에게 전송
+        String authId = mBoardTeacherRepository.findById(matchingTeacherRequest.getMtId()).get().getMBoard().getMember().getId();
+        String message = matchingTeacherRequest.getTitle();
+        notificationService.send(authId, Notification.NotiType.MatchingResponse, message);
         return privateClass;
     }
 }
