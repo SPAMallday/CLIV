@@ -2,6 +2,7 @@ package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
 import com.ssafy.crafts.api.request.HashtagRequest;
+import com.ssafy.crafts.api.request.MatchingTeacherRequest;
 import com.ssafy.crafts.api.request.PrivateClassRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import com.ssafy.crafts.db.entity.ClassInfo;
@@ -36,7 +37,7 @@ public class PrivateClassServiceImpl implements PrivateClassService{
     private final MBoardTeacherRepository mBoardTeacherRepository;
 
     @Override
-    public void createPrivateClass(PrivateClassRequest privateClassRequest, int mtId) {
+    public void createPrivateClass(MatchingTeacherRequest matchingTeacherRequest, int mtId) {
         /**
          * @Method Name : createPrivateClass
          * @작성자 : 김민주
@@ -44,9 +45,9 @@ public class PrivateClassServiceImpl implements PrivateClassService{
          * */
 
         PrivateClass privateClass = PrivateClass.builder()
-                        .className(privateClassRequest.getClassName())
-                        .classDatetime(privateClassRequest.getClassDatetime())
-                        .tuitionFee(privateClassRequest.getTuitionFee())
+                        .className(matchingTeacherRequest.getTitle())
+                        .classDatetime(matchingTeacherRequest.getWantedDay())
+                        .tuitionFee(matchingTeacherRequest.getPrice())
                         .mBoardTeacher(mBoardTeacherRepository.findById(mtId).get())
                         .build();
 //        privateClassRepository.save(privateClassRequest.toEntity());

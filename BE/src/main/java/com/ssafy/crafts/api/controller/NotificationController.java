@@ -48,6 +48,7 @@ public class NotificationController {
          */
         response.setContentType("text/event-stream");	// Header에 Content Type을 Event Stream으로 설정
         response.setCharacterEncoding("UTF-8");		// Header에 encoding을 UTF-8로 설정
+
         return new ResponseEntity<>(notificationService.subscribe(authId), HttpStatus.OK);
     }
 

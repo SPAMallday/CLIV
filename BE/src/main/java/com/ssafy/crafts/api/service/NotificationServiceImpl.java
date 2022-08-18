@@ -44,6 +44,7 @@ public class NotificationServiceImpl implements NotificationService{
          * @Method 설명 : 알림을 보낸다.
          */
         try {
+            log.info("알림 전송");
             emitter.send(SseEmitter.event()
                     .id(eventId)
                     .data(data));
@@ -80,6 +81,7 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
+    @Async
     public SseEmitter subscribe(String authId) {
         /**
          * @Method Name : subscribe
@@ -100,7 +102,7 @@ public class NotificationServiceImpl implements NotificationService{
         // 503 에러를 방지하기 위해 더미 이벤트를 전송한다.
         String eventId = makeTimeIncludeId(authId);
         sendNotification(emitter, eventId, emitterId, "EventStream Created. [userId=" + authId + "]");
-
+        log.info(authId);
 
         return emitter;
     }

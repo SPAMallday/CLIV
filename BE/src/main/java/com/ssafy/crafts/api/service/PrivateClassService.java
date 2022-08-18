@@ -1,6 +1,7 @@
 package com.ssafy.crafts.api.service;
 
 import com.ssafy.crafts.api.request.ClassInfoRequest;
+import com.ssafy.crafts.api.request.MatchingTeacherRequest;
 import com.ssafy.crafts.api.request.PrivateClassRequest;
 import com.ssafy.crafts.api.response.ClassInfoResponse;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface PrivateClassService {
 
-    void createPrivateClass(PrivateClassRequest privateClassRequest, int mtId);
+    void createPrivateClass(MatchingTeacherRequest matchingTeacherRequest, int mtId);
 
 }

@@ -32,6 +32,7 @@ public class MatchingTeacherRequest {
     private String teacherGender;   // 강사 성별
     private String content;     // 내용
     private int categoryId;     // 카테고리 아이디
+    private int price;
 
     public void setAuthId(String authId){
         this.authId = authId;

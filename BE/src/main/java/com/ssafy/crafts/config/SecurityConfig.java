@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/kakao/**").permitAll() //전체 접근 허용
                 .antMatchers("/api/main/list").permitAll()
                 .antMatchers("/api/class/list").permitAll()
+                .antMatchers("/api/sub").permitAll()
                 .anyRequest().permitAll().and() // 해당 요청을 인증된 사용자만 사용 가능
                 .headers()
                 .frameOptions().disable().and()
