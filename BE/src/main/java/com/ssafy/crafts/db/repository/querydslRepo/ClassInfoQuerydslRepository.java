@@ -208,7 +208,7 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)
                         .and(qClassInfo.teacher.id.eq(authId)))
-                .orderBy(qClassInfo.regdate.desc())
+                .orderBy(qClassInfo.classDatetime.desc())
                 .fetch();
     }
 
@@ -238,7 +238,7 @@ public class ClassInfoQuerydslRepository {
                 .from(qClassInfo)
                 .where(qClassInfo.classStatus.eq(ClassInfo.ClassStatus.EXPECTED)
                         .and(qClassInfo.members.contains(memberQuerydslRepository.findMemberByAuthId(authId).get())))
-                .orderBy(qClassInfo.regdate.desc())
+                .orderBy(qClassInfo.classDatetime.desc())
                 .fetch();
     }
 
