@@ -15,7 +15,6 @@ import lombok.*;
 @Getter
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @ApiModel("MatchingTeacherRequest")
 @Builder
 public class MatchingTeacherRequest {
