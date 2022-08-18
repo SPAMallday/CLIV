@@ -37,7 +37,7 @@ const swiperProps = {
       stretch: 100,
       depth: 300,
       modifier: 1,
-      slideShadows: false,
+      slideShadows: true,
     },
   },
   start: {},

@@ -27,6 +27,7 @@ import Swal from 'sweetalert2';
 import { apiClient } from '../../../api';
 
 import './ClassCreate.css';
+import { useNavigate } from 'react-router-dom';
 
 const editorConfiguration = {
   simpleUpload: {
@@ -108,6 +109,8 @@ function getLabelText(value) {
 }
 
 function ClassCreate() {
+  const navigate = useNavigate();
+
   const color = '#DF7861';
   const date = new Date();
   const timeNow =
@@ -148,6 +151,13 @@ function ClassCreate() {
 
   const handleOpenSuccess = () => {
     setSuccess(true);
+    Swal.fire({
+      title: '클래스 생성 완료!', // Alert 제목
+      text: '예정된 클래스로 이동합니다',
+      icon: 'success', // Alert 타입
+    }).then(() => {
+      navigate('/classmanage/reserve');
+    });
   };
 
   const handleCloseSuccess = () => {
@@ -176,13 +186,18 @@ function ClassCreate() {
 
   // 등록 버튼 눌렀을 때 검사
   const validData = () => {
-    if (title !== '' && dateTime !== timeNow && content !== '') {
+    if (
+      title !== '' &&
+      dateTime !== timeNow &&
+      content !== '' &&
+      !uploadImage
+    ) {
       sendCreate();
     } else {
       Swal.fire({
         title: '잠깐!', // Alert 제목
-        text: '모든 내용을 작성해주세요', // Alert 내용
-        icon: 'error', // Alert 타입
+        text: '대표 사진을 선택하고,\n 모든 내용을 작성해주세요', // Alert 내용
+        icon: 'info', // Alert 타입
       });
     }
   };
@@ -203,6 +218,10 @@ function ClassCreate() {
       return;
     } else {
       setUploadImage(event.target.files[0]);
+      Swal.fire({
+        title: '사진 업로드 완료!', // Alert 제목
+        icon: 'success', // Alert 타입
+      });
     }
   };
 
@@ -212,9 +231,7 @@ function ClassCreate() {
 
   const sendCreate = async () => {
     let myData = {
-      teacherId: '선생님 아이디',
       categoryId: category,
-      tagginRequest: ['태그1', '태그2'],
       className: title,
       headcount: number,
       price: cost,
@@ -234,7 +251,7 @@ function ClassCreate() {
 
     try {
       const response = await apiClient.post('/api/class/create', formData);
-      if (response.status === '201') {
+      if (response.status === 201) {
         handleOpenSuccess();
       }
     } catch (error) {

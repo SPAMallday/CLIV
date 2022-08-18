@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -71,6 +71,8 @@ function NavBar() {
   const role = useSelector((state) => state.userInfo.user.role);
   const authId = useSelector((state) => state.userInfo.user.id);
 
+  const navigate = useNavigate();
+
   // TODO 로딩 스피너 먹이는 법..?
   const loading = useSelector((state) => state.loading);
 
@@ -134,6 +136,7 @@ function NavBar() {
   const logoutBtn = () => {
     console.log('out');
     dispatch(logout());
+    navigate('/');
   };
 
   // SSE 적용
