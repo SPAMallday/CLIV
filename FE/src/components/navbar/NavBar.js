@@ -268,7 +268,7 @@ function NavBar() {
               <ListItemButton>
                 <ListItemText primary="알림센터" />
                 <Badge
-                  badgeContent={notiData?.length}
+                  badgeContent={notiData.length}
                   color="error"
                   sx={{
                     right: '20px',
@@ -315,7 +315,7 @@ function NavBar() {
 
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <Box sx={{ display: 'flex' }}>
         <AppBar component="nav" position="relative">
           <Toolbar

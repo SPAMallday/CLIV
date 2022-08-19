@@ -66,11 +66,10 @@ export default function ListCarousel({ value, type }) {
                 <CardMedia
                   alt="classThumbnail"
                   component="img"
-                  sx={
-                    {
-                      // pt: '56.25%', // 16:9
-                    }
-                  }
+                  sx={{
+                    height: 'auto',
+                    // pt: '56.25%', // 16:9
+                  }}
                   image={cl.classImg}
                 />
                 <CardActions>

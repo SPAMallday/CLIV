@@ -32,11 +32,10 @@ const ClassThumbnailList = ({ value }) => {
                 <CardMedia
                   alt="classThumbnail"
                   component="img"
-                  sx={
-                    {
-                      // pt: '56.25%', // 16:9
-                    }
-                  }
+                  sx={{
+                    height: '100%',
+                    // pt: '56.25%', // 16:9
+                  }}
                   image={cl.classImg}
                 />
                 <CardActions>

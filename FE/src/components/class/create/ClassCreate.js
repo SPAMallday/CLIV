@@ -175,7 +175,7 @@ function ClassCreate() {
       title !== '' &&
       dateTime !== timeNow &&
       content !== '' &&
-      !uploadImage
+      uploadImage !== null
     ) {
       sendCreate();
     } else {
