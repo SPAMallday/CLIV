@@ -9,7 +9,6 @@ import OpenViduLayout from '../../layout/openvidu-layout';
 import UserModel from '../../models/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
 import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import withRouter from '../route/WithRouter';
 import { Box, Button, Dialog, Typography } from '@mui/material';
 
@@ -27,8 +26,6 @@ class VideoRoomComponent extends Component {
 
     // FIXME 백엔드 배포 연결 테스트용
     this.OPENVIDU_SERVER_URL =
-      // 'https://i7a605.p.ssafy.io:8443';
-
       process.env.NODE_ENV === 'production'
         ? process.env.REACT_APP_BASE_URL +
           ':' +
@@ -36,12 +33,9 @@ class VideoRoomComponent extends Component {
         : 'https://' + window.location.hostname + ':4443';
 
     // FIXME 백엔드 배포 연결 테스트용
-    this.OPENVIDU_SERVER_SECRET =
-      // 'CLIV';
-
-      process.env.REACT_APP_OPENVIDU_SECRET
-        ? process.env.REACT_APP_OPENVIDU_SECRET
-        : 'MY_SECRET';
+    this.OPENVIDU_SERVER_SECRET = process.env.REACT_APP_OPENVIDU_SECRET
+      ? process.env.REACT_APP_OPENVIDU_SECRET
+      : 'MY_SECRET';
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
     // TODO 테스트 끝나면 주석처리 sessionName
