@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin(origins = "*")
-@RequestMapping("/api")
+@RequestMapping("")
 @RequiredArgsConstructor
 public class NotificationController {
     private final NotificationService notificationService;

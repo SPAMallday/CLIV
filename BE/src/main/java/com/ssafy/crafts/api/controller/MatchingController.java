@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Transactional
-@RequestMapping("/api/matching")
+@RequestMapping("/matching")
 @RequiredArgsConstructor
 public class MatchingController {
     private static final String SUCCESS = "success";

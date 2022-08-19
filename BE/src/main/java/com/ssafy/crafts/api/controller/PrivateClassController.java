@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "1:1수업 관련 API", tags = {"MatchingController"}, description = "매칭 관련 컨트롤러")
 @RestController
 @Slf4j
-@RequestMapping("/api/privateclass")
+@RequestMapping("/privateclass")
 @RequiredArgsConstructor
 public class PrivateClassController {
     private static final String SUCCESS = "success";

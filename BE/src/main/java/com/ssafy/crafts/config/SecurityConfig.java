@@ -52,10 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .csrf().disable() // csrf 보안 설정을 비활성화
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)// JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
-                .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);// JWT 토큰은 기본적으로 session을 사용하지 않기 때문에 STATELESS(무상태)를 유지
 //                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), JwtAuthenticationFilter.class);
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         // UsernamePasswordAuthenticationFilter :
         // - (아이디와 비밀번호를 사용하는 form 기반 인증) 설정된 로그인 URL로 오는 요청을 감시하며, 유저 인증 처리
         // - AuthenticationManager를 통한 인증 실행
@@ -71,10 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://i7a605.p.ssafy.io");
         configuration.addAllowedOrigin("http://i7a605.p.ssafy.io");
-        configuration.addAllowedOrigin("https://i7a605.p.ssafy.io:80");
-        configuration.addAllowedOrigin("http://i7a605.p.ssafy.io:80");
-        configuration.addAllowedOrigin("https://i7a605.p.ssafy.io:8080");
-        configuration.addAllowedOrigin("http://i7a605.p.ssafy.io:8080");
 //        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");

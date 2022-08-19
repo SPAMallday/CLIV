@@ -33,7 +33,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @Transactional
-@RequestMapping("/api/review")
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
     private static final String SUCCESS = "success";

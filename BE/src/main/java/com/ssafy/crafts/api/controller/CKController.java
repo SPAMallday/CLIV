@@ -23,7 +23,7 @@ import java.io.IOException;
 @Api(value = "이미지 저장 관련 API", tags = {"CKController"}, description = "이미지 저장 컨트롤러")
 @RestController
 @Slf4j
-@RequestMapping("/api/image")
+@RequestMapping("/image")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class CKController {

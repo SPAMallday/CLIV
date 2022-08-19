@@ -28,7 +28,7 @@ import java.text.ParseException;
 @RestController
 @Slf4j
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/class")
+@RequestMapping("/class")
 @RequiredArgsConstructor
 public class ClassController {
     private final ClassService classService;

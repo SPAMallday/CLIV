@@ -22,7 +22,7 @@ import java.util.List;
 @Api(value = "채팅 관련 API", tags = {"ChatRoomController"}, description = "채팅 관련 컨트롤러")
 @RestController
 @Slf4j
-@RequestMapping("/api/chat")
+@RequestMapping("/chat")
 @RequiredArgsConstructor
 public class ChatRoomController {
 

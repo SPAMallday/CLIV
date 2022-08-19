@@ -49,7 +49,7 @@ public class ClassInfo {
             inverseJoinColumns = @JoinColumn(name = "hashtag_id", referencedColumnName = "hashtag_id"))
     private List<Hashtag> tagging = new ArrayList<>();
 
-    @Column(name = "class_name", nullable = false, length = 30)
+    @Column(name = "class_name", nullable = false, length = 100)
     private String className;
 
     @Column(name = "class_datetime", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

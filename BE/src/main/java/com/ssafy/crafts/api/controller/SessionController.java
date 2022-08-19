@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @Slf4j
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/class")
+@RequestMapping("/class")
 @RequiredArgsConstructor
 public class SessionController {
 

@@ -29,7 +29,7 @@ import java.text.ParseException;
 @RestController
 @Slf4j
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/main")
+@RequestMapping("/main")
 @RequiredArgsConstructor
 public class MainController {
     private final MainServiceImpl mainServiceImpl;
