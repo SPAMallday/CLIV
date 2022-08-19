@@ -1,77 +1,60 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-// import {ThemeProvider as StyledThemeProvider} from "styled-components"
+import React from 'react';
+import { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import ClassThumbnailList from '../../components/main/ClassThumbnailList';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8]; // 현재 8개 보여줌
-const classImage = ["images/sample.jpg"]; // card내용 서버에서 받아오기 / 썸네일, 강의제목
-const classTitle = ["title"]; // 서버에서 받아올 것들
+import { mainList } from '../../api/mainAPI';
+import { styled } from '@mui/material';
+
+import 'swiper/css';
+import ListCarousel from '../../components/main/ListCarousel';
+
+const MainListTitle = styled(Typography)({
+  align: 'left',
+  color: 'text.primary',
+  gutterBottom: true,
+  fontSize: '1.7rem',
+  fontWeight: '700',
+});
 
 function Main() {
+  // const [class, setClass] = useState(null);
+  // const { count } = useSelector((state) => state.counter);
+
+  const [ctList, setCTList] = useState([]);
+  const [hcList, setHCList] = useState([]);
+  const [allList, setAllList] = useState([]);
+
+  useEffect(() => {
+    mainList().then((res) => {
+      setCTList(res.classTimeCL);
+      setHCList(res.headcountCL);
+      setAllList(res.all);
+    });
+  }, []);
+
   return (
     <main>
       {/* Hero unit */}
-      <Box
-        sx={{
-          pt: 8,
-          pb: 6,
-        }}
-      >
+      <Box sx={{ pt: 4 }}>
         <Container maxWidth="lg">
-          <Typography
-            component="h1"
-            variant="h3"
-            align="left"
-            color="text.primary"
-            gutterBottom
-          >
-            추천 클래스
-          </Typography>
+          <Box sx={{ py: 2 }}>
+            <MainListTitle>마감 임박 클래스💥</MainListTitle>
+            <ListCarousel value={hcList} type="deadline" />
+          </Box>
+          <Box sx={{ py: 2 }}>
+            <MainListTitle>곧 시작하는 클래스</MainListTitle>
+            <ClassThumbnailList value={ctList} />
+          </Box>
+          <Box sx={{ py: 2 }}>
+            <MainListTitle>추천 클래스</MainListTitle>
+            {/* <ListCarousel value={allList} /> */}
+            <ClassThumbnailList value={allList} />
+          </Box>
         </Container>
       </Box>
-      <Container sx={{ py: 8 }} maxWidth="lg">
-        {/* End hero unit */}
-        <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} sm={6} md={4} lg={3}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={
-                    {
-                      // pt: '56.25%', // 16:9
-                    }
-                  }
-                  // image="https://source.unsplash.com/random"
-                  image="images/sample.jpg"
-                  alt="random"
-                />
-                {/* <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      뜨개질입니다.
-                    </Typography>
-                  </CardContent> */}
-                <CardActions>
-                  <Typography gutterBottom variant="subtitle2" component="div">
-                    뜨개구리
-                  </Typography>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
     </main>
   );
 }

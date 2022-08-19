@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import MyReview from './MyReview';
@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import { FormControl, Select, MenuItem } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { myReview, teacherReview } from '../../api/reviewAPI';
 
 import './MyReview.css';
 
@@ -23,11 +25,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -46,7 +44,11 @@ function a11yProps(index) {
 }
 
 function MyReviewTabs(props) {
+  const userId = useSelector((state) => state.userInfo.user.id);
+  const role = useSelector((state) => state.userInfo.user.role);
   const [valueTitle, setValueTitle] = React.useState(0);
+  const [myRvw, setMyRvw] = React.useState([]);
+  const [teacherRvw, setTeacherRvw] = React.useState([]);
   const handleChangeTitle = (event, newValue) => {
     setValueTitle(newValue);
   };
@@ -60,6 +62,19 @@ function MyReviewTabs(props) {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  useEffect(() => {
+    myReview(userId).then((res) => {
+      setMyRvw(res);
+      console.log('res' + res);
+    });
+
+    if (role === 'TEACHER') {
+      teacherReview(userId).then((res) => {
+        setTeacherRvw(res);
+      });
+    }
+  }, []);
 
   return (
     <Box className="myreviewbox">
@@ -101,24 +116,24 @@ function MyReviewTabs(props) {
                 </Tabs>
               </Box>
               <FormControl sx={{ width: '150px' }}>
-                <InputLabel color="secondary">정렬</InputLabel>
+                {/* <InputLabel color="secondary">정렬</InputLabel>
                 <Select
                   value={age}
                   label="Age"
                   onChange={handleChange}
                   color={'secondary'}
-                >
-                  <MenuItem value={10}>최신순</MenuItem>
+                > */}
+                {/* <MenuItem value={10}>최신순</MenuItem>
                   <MenuItem value={20}>높은 별점 순</MenuItem>
-                  <MenuItem value={30}>낮은 별점 순</MenuItem>
-                </Select>
+                  <MenuItem value={30}>낮은 별점 순</MenuItem> */}
+                {/* </Select> */}
               </FormControl>
             </Box>
             <TabPanel value={valueMiniTitle} index={0}>
-              <MyReview />
+              <MyReview value={myRvw} />
             </TabPanel>
             <TabPanel value={valueMiniTitle} index={1}>
-              <MyReview />
+              <MyReview value={teacherRvw} />
             </TabPanel>
           </Box>
         </TabPanel>
@@ -127,26 +142,6 @@ function MyReviewTabs(props) {
       </TabPanel> */}
       </Box>
     </Box>
-
-    // <div className='myreview'>
-    //   <Box sx={{ width: '100%' }}>
-    //     <TabPanel value={value} index={0}>
-    // <div className='myreview-container'>
-    //   <div className='leftside'>
-
-    //   </div>
-    //   <div className='rightside'>
-    //     <div>정렬 : </div>
-    //     <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-    //       <Select labelId='demo-select-small' id='demo-select-small' onChange={handleChange}>
-    //         <MenuItem>최신순</MenuItem>
-    //       </Select>
-    //     </FormControl>
-    //   </div>
-    //  </div>
-    //     </TabPanel>
-    //   </Box>
-    // </div>
   );
 }
 

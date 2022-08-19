@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './VideoRoomComponent.css';
 import { OpenVidu } from 'openvidu-browser';
 import StreamComponent from './stream/StreamComponent';
@@ -9,37 +8,55 @@ import ChatComponent from './chat/ChatComponent';
 import OpenViduLayout from '../../layout/openvidu-layout';
 import UserModel from '../../models/user-model';
 import ToolbarComponent from './toolbar/ToolbarComponent';
+import { connect } from 'react-redux';
+import withRouter from '../route/WithRouter';
+import { Box, Button, Dialog, Typography } from '@mui/material';
+
+import Swal from 'sweetalert2';
+
+import PencilPath from '../../assets/pencil.png';
+import { exitClass } from '../../api/classAPI';
+import axios from 'axios';
 
 var localUser = new UserModel();
 
 class VideoRoomComponent extends Component {
   constructor(props) {
     super(props);
-    this.OPENVIDU_SERVER_URL = this.props.openviduServerUrl
-      ? this.props.openviduServerUrl
-      : 'https://' + window.location.hostname + ':4443';
-    this.OPENVIDU_SERVER_SECRET = this.props.openviduSecret
-      ? this.props.openviduSecret
+
+    // FIXME 백엔드 배포 연결 테스트용
+    this.OPENVIDU_SERVER_URL =
+      process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_BASE_URL +
+          ':' +
+          process.env.REACT_APP_OPENVIDU_PORT
+        : 'https://' + window.location.hostname + ':4443';
+
+    // FIXME 백엔드 배포 연결 테스트용
+    this.OPENVIDU_SERVER_SECRET = process.env.REACT_APP_OPENVIDU_SECRET
+      ? process.env.REACT_APP_OPENVIDU_SECRET
       : 'MY_SECRET';
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
-    let sessionName = this.props.sessionName
-      ? this.props.sessionName
-      : 'SessionA';
-    let userName = this.props.user
-      ? this.props.user
-      : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+    // TODO 테스트 끝나면 주석처리 sessionName
+    // let sessionName = this.props.sessionName
+    //   ? this.props.sessionName
+    //   : 'SessionA';
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: sessionName,
-      myUserName: userName,
+      // TODO 테스트 끝나면 주석처리 mySId
+      // mySessionId: sessionName,
+      myUserName: '',
       session: undefined,
       localUser: undefined,
       subscribers: [],
       chatDisplay: 'none',
       currentVideoDevice: undefined,
       mainVideo: undefined,
+      token: undefined,
+      classId: undefined,
+      classEnd: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -48,7 +65,6 @@ class VideoRoomComponent extends Component {
     // this.updateLayout = this.updateLayout.bind(this);
     this.camStatusChanged = this.camStatusChanged.bind(this);
     this.micStatusChanged = this.micStatusChanged.bind(this);
-    this.nicknameChanged = this.nicknameChanged.bind(this);
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.switchCamera = this.switchCamera.bind(this);
     this.screenShare = this.screenShare.bind(this);
@@ -59,30 +75,56 @@ class VideoRoomComponent extends Component {
     this.checkSize = this.checkSize.bind(this);
     this.handleTargetVideo = this.handleTargetVideo.bind(this);
     this.changeTargetVideo = this.changeTargetVideo.bind(this);
+    this.validateAccess = this.validateAccess.bind(this);
+    this.handleDialogClose = this.handleDialogClose.bind(this);
+    // TODO 테스트 끝나면 주석처리
+    // this.getToken = this.getToken.bind(this);
   }
 
   componentDidMount() {
-    const openViduLayoutOptions = {
-      maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
-      minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
-      fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
-      bigClass: 'OV_big', // The class to add to elements that should be sized bigger
-      bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
-      bigFixedRatio: false, // fixedRatio for the big ones
-      bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
-      bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
-      bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
-      animate: true, // Whether you want to animate the transitions
-    };
+    // router로 전달받은 classId를 세팅하기 위한 useParams
+    const classId = this.props.params.classId;
+    // router로 전달받은 openvidu token을 세팅하기 위한 location
+    const location = this.props.location;
+    // react redux에서 정의한 userInfo state를 사용하기 위함
+    const { userInfo } = this.props;
 
-    this.layout.initLayoutContainer(
-      document.getElementById('layout'),
-      openViduLayoutOptions,
-    );
-    window.addEventListener('beforeunload', this.onbeforeunload);
-    // window.addEventListener("resize", this.updateLayout);
-    window.addEventListener('resize', this.checkSize);
-    this.joinSession();
+    // 이렇게 하면 처음에 렌더링을 하고, 문제가 있음을 확인했기 때문에
+    // state에 변경이 생기고 다시 렌더링을 한 번 더하는 문제가 있음
+    // if (!this.props.location.state) {
+    //   alert('잘못된 접근입니다.');
+    //   this.setState({ accessError: true });
+    // }
+
+    if (location.state) {
+      this.setState({
+        token: location.state.token,
+        myUserName: userInfo.user.nickname,
+        classId: classId,
+      });
+
+      const openViduLayoutOptions = {
+        maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
+        minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
+        fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
+        bigClass: 'OV_big', // The class to add to elements that should be sized bigger
+        bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
+        bigFixedRatio: false, // fixedRatio for the big ones
+        bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
+        bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
+        bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
+        animate: true, // Whether you want to animate the transitions
+      };
+
+      this.layout.initLayoutContainer(
+        document.getElementById('layout'),
+        openViduLayoutOptions,
+      );
+      window.addEventListener('beforeunload', this.onbeforeunload);
+      // window.addEventListener("resize", this.updateLayout);
+      window.addEventListener('resize', this.checkSize);
+      this.joinSession();
+    }
   }
 
   componentWillUnmount() {
@@ -111,31 +153,19 @@ class VideoRoomComponent extends Component {
   }
 
   connectToSession() {
-    if (this.props.token !== undefined) {
-      console.log('token received: ', this.props.token);
-      this.connect(this.props.token);
+    // TODO 테스트 끝나면 돌리기
+    // this.getToken();
+    if (this.state.token !== undefined) {
+      this.connect(this.state.token);
     } else {
-      this.getToken()
-        .then((token) => {
-          console.log(token);
-          this.connect(token);
-        })
-        .catch((error) => {
-          if (this.props.error) {
-            this.props.error({
-              error: error.error,
-              messgae: error.message,
-              code: error.code,
-              status: error.status,
-            });
-          }
-          console.log(
-            'There was an error getting the token:',
-            error.code,
-            error.message,
-          );
-          alert('There was an error getting the token:', error.message);
-        });
+      // 토큰이 없는 경우 메인페이지로 이동
+      Swal.fire({
+        title: '클래스에 참여할 권한이 없습니다',
+        text: '메인페이지로 이동합니다',
+        icon: 'error',
+      }).then(() => {
+        this.props.navigate('/', { replace: true });
+      });
     }
   }
 
@@ -264,24 +294,29 @@ class VideoRoomComponent extends Component {
   }
 
   leaveSession() {
-    const mySession = this.state.session;
+    // 기존 openvidu 로컬에서 세션 나가기
+    // const mySession = this.state.session;
+    // if (mySession) {
+    //   mySession.disconnect();
+    // }
 
-    if (mySession) {
-      mySession.disconnect();
-    }
+    // Openvidu 세션에서 나가도록 서버에 요청
+    exitClass(this.state.classId);
 
     // Empty all properties...
     this.OV = null;
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: 'SessionA',
-      myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
+      // mySessionId: 'SessionA',
+      myUserName: '',
       localUser: undefined,
+      mainVideo: undefined,
+      token: undefined,
+      classId: undefined,
+      // state가 true로 바뀌면서 자동으로 Dialog 표시
+      classEnd: true,
     });
-    if (this.props.leaveSession) {
-      this.props.leaveSession();
-    }
   }
 
   camStatusChanged() {
@@ -296,15 +331,6 @@ class VideoRoomComponent extends Component {
     localUser.getStreamManager().publishAudio(localUser.isAudioActive());
     this.sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() });
     this.setState({ localUser: localUser });
-  }
-
-  nicknameChanged(nickname) {
-    let localUser = this.state.localUser;
-    localUser.setNickname(nickname);
-    this.setState({ localUser: localUser });
-    this.sendSignalUserChanged({
-      nickname: this.state.localUser.getNickname(),
-    });
   }
 
   deleteSubscriber(stream) {
@@ -489,11 +515,20 @@ class VideoRoomComponent extends Component {
         if (error && error.name === 'SCREEN_EXTENSION_NOT_INSTALLED') {
           this.setState({ showExtensionDialog: true });
         } else if (error && error.name === 'SCREEN_SHARING_NOT_SUPPORTED') {
-          alert('Your browser does not support screen sharing');
+          Swal.fire({
+            title: 'Your browser does not support screen sharing',
+            icon: 'info',
+          });
         } else if (error && error.name === 'SCREEN_EXTENSION_DISABLED') {
-          alert('You need to enable screen sharing extension');
+          Swal.fire({
+            title: 'You need to enable screen sharing extension',
+            icon: 'info',
+          });
         } else if (error && error.name === 'SCREEN_CAPTURE_DENIED') {
-          alert('You need to choose a window or application to share');
+          Swal.fire({
+            title: 'You need to choose a window or application to share',
+            icon: 'question',
+          });
         }
       },
     );
@@ -608,98 +643,169 @@ class VideoRoomComponent extends Component {
     });
   }
 
+  // Dialog를 닫으면 리뷰창으로 이동
+  handleDialogClose() {
+    this.setState({
+      classEnd: false,
+    });
+    // 해당 수업의 classId를 가지고 이동
+    this.props.navigate('/class/review', {
+      state: { classId: this.state.classId },
+    });
+  }
+
+  // 주소를 직접 입력해서 접근하면 이전 페이지에서 수행하는
+  // token을 가져오는 동작을 하지 않아서 location에 state가 없음
+  validateAccess() {
+    if (!this.props.location.state) {
+      alert('잘못된 접근입니다.');
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    const mySessionId = this.state.mySessionId;
+    const open = this.state.classEnd;
     const localUser = this.state.localUser;
     var subscribers = this.state.subscribers;
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
-      <div className="container" id="container">
-        <ToolbarComponent
-          sessionId={mySessionId}
-          user={localUser}
-          subscribers={subscribers}
-          showNotification={this.state.messageReceived}
-          camStatusChanged={this.camStatusChanged}
-          micStatusChanged={this.micStatusChanged}
-          screenShare={this.screenShare}
-          stopScreenShare={this.stopScreenShare}
-          toggleFullscreen={this.toggleFullscreen}
-          switchCamera={this.switchCamera}
-          leaveSession={this.leaveSession}
-          toggleChat={this.toggleChat}
-          targetVideoStreamId={this.handleTargetVideo}
-        />
+      <>
+        {/* // TODO 테스트 끝나면 해제 */}
+        {/* 접근 에러가 있다면 바로 메인페이지로 이동 */}
+        {/* {!this.validateAccess() && <Navigate to="/" replace="true" />} */}
 
-        <DialogExtensionComponent
-          showDialog={this.state.showExtensionDialog}
-          cancelClicked={this.closeDialogExtension}
-        />
+        <div className="container" id="container">
+          <ToolbarComponent
+            user={localUser}
+            subscribers={subscribers}
+            showNotification={this.state.messageReceived}
+            camStatusChanged={this.camStatusChanged}
+            micStatusChanged={this.micStatusChanged}
+            screenShare={this.screenShare}
+            stopScreenShare={this.stopScreenShare}
+            toggleFullscreen={this.toggleFullscreen}
+            switchCamera={this.switchCamera}
+            leaveSession={this.leaveSession}
+            toggleChat={this.toggleChat}
+            targetVideoStreamId={this.handleTargetVideo}
+          />
 
-        <div id="videoBoundary">
-          <div id="bigVideoContainer">
-            <div className="videoWrapper">
-              {this.state.subscribers
-                .filter((sub, i) => {
-                  if (this.state.mainVideo === undefined && i === 0)
-                    return true;
-                  else if (
-                    sub.streamManager.stream.streamId === this.state.mainVideo
-                  )
-                    return true;
-                  else return false;
-                })
-                .map((sub, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className="OT_root OT_publisher custom-class"
-                      id="remoteUsers"
-                    >
-                      <StreamComponent
-                        user={sub}
-                        streamId={sub.streamManager.stream.streamId}
-                      />
-                    </div>
-                  );
-                })}
+          <DialogExtensionComponent
+            showDialog={this.state.showExtensionDialog}
+            cancelClicked={this.closeDialogExtension}
+          />
+
+          <div id="videoBoundary">
+            <div id="bigVideoContainer">
+              <div className="videoWrapper">
+                {this.state.subscribers
+                  .filter((sub, i) => {
+                    if (this.state.mainVideo === undefined && i === 0)
+                      return true;
+                    else if (
+                      sub.streamManager.stream.streamId === this.state.mainVideo
+                    )
+                      return true;
+                    else return false;
+                  })
+                  .map((sub, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="OT_root OT_publisher custom-class"
+                        id="remoteUsers"
+                      >
+                        <StreamComponent
+                          user={sub}
+                          streamId={sub.streamManager.stream.streamId}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
-          </div>
-          <div id="myVideoContainer">
-            <div className="videoWrapper">
+            <div id="myVideoContainer">
+              <div className="videoWrapper">
+                {localUser !== undefined &&
+                  localUser.getStreamManager() !== undefined && (
+                    <div
+                      className="OT_root OT_publisher custom-class"
+                      id="localUser"
+                    >
+                      <StreamComponent user={localUser} />
+                    </div>
+                  )}
+              </div>
+            </div>
+            <div id="myChatContainer">
               {localUser !== undefined &&
                 localUser.getStreamManager() !== undefined && (
                   <div
                     className="OT_root OT_publisher custom-class"
-                    id="localUser"
+                    style={chatDisplay}
                   >
-                    <StreamComponent
+                    <ChatComponent
                       user={localUser}
-                      handleNickname={this.nicknameChanged}
+                      chatDisplay={this.state.chatDisplay}
+                      close={this.toggleChat}
+                      messageReceived={this.checkNotification}
                     />
                   </div>
                 )}
             </div>
           </div>
-          <div id="myChatContainer">
-            {localUser !== undefined &&
-              localUser.getStreamManager() !== undefined && (
-                <div
-                  className="OT_root OT_publisher custom-class"
-                  style={chatDisplay}
+
+          <Dialog
+            open={open}
+            onClose={this.handleDialogClose}
+            PaperProps={{
+              style: { borderRadius: '70px', textAlign: 'center' },
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                height: '300px',
+                width: '600px',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                borderRadius: '100px',
+              }}
+            >
+              <Typography fontWeight={700} fontSize={'1.6rem'}>
+                수업이 종료되었습니다!
+              </Typography>
+              <Typography sx={{ mt: 1 }}>
+                다음 수강생과 선생님을 위해 리뷰를 남겨주세요!
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  component="label"
+                  size="large"
+                  onClick={this.handleDialogClose}
+                  sx={{ width: '50%', height: '3rem', borderRadius: '1.5rem' }}
                 >
-                  <ChatComponent
-                    user={localUser}
-                    chatDisplay={this.state.chatDisplay}
-                    close={this.toggleChat}
-                    messageReceived={this.checkNotification}
+                  <img
+                    src={PencilPath}
+                    style={{
+                      position: 'absolute',
+                      width: '20px',
+                      left: '18%',
+                    }}
                   />
-                </div>
-              )}
-          </div>
-        </div>
-        {/* <div id='layout' className='bounds'>
+                  <Typography fontWeight={700} fontSize={'1.05rem'}>
+                    리뷰 남기기
+                  </Typography>
+                </Button>
+              </Box>
+            </Box>
+          </Dialog>
+
+          {/* <div id='layout' className='bounds'>
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
               <div
@@ -710,7 +816,8 @@ class VideoRoomComponent extends Component {
               </div>
             )}
         </div> */}
-      </div>
+        </div>
+      </>
     );
   }
 
@@ -726,80 +833,88 @@ class VideoRoomComponent extends Component {
    *   3) The token must be consumed in Session.connect() method
    */
 
-  getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) =>
-      this.createToken(sessionId),
-    );
-  }
+  // 별도의 서버없이 로컬에서 Openvidu 서버만으로 테스트하는 경우 사용하는 코드
+  // 세션 관리 불가
+  // TODO 테스트 끝나면 아래 전부 주석처리 하기
+  // getToken() {
+  //   return this.createSession(this.state.mySessionId).then((sessionId) =>
+  //     this.createToken(sessionId),
+  //   );
+  // }
 
-  createSession(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(this.OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
-          headers: {
-            Authorization:
-              'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          console.log('CREATE SESION', response);
-          resolve(response.data.id);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error.response && error.response.status === 409) {
-            resolve(sessionId);
-          } else {
-            console.log(error);
-            console.warn(
-              'No connection to OpenVidu Server. This may be a certificate error at ' +
-                this.OPENVIDU_SERVER_URL,
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  this.OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  this.OPENVIDU_SERVER_URL +
-                  '"',
-              )
-            ) {
-              window.location.assign(
-                this.OPENVIDU_SERVER_URL + '/accept-certificate',
-              );
-            }
-          }
-        });
-    });
-  }
+  // createSession(sessionId) {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({ customSessionId: sessionId });
+  //     axios
+  //       .post(this.OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+  //         headers: {
+  //           Authorization:
+  //             'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
+  //           'Content-Type': 'application/json',
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log('CREATE SESION', response);
+  //         resolve(response.data.id);
+  //       })
+  //       .catch((response) => {
+  //         var error = Object.assign({}, response);
+  //         if (error.response && error.response.status === 409) {
+  //           resolve(sessionId);
+  //         } else {
+  //           console.log(error);
+  //           console.warn(
+  //             'No connection to OpenVidu Server. This may be a certificate error at ' +
+  //               this.OPENVIDU_SERVER_URL,
+  //           );
+  //           if (
+  //             window.confirm(
+  //               'No connection to OpenVidu Server. This may be a certificate error at "' +
+  //                 this.OPENVIDU_SERVER_URL +
+  //                 '"\n\nClick OK to navigate and accept it. ' +
+  //                 'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+  //                 this.OPENVIDU_SERVER_URL +
+  //                 '"',
+  //             )
+  //           ) {
+  //             window.location.assign(
+  //               this.OPENVIDU_SERVER_URL + '/accept-certificate',
+  //             );
+  //           }
+  //         }
+  //       });
+  //   });
+  // }
 
-  createToken(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({});
-      axios
-        .post(
-          this.OPENVIDU_SERVER_URL +
-            '/openvidu/api/sessions/' +
-            sessionId +
-            '/connection',
-          data,
-          {
-            headers: {
-              Authorization:
-                'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
-              'Content-Type': 'application/json',
-            },
-          },
-        )
-        .then((response) => {
-          console.log('TOKEN', response);
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
-    });
-  }
+  // createToken(sessionId) {
+  //   return new Promise((resolve, reject) => {
+  //     var data = JSON.stringify({});
+  //     axios
+  //       .post(
+  //         this.OPENVIDU_SERVER_URL +
+  //           '/openvidu/api/sessions/' +
+  //           sessionId +
+  //           '/connection',
+  //         data,
+  //         {
+  //           headers: {
+  //             Authorization:
+  //               'Basic ' + btoa('OPENVIDUAPP:' + this.OPENVIDU_SERVER_SECRET),
+  //             'Content-Type': 'application/json',
+  //           },
+  //         },
+  //       )
+  //       .then((response) => {
+  //         console.log('TOKEN', response);
+  //         resolve(response.data.token);
+  //       })
+  //       .catch((error) => reject(error));
+  //   });
+  // }
 }
-export default VideoRoomComponent;
+
+const mapStateToProps = (state) => ({
+  userInfo: state.userInfo,
+});
+
+export default connect(mapStateToProps)(withRouter(VideoRoomComponent));

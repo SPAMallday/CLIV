@@ -7,13 +7,15 @@
 .matchingContainer {
   display: flex;
   background-color: white;
-  width: 70%;
+  width: 100%;
   min-width: 500px;
-  height: 100%;
   margin-top: 2%;
   margin-bottom: 2%;
   border-radius: 25px;
   margin: auto;
+  padding: 5%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .matchingItem {
@@ -34,23 +36,9 @@
   padding-right: 5%;
 }
 
-.matchingRadio .matchingRadioBtn {
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
 .matchingBtnBox {
   margin-top: 2%;
   text-align: center;
   display: flex;
-  justify-content: space-between;
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-@media (min-width: 1280px) {
-  .matchingRadio .matchingRadioBtn {
-    margin-left: 15%;
-    margin-right: 15%;
-  }
+  justify-content: center;
 }
