@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import "./StreamComponent.css";
-import OvVideoComponent from "./OvVideo";
+import React, { Component } from 'react';
+import './StreamComponent.css';
+import OvVideoComponent from './OvVideo';
 
-import MicOff from "@mui/icons-material/MicOff";
-import VideocamOff from "@mui/icons-material/VideocamOff";
-import VolumeUp from "@mui/icons-material/VolumeUp";
-import VolumeOff from "@mui/icons-material/VolumeOff";
-import IconButton from "@mui/material/IconButton";
+import MicOff from '@mui/icons-material/MicOff';
+import VideocamOff from '@mui/icons-material/VideocamOff';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+import VolumeOff from '@mui/icons-material/VolumeOff';
+import IconButton from '@mui/material/IconButton';
 
 export default class StreamComponent extends Component {
   constructor(props) {
@@ -28,7 +28,9 @@ export default class StreamComponent extends Component {
         {this.props.user !== undefined &&
         this.props.user.getStreamManager() !== undefined ? (
           <div className="streamComponent">
-            <div className="nickname">{this.state.nickname}</div>
+            <div className="nickname" style={{ textAlign: 'center' }}>
+              {this.state.nickname.slice(0, 4)}
+            </div>
             <OvVideoComponent
               user={this.props.user}
               mutedSound={this.state.mutedSound}
