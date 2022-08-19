@@ -3,6 +3,7 @@ package com.ssafy.crafts.db.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
+@ToString
 public class ClassInfo {
 
     @Id
@@ -47,14 +49,11 @@ public class ClassInfo {
             inverseJoinColumns = @JoinColumn(name = "hashtag_id", referencedColumnName = "hashtag_id"))
     private List<Hashtag> tagging = new ArrayList<>();
 
-    @Column(name = "class_name", nullable = false, length = 30)
+    @Column(name = "class_name", nullable = false, length = 100)
     private String className;
 
     @Column(name = "class_datetime", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp classDatetime;
-
-    @Column(name = "duration_h", columnDefinition = "TINYINT", nullable = false, length = 1)
-    private int durationH;
 
     @Column(columnDefinition = "TINYINT", nullable = false, length = 1)
     private int headcount;
@@ -62,10 +61,7 @@ public class ClassInfo {
     @Column(nullable = false)
     private int price;
 
-    @Column(length = 200)
-    private String guide;
-
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 3000)
     private String content;
 
     @Column(length = 200)
@@ -78,8 +74,14 @@ public class ClassInfo {
     @Column(name = "status", length = 10, nullable = false)
     private ClassStatus classStatus;
 
+    @Column(name = "session_id", length = 20)
+    private String sessionId;
+
+    @Column(name = "regdate",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp regdate;
+
     @Builder
-    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int durationH, int headcount, int price, String guide, String content, String classImg, int level, ClassStatus classStatus) {
+    public ClassInfo(int id, List<QnA> qnaList, List<Review> reviewList, Category category, Member teacher, List<Member> members, List<Hashtag> tagging, String className, Timestamp classDatetime, int headcount, int price, String content, String classImg, int level, ClassStatus classStatus, String sessionId, Timestamp regdate) {
         this.id = id;
         this.qnaList = qnaList;
         this.reviewList = reviewList;
@@ -89,14 +91,14 @@ public class ClassInfo {
         this.tagging = tagging;
         this.className = className;
         this.classDatetime = classDatetime;
-        this.durationH = durationH;
         this.headcount = headcount;
         this.price = price;
-        this.guide = guide;
         this.content = content;
         this.classImg = classImg;
         this.level = level;
         this.classStatus = classStatus;
+        this.sessionId = sessionId;
+        this.regdate = regdate;
     }
 
     public void addReviewList(Review review) {

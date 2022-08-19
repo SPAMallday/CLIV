@@ -26,8 +26,8 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<ClassInfo> classes = new ArrayList<>();
 
-    @OneToOne(mappedBy = "category")
-    private MBoard mBoard;
+    @OneToMany(mappedBy = "category")
+    private List<MBoard> mBoard = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "TEACHER_CATEGORIES",

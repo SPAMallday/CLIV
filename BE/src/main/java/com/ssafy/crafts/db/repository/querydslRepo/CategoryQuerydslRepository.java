@@ -16,9 +16,15 @@ public class CategoryQuerydslRepository {
 
     QCategory qCategory = QCategory.category;
 
-    public Optional<Category> findCategoryById(int id) {
+    public Category findCategoryById(int id) {
         Category category = jpaQueryFactory.select(qCategory).from(qCategory)
                 .where(qCategory.id.eq(id)).fetchOne();
-        return Optional.ofNullable(category);
+        return category;
+    }
+
+    public String findCategoryContentById(int id) {
+        String content = jpaQueryFactory.select(qCategory.content).from(qCategory)
+                .where(qCategory.id.eq(id)).fetchOne();
+        return content;
     }
 }
