@@ -47,6 +47,7 @@ class VideoRoomComponent extends Component {
     this.state = {
       // TODO 테스트 끝나면 주석처리 mySId
       // mySessionId: sessionName,
+      // myUserName: this.props.userInfo.user.nickname,
       myUserName: '',
       session: undefined,
       localUser: undefined,
@@ -96,34 +97,35 @@ class VideoRoomComponent extends Component {
     //   this.setState({ accessError: true });
     // }
 
+    // TODO 로컬 테스트 끝나면 활성화 (밑에 괄호 닫는 곳 주의)
     if (location.state) {
-      this.setState({
-        token: location.state.token,
-        myUserName: userInfo.user.nickname,
-        classId: classId,
-      });
+    this.setState({
+      token: location.state.token,
+      myUserName: userInfo.user.nickname,
+      classId: classId,
+    });
 
-      const openViduLayoutOptions = {
-        maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
-        minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
-        fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
-        bigClass: 'OV_big', // The class to add to elements that should be sized bigger
-        bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
-        bigFixedRatio: false, // fixedRatio for the big ones
-        bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
-        bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
-        bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
-        animate: true, // Whether you want to animate the transitions
-      };
+    const openViduLayoutOptions = {
+      maxRatio: 3 / 2, // The narrowest ratio that will be used (default 2x3)
+      minRatio: 9 / 16, // The widest ratio that will be used (default 16x9)
+      fixedRatio: false, // If this is true then the aspect ratio of the video is maintained and minRatio and maxRatio are ignored (default false)
+      bigClass: 'OV_big', // The class to add to elements that should be sized bigger
+      bigPercentage: 0.8, // The maximum percentage of space the big ones should take up
+      bigFixedRatio: false, // fixedRatio for the big ones
+      bigMaxRatio: 3 / 2, // The narrowest ratio to use for the big elements (default 2x3)
+      bigMinRatio: 9 / 16, // The widest ratio to use for the big elements (default 16x9)
+      bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
+      animate: true, // Whether you want to animate the transitions
+    };
 
-      this.layout.initLayoutContainer(
-        document.getElementById('layout'),
-        openViduLayoutOptions,
-      );
-      window.addEventListener('beforeunload', this.onbeforeunload);
-      // window.addEventListener("resize", this.updateLayout);
-      window.addEventListener('resize', this.checkSize);
-      this.joinSession();
+    this.layout.initLayoutContainer(
+      document.getElementById('layout'),
+      openViduLayoutOptions,
+    );
+    window.addEventListener('beforeunload', this.onbeforeunload);
+    // window.addEventListener("resize", this.updateLayout);
+    window.addEventListener('resize', this.checkSize);
+    this.joinSession();
     }
   }
 
@@ -154,7 +156,9 @@ class VideoRoomComponent extends Component {
 
   connectToSession() {
     // TODO 테스트 끝나면 돌리기
-    // this.getToken();
+    // this.getToken().then((token) => {
+    //   this.connect(token);
+    // });
     if (this.state.token !== undefined) {
       this.connect(this.state.token);
     } else {
@@ -294,6 +298,7 @@ class VideoRoomComponent extends Component {
   }
 
   leaveSession() {
+    // TODO 테스트할 때 마다 전환
     // 기존 openvidu 로컬에서 세션 나가기
     // const mySession = this.state.session;
     // if (mySession) {

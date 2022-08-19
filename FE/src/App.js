@@ -23,7 +23,6 @@ import ClassCreate from './components/class/create/ClassCreate';
 import QnaItem from './components/qna/QnaItem';
 
 function App() {
-  console.log(process.env.NODE_ENV);
   return (
     <div className="App">
       <Interceptor>

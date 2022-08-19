@@ -75,16 +75,15 @@ function Profile() {
                   style={{ height: '1.2rem' }}
                 />
               </Typography>
-              {role === 'TEACHER' ? null : (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={changeAuthHandler}
-                  sx={{ borderRadius: '20px' }}
-                >
-                  선생님 전환
-                </Button>
-              )}
+              {/* {role === 'TEACHER' ? null : (          )} */}
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={changeAuthHandler}
+                sx={{ borderRadius: '20px' }}
+              >
+                선생님 전환
+              </Button>
             </Stack>
           </Box>
         </Grid>
