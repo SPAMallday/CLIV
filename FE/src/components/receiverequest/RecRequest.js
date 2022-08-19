@@ -28,6 +28,7 @@ function RecRequest() {
   const clickItem = (item) => {
     setOpenDetail(true);
     setTransItem(item);
+    // console.log(item);
   };
 
   const [data, setData] = useState([
@@ -77,6 +78,7 @@ function RecRequest() {
                         요청일 : {item.regdate.slice(0, 10)}
                       </Typography>
                       <Typography>원하는 시간 : {item.wantedDay} </Typography>
+                      <Typography>원하는 가격 : {item.price} 원 </Typography>
                     </Stack>
                   </Box>
 

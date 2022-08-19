@@ -23,7 +23,7 @@ import { cateList, matchingCreate } from '../../api/matchingAPI';
 import './MatchingRequest.css';
 import { useSelector } from 'react-redux';
 
-const steps = ['카테고리 선택', '제목', '원하는 시간', '성별', '내용'];
+const steps = ['카테고리', '제목', '시간', '가격', '성별', '내용'];
 
 function MatchingRequest() {
   const color = '#DF7861';
@@ -35,6 +35,7 @@ function MatchingRequest() {
   const [gender, setGender] = useState('');
   const [dateTime, setDateTime] = useState(date);
   const [content, setContent] = useState('');
+  const [price, setPrice] = useState('');
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
 
@@ -58,6 +59,11 @@ function MatchingRequest() {
   const handleTitle = (event) => {
     setTitle(event.target.value);
   };
+
+  const handlePrice = (event) => {
+    setPrice(event.target.value);
+  };
+
   useEffect(() => {
     cateList().then((res) => {
       setCategoryArr(res);
@@ -107,8 +113,9 @@ function MatchingRequest() {
       content: content,
       matStatus: false,
       categoryId: value,
+      price: price,
     };
-    console.log(myData);
+    // console.log(myData);
 
     matchingCreate(myData).then((res) => {
       handleOpenSuccess();
@@ -238,6 +245,18 @@ function MatchingRequest() {
               )}
               {activeStep === 3 && (
                 <Box className="matchingContainer">
+                  <TextField
+                    value={price}
+                    onChange={handlePrice}
+                    color="secondary"
+                    label="원하는 가격 입력"
+                    type="number"
+                    focused
+                  />
+                </Box>
+              )}
+              {activeStep === 4 && (
+                <Box className="matchingContainer">
                   <div sx={{ width: '100%' }}>강사님의 성별을 골라 주세요!</div>
 
                   <FormControl className="matchingRadioBox">
@@ -269,7 +288,7 @@ function MatchingRequest() {
                   </FormControl>
                 </Box>
               )}
-              {activeStep === 4 && (
+              {activeStep === 5 && (
                 <Box>
                   <Box
                     component="form"
