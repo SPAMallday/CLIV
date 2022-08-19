@@ -46,6 +46,15 @@
 
 <br/>
 
+# Wiki
+
+<a href="https://lab.ssafy.com/s07-webmobile1-sub2/S07P12A605/-/wikis/WebRTC%EB%9E%80%3F">WebRTC란?</a>
+
+<a href="https://lab.ssafy.com/s07-webmobile1-sub2/S07P12A605/-/wikis/%EC%B9%B4%EC%B9%B4%EC%98%A4-%EB%A1%9C%EA%B7%B8%EC%9D%B8---Spring-Security---JWT-%ED%86%A0%ED%81%B0-%EA%B5%AC%ED%98%84-%ED%9D%90%EB%A6%84%EB%8F%84">카카오 로그인 + Spring Security + JWT 토큰 구현 흐름도</a>
+
+<a href="https://lab.ssafy.com/s07-webmobile1-sub2/S07P12A605/-/wikis/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%B0%B0%ED%8F%AC">프로젝트 배포</a>
+
+
 # 시스템 아키텍쳐 구조
 ![architecture](./img/system.png)
 
