@@ -22,11 +22,11 @@
 
 | 이름   | 역할 | 담당        |
 | ------ | ---- | ----------- |
-| 김민주 | 팀원 | `Back-end`  |
+| 김** | 팀원 | `Back-end`  |
 | 박지원 | 팀원 | `Front-end` |
-| 조혜진 | 팀원 | `Front-end` |
-| 최윤정 | 팀원 | `Front-end` |
-| 허성은 | 팀장 | `Back-end`  |
+| 조** | 팀원 | `Front-end` |
+| 최** | 팀원 | `Front-end` |
+| 허** | 팀장 | `Back-end`  |
 
 ## 🐻개발 환경 및 구성
 
@@ -60,84 +60,3 @@
 
 # ERD
 ![architecture](./img/erd.png)
-
-# Code Convention
-
-## 💬 BE 기본 규칙
-
-🐪 **CamelCase** 사용하기
-
-🐈‍⬛ **CleanCode** 작성하기 - 메서드명은 기능을 나타낼 수 있는 이름으로! 클래스명과 변수명은 어떤 역할을 하는지 알아보기 쉽게!
-
-## 🧐 주석
-
-### ✅ 클래스 설명
-
-클래스 상단에 다음 형식으로 주석 달아주기
-
-```java
-/**  
-* @FileName : ${file_name}  
-* @작성자 : ${user}  
-* @Class 설명 : 
-*/
-```
-
-### ✅ 메서드 설명
-
-메서드 **내부** 최상단에 다음 형식으로 주석 달아주기 
-
-```java
-/**  
-* @Method Name : ${enclosing_method}  
-* @작성자 : ${user}  
-* @Method 설명 : 
-*/
-```
-
-### ✅ 기타 주석 설명
-
-이해하기 힘들다고 생각되는 로직에는 `//` 붙여서 설명 달아주기
-
-## 🙌 명명규칙
-
-### 🧊 Entity
-
-- **클래스명** : ERD 상의 Table 명과 동일한 카멜표기법으로 작성하기. 만약 예약어와 겹칠 경우에는 ‘Table명 + 임의의 단어` 형식으로 생성
-- **변수명** : ERD 상의 Column 명과 동일한 카멜표기법으로 작성
-- **어노테이션 설정**
-    - `@Setter` 지양하기
-    - `@Builder` 설정하기
-
-### 🧊 DTO = Request, Response
-
-- **명명규칙**
-    - Entity명 + Request/Response
-    - ex) AuthResponse, AuthRequest
-- DTO와 Entity가 서로 변환되기 위해 **Querydsl 구현 필요**
-
-### 🧊 Repository - Querydsl, JpaRepository
-
-- **JpaRepository**
-    - 명명규칙 : Entity명 + repository
-        - ex) AuthRepository
-    - 구현 규칙
-        - `@Repository` 어노테이션 등록
-        - JpaRepository 상속받기
-        - JpaRepository에는 Key : Entity, Value: Entity PK 데이터타입 설정해주기
-    
-    ```java
-    @Repository
-    public interface AuthRepository extends JpaRepository<Auth, String> {
-    
-    }
-    ```
-    
-
-- QuerydslRepository
-    - 명명규칙 : Entity 명 + `QuerydslRepository`
-        - ex) MemberQuerydslRepository
-    - 구현 규칙
-        - `@Repository` 어노테이션 등록
-        - `@RequiredArgsConstructor` 어노테이션 등록
-        - JpaQueryFactory 의존성 주입 받기
